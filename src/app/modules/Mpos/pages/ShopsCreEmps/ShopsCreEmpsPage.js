@@ -3,6 +3,8 @@ import { Route } from "react-router-dom";
 import { ShopsCreEmpsLoadingDialog } from "./ShopsCreEmps-loading-dialog/ShopsCreEmpsLoadingDialog";
 import { ShopsCreEmpEditDialog } from "./ShopsCreEmp-edit-dialog/ShopsCreEmpEditDialog";
 import { ShopsCreEmpEditPage } from "./ShopsCreEmp-edit-page/ShopsCreEmpEditDialog";
+import { TitleDialog } from "./Title-edit-dialog/TitleEditDialog";
+import { PositionDialog } from "./Position-edit-dialog/PositionEditDialog";
 import { ShopsCreEmpDeleteDialog } from "./ShopsCreEmp-delete-dialog/ShopsCreEmpDeleteDialog";
 import { ShopsCreEmpsDeleteDialog } from "./ShopsCreEmps-delete-dialog/ShopsCreEmpsDeleteDialog";
 import { ShopsCreEmpsFetchDialog } from "./ShopsCreEmps-fetch-dialog/ShopsCreEmpsFetchDialog";
@@ -22,6 +24,12 @@ export function ShopsCreEmpsPage({ history }) {
   history.location.pathname.split("/")[3];
 
   const ShopsCreEmpsUIEvents = {
+    newPositionEmpButtonClick: () => {      
+      history.push(`${pages}/pagenew/position`);
+    },
+    newTitleEmpButtonClick: () => {
+      history.push(`${pages}/pagenew/title`);
+    },
     newShopsPageCreshopButtonClick: () => {
       store.dispatch({type:"pagehistory",value:1})
       history.push(`${pages}/pagenew`);
@@ -55,6 +63,26 @@ export function ShopsCreEmpsPage({ history }) {
   return (
     <ShopsCreEmpsUIProvider ShopsCreEmpsUIEvents={ShopsCreEmpsUIEvents}>
       <ShopsCreEmpsLoadingDialog />
+      <Route path={`${pages}/pagenew/position`}>
+        {({ history, match }) => (
+          <PositionDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
+      <Route path={`${pages}/pagenew/title`}>
+        {({ history, match }) => (
+          <TitleDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
       <Route path={`${pages}/pagenew`}>
         {({ history, match }) => (
           <ShopsCreEmpEditPage

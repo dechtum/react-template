@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from "react";
-import { Card, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../_redux/ShopsCreEmps/ShopsCreEmpsActions";
-import { ShopsCreEmpEditDialogHeader } from "./ShopsCreEmpEditDialogHeader";
-import { ShopsCreEmpEditForm } from "./ShopsCreEmpEditForm";
+import { TitleDialogHeader } from "./TitleDialogHeader";
+import { TitleForm } from "./TitleEditForm";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
 
-
-export function ShopsCreEmpEditPage({ id, show, onHide }) {
+export function TitleDialog({ id, show, onHide }) {
   // ShopsCreEmps UI Context
   const ShopsCreEmpsUIContext = useShopsCreEmpsUIContext();
   const ShopsCreEmpsUIProps = useMemo(() => {
@@ -42,16 +41,20 @@ export function ShopsCreEmpEditPage({ id, show, onHide }) {
     }
   };
   return (
-    <div style={{ display: show ? 'block' : 'none' }}>
-
-      <ShopsCreEmpEditForm
+    <Modal
+      size="lg"
+      show={show}
+      onHide={onHide}
+      aria-labelledby="example-modal-sizes-title-lg"
+    >
+      <TitleDialogHeader id={id} />
+      <TitleForm
         saveShopsCreEmp={saveShopsCreEmp}
         actionsLoading={actionsLoading}
         ShopsCreEmp={ShopsCreEmpForEdit || ShopsCreEmpsUIProps.initShopsCreEmp}
         onHide={onHide}
-        id={id}
       />
-    </div>
-   
+    </Modal>
+
   );
 }

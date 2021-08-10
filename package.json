@@ -2,7 +2,7 @@
     "name": "demo1",
     "version": "7.2.5",
     "private": true,
-    "homepage": "/",
+    "homepage": "/mpos",
     "scripts": {
         "start": "react-scripts start -o",
         "build": "react-scripts build",

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import { PuyPursLoadingDialog } from "./PuyPurs-loading-dialog/PuyPursLoadingDialog";
 import { PuyPurEditDialog } from "./PuyPur-edit-dialog/PuyPurEditDialog";
 import { PuyPurEditPage } from "./PuyPur-edit-page/PuyPurEditDialog";
+import { ReciveEditDialog } from "./Recive-edit-dialog/ReciveEditDialog";
 import { PuyPurDeleteDialog } from "./PuyPur-delete-dialog/PuyPurDeleteDialog";
 import { PuyPursDeleteDialog } from "./PuyPurs-delete-dialog/PuyPursDeleteDialog";
 import { PuyPursFetchDialog } from "./PuyPurs-fetch-dialog/PuyPursFetchDialog";
@@ -10,7 +11,7 @@ import { PuyPursUpdateStateDialog } from "./PuyPurs-update-status-dialog/PuyPurs
 import { PuyPursUIProvider } from "./PuyPursUIContext";
 import { PuyPursCard } from "./PuyPursCard";
 import {store} from './Store';
-import { Card } from "react-bootstrap";
+import { useLang, setLanguage } from "./../../../../../_metronic/i18n";
 
 export function PuyPursPage({ history }) {
   const pages =
@@ -22,6 +23,9 @@ export function PuyPursPage({ history }) {
   history.location.pathname.split("/")[3];
 
   const PuyPursUIEvents = {
+    openReciveButtonClick: () => {
+      history.push(`${pages}/pagenew/recive`);
+    },
     newShopsPageCreshopButtonClick: () => {
       store.dispatch({type:"pagehistory",value:1})
       history.push(`${pages}/pagenew`);
@@ -55,6 +59,16 @@ export function PuyPursPage({ history }) {
   return (
     <PuyPursUIProvider PuyPursUIEvents={PuyPursUIEvents}>
       <PuyPursLoadingDialog />
+      <Route path={`${pages}/pagenew/recive`}>
+        {({ history, match }) => (
+          <ReciveEditDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
       <Route path={`${pages}/pagenew`}>
         {({ history, match }) => (
           <PuyPurEditPage

@@ -4,7 +4,8 @@ import { Modal } from "react-bootstrap";
 import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
-export function ShopsCreEmpEditDialogHeader({ id,onHide }) {
+export function PositionDialogHeader({ id }) {
+
   // ShopsCreEmps Redux state
   const { ShopsCreEmpForEdit, actionsLoading } = useSelector(
     (state) => ({
@@ -14,27 +15,25 @@ export function ShopsCreEmpEditDialogHeader({ id,onHide }) {
     shallowEqual
   );
 
-  const [title, setTitle] = useState("");
-  let til = useLang()=='en'?"Edit Employee":"เพิ่ม พนักงาน";
-  let tilE = useLang()=='en'?"Edit Employee":"แก้ไข พนักงาน";
-  // Title couting
+  let til = useLang()=='en'?"Edit Position":"เพิ่ม ตำแหน่งงาน";
+  let tilE = useLang()=='en'?"Edit Position":"แก้ไข ตำแหน่งงาน";
+  const [Position, setPosition] = useState("");
+  // Position couting
   useEffect(() => {
-    let _title = id ? "" : `${til}`;
+    let _Position = id ? "" : til;
     if (ShopsCreEmpForEdit && id) {
-      _title = `${til} '${ShopsCreEmpForEdit.firstName} ${ShopsCreEmpForEdit.lastName}'`;
+      _Position = `${tilE} '${ShopsCreEmpForEdit.firstName}'`;
     }
 
-    setTitle(_title);
+    setPosition(_Position);
     // eslint-disable-next-line
   }, [ShopsCreEmpForEdit, actionsLoading]);
 
   return (
     <>
       {actionsLoading && <ModalProgressBar />}
-      {/* closeButton */}
-      <Modal.Header >
-        <Modal.Title id="example-modal-sizes-title-lg">{title}</Modal.Title>
-        <a className="hover" onClick={onHide}>{useLang()=='en'?"back":"ย้อนกลับ"}</a>
+      <Modal.Header closeButton>
+        <Modal.Title id="example-modal-sizes-Position-lg">{Position}</Modal.Title>
       </Modal.Header>
     </>
   );

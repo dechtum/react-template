@@ -25,7 +25,7 @@ export function PuyPursCard() {
 
   return (
     <Card>
-      <CardHeader title="PuyPurs list">
+      <CardHeader title={useLang()=='en'?'Purchase Order':'ใบสั่งซื้อ'}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -35,7 +35,7 @@ export function PuyPursCard() {
 
       </CardHeader>
       <CardBody>
-        <PuyPursFilter  name="New"/>
+        <PuyPursFilter  name={useLang()=='en'?'New':'เพิ่ม'}/>
         {PuyPursUIProps.ids.length > 0 && <PuyPursGrouping />}
         <PuyPursTable />
       </CardBody>

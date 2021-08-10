@@ -22,7 +22,7 @@ const ShopsCreshopEditSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(3, "Minimum 3 symbols")
     .max(50, "Maximum 50 symbols")
-    .required("Firstname is required"),
+    .required("กรุณากรอกชื่อร้าน"),
   lastName: Yup.string()
     .min(3, "Minimum 3 symbols")
     .max(50, "Maximum 50 symbols")
@@ -81,80 +81,96 @@ export function ShopsCreshopEditForm({
                       />  
                 </Card>
                 <> </>
-                <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
+                <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg ">
                   <ShopsCreshopEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
+                  <div className="form-group row mt-5">
                     {/* First Name */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <Field
                         name="firstName"
                         component={Input}
-                        placeholder="First Name"
-                        label="First Name"
+                        placeholder="ตั้งชื่อร้านค้าของคุณ"
+                        label="ชื่อร้าน"
+                        sublabel="ความยาวไม่เกิน 200 ตัวอักษร"
                       />
                     </div>
                     {/* Last Name */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <Field
                         name="lastName"
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
+                        placeholder="เลขประจำตัวผู้เสียภาษี (ถ้ามี)"
+                        label="เลขที่ผู้เสียภาษี"
+                        sublabel="หมายเลขที่กรมพัฒนาธุระกิจออกให้"
                       />
-                    </div>
-                    {/* Login */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
-                      />
-                    </div>
+                    </div>                    
                   </div>
-                  {/* Email */}
-                  <div className="form-group row">
-                    <div className="col-lg-4">
-                      <Field
-                        type="email"
-                        name="email"
-                        component={Input}
-                        placeholder="Email"
-                        label="Email"
-                      />
-                    </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
+                  <hr/>
+                  <div  className="form-group row ">
+                    <div className="col-lg-12">
+                        <Field
+                          type="email"
+                          name="email"
+                          component={Input}
+                          placeholder="บ้านเลขที่ ซอย หมู่บ้าน"
+                          label="ที่อยู่"
+                          sublabel="ความยาวไม่เกิน 200 ตัวอักษร"
+                        />
+                      </div>
+                  </div>
+                  <div className="form-group row ">
+                    
+                    {/* Login */}
+                    <div className="col-lg-6">
                       <Field
                         name="ipAddress"
                         component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share ShopsCreshop IP Address with anyone else"
+                        placeholder="รหัสไปรษณีย์"
+                        label="รหัสไปรษณีย์"
+                        sublabel=""
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="จังหวัด"
+                        label="จังหวัด"
+                        sublabel=""
+                      />
+                    </div>
+                    
+                    
+                  </div>
+                  <div className="form-group row ">
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="อำเภอ"
+                        label="อำเภอ"
+                        sublabel=""
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="ตำบล"
+                        label="ตำบล"
+                        customFeedbackLabel=""
                       />
                     </div>
                   </div>
                   <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Input}
+                        placeholder="โทรศัพท์"
+                        label="โทรศัพท์"
+                        customFeedbackLabel="หมายเลขโทรศัพท์"
+                      />
                     </div>
                   </div>
                 </Card>

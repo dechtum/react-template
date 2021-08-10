@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
-export function PuyPurEditDialogHeader({ id,onHide,lbl}) {
+export function ReciveEditDialogHeader({ id }) {
   // PuyPurs Redux state
   const { PuyPurForEdit, actionsLoading } = useSelector(
     (state) => ({
@@ -15,13 +15,14 @@ export function PuyPurEditDialogHeader({ id,onHide,lbl}) {
   );
 
 
+  let til = useLang()=='en'?"Edit Recive":"สร้างใบรับสินค้า";
+  let tilE = useLang()=='en'?"Edit Recive":"แก้ไขใบรับสินค้า";
   const [title, setTitle] = useState("");
-  
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : lbl;
+    let _title = id ? "" : til;
     if (PuyPurForEdit && id) {
-      _title = `${lbl} '${PuyPurForEdit.firstName} ${PuyPurForEdit.lastName}'`;
+      _title = `${tilE} '${PuyPurForEdit.firstName} ${PuyPurForEdit.lastName}'`;
     }
 
     setTitle(_title);
@@ -31,10 +32,8 @@ export function PuyPurEditDialogHeader({ id,onHide,lbl}) {
   return (
     <>
       {actionsLoading && <ModalProgressBar />}
-      {/* closeButton */}
-      <Modal.Header >
+      <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">{title}</Modal.Title>
-        <a className="hover" onClick={onHide}>{useLang()=='en'?"back":"ย้อนกลับ"}</a>
       </Modal.Header>
     </>
   );

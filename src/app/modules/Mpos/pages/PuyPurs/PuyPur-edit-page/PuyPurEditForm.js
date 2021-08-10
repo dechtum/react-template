@@ -3,16 +3,20 @@
 // Please, be familiar with article first:
 // https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
 import React from "react";
-import { Card, Modal } from "react-bootstrap";
+import { Card, Modal, Tab, Tabs } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { PuyPurEditDialogHeader } from "./PuyPurEditDialogHeader";
-
+import { Tab1,Tab2,Tab3 } from "./tab/index";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
 
 import {
   Input,
   Select,
   Switch,
+  Upload,
+  SITMore,
   DatePickerField,
 } from "../../../../../../_metronic/_partials/controls";
 
@@ -43,6 +47,12 @@ export function PuyPurEditForm({
   onHide,
   id,
 }) {
+  let btnOk = useLang() == 'en'?'Save':'บันทึก';
+  let btnCancel = useLang() == 'en'?'Cancel':'ยกเลิก';
+  let tab1 = useLang() == 'en'?'Purchase Order':'ใบสั่งซื้อ';
+  let tab2 = useLang() == 'en'?'Receipt':'ใบรับสินค้า';
+  let tab3 = useLang() == 'en'?'Payment':'ใบสำคัญจ่าย';
+  const [tempfile,setTempfiel] = React.useState('');
   const [state, setState] = React.useState({
     active: false
   })
@@ -61,96 +71,30 @@ export function PuyPurEditForm({
         }}
       >
         {({ handleSubmit }) => (
-          <div className="row" >
-            <Modal.Body className="overlay overlay-block cursor-default col-12">
+          <div className="row">
+            <Modal.Body className="overlay overlay-block cursor-default pt-0">
               {actionsLoading && (
                 <div className="overlay-layer bg-transparent">
                   <div className="spinner spinner-lg spinner-success" />
                 </div>
               )}
-              <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
-                </Card>
-                <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
-                  <PuyPurEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
-                    {/* First Name */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="firstName"
-                        component={Input}
-                        placeholder="First Name"
-                        label="First Name"
-                      />
-                    </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="lastName"
-                        component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
-                      />
-                    </div>
-                    {/* Login */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
-                      />
-                    </div>
-                  </div>
-                  {/* Email */}
-                  <div className="form-group row">
-                    <div className="col-lg-4">
-                      <Field
-                        type="email"
-                        name="email"
-                        component={Input}
-                        placeholder="Email"
-                        label="Email"
-                      />
-                    </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="ipAddress"
-                        component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share PuyPur IP Address with anyone else"
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
-                    </div>
-                  </div>
-                </Card>
-
-
+              <Form className="form form-label-right">  
+                <Tabs>
+                    <Tab eventKey="Tab1" title={tab1} >
+                      <PuyPurEditDialogHeader lbl={tab1}  id={id} onHide={onHide} />
+                      <Tab1 id={id} onHide={onHide} />
+                      
+                    </Tab>
+                    <Tab eventKey="Tab2" title={tab2}>
+                      <PuyPurEditDialogHeader lbl={tab2} id={id} onHide={onHide} />
+                      <Tab2 id={id} onHide={onHide} />
+                    </Tab>
+                    <Tab eventKey="Tab3" title={tab3}>
+                      <PuyPurEditDialogHeader lbl={tab3} id={id} onHide={onHide} />
+                     
+                    </Tab>
+                  </Tabs>         
+                 
               </Form>
             </Modal.Body>
             <Modal.Footer className=" col-12  pl-3 pr-3" >
@@ -167,7 +111,7 @@ export function PuyPurEditForm({
                     onClick={onHide}
                     className="btn btn-light btn-elevate"
                   >
-                    Cancel
+                    {btnCancel}
                   </button>
                   <> </>
                   <button
@@ -175,7 +119,7 @@ export function PuyPurEditForm({
                     onClick={() => handleSubmit()}
                     className="btn btn-primary btn-elevate"
                   >
-                    Save
+                    {btnOk}
                   </button>
                 </div>
               </div>

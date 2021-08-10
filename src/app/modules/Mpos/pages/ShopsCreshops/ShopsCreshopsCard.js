@@ -24,7 +24,7 @@ export function ShopsCreshopsCard() {
 
   return (
     <Card>
-      <CardHeader title={useLang()=='en'?"ShopsCreshops list":"ShopsCreshops รายการ"}>
+      <CardHeader title={useLang()=='en'?"Shops":"ร้านค้า"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}

@@ -48,6 +48,8 @@ export function ShopsCreEmpsUIProvider({ShopsCreEmpsUIEvents, children}) {
     setQueryParams,
     initShopsCreEmp,
     newShopsPageCreshopButtonClick: ShopsCreEmpsUIEvents.newShopsPageCreshopButtonClick,
+    newTitleEmpButtonClick: ShopsCreEmpsUIEvents.newTitleEmpButtonClick,
+    newPositionEmpButtonClick: ShopsCreEmpsUIEvents.newPositionEmpButtonClick,
     newShopsCreEmpButtonClick: ShopsCreEmpsUIEvents.newShopsCreEmpButtonClick,
     openEditShopsCreEmpDialog: ShopsCreEmpsUIEvents.openEditShopsCreEmpDialog,
     openDeleteShopsCreEmpDialog: ShopsCreEmpsUIEvents.openDeleteShopsCreEmpDialog,

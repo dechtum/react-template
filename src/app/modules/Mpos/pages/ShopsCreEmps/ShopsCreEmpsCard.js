@@ -24,7 +24,7 @@ export function ShopsCreEmpsCard() {
 
   return (
     <Card>
-      <CardHeader title="ShopsCreEmps list">
+      <CardHeader title={useLang()=='en'?'Employees':'พนักงาน'}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
            {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function ShopsCreEmpsCard() {
 
       </CardHeader>
       <CardBody>
-        <ShopsCreEmpsFilter  name="New"/>
+        <ShopsCreEmpsFilter  name={useLang()=='en'?"New":"เพิ่ม"}/>
         {ShopsCreEmpsUIProps.ids.length > 0 && <ShopsCreEmpsGrouping />}
         <ShopsCreEmpsTable />
       </CardBody>

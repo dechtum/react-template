@@ -18,6 +18,7 @@ export function Input({
   field, // { name, value, onChange, onBlur }
   form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   label,
+  sublabel,
   withFeedbackLabel = true,
   customFeedbackLabel,
   type = "text",
@@ -25,7 +26,7 @@ export function Input({
 }) {
   return (
     <>
-      {label && <label>Enter {label}</label>}
+      {label}
       <input
         type={type}
         className={getFieldCSSClasses(touched[field.name], errors[field.name])}
@@ -36,6 +37,7 @@ export function Input({
         <FieldFeedbackLabel
           error={errors[field.name]}
           touched={touched[field.name]}
+          sublabel={sublabel}
           label={label}
           type={type}
           customFeedbackLabel={customFeedbackLabel}

@@ -2,17 +2,21 @@
 // Data validation is based on Yup
 // Please, be familiar with article first:
 // https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
-import React from "react";
+import React ,{ useMemo } from "react";
 import { Card, Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { ShopsCreEmpEditDialogHeader } from "./ShopsCreEmpEditDialogHeader";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import { useShopsCreEmpsUIContext } from "./../ShopsCreEmpsUIContext";
 
 
 import {
   Input,
   Select,
   Switch,
+  Upload,
+  SITMore,
   DatePickerField,
 } from "../../../../../../_metronic/_partials/controls";
 
@@ -43,12 +47,36 @@ export function ShopsCreEmpEditForm({
   onHide,
   id,
 }) {
+  const [tempfile,setTempfiel] = React.useState('');
+  const [lang,setLang] = React.useState(useLang());
   const [state, setState] = React.useState({
     active: false
   })
+  const ShopsCreEmpsUIContext = useShopsCreEmpsUIContext();
+  const ShopsCreEmpsUIProps = useMemo(() => {
+    return {
+      ids: ShopsCreEmpsUIContext.ids,
+      newTitleEmpButtonClick: ShopsCreEmpsUIContext.newTitleEmpButtonClick,
+      newPositionEmpButtonClick: ShopsCreEmpsUIContext.newPositionEmpButtonClick,
+    };
+  }, [ShopsCreEmpsUIContext]);
   const handleChange = (e, name) => {
     console.log(e.target.checked);
     setState({ ...state, [name]: e.target.checked });
+  }
+
+  function handleClick(e){
+    console.log(e.target.name);
+    switch (e.target.name) {
+      case 'emtitle':
+        ShopsCreEmpsUIProps.newTitleEmpButtonClick(e.target.name);
+        break;
+      case 'empos':
+        ShopsCreEmpsUIProps.newPositionEmpButtonClick(e.target.name);
+        break;
+      default:
+        break;
+    }
   }
   return (
     <>
@@ -69,84 +97,173 @@ export function ShopsCreEmpEditForm({
                 </div>
               )}
               <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
+                <Card className="col-md-4 pt-3 pb-3" style={{ height: "38vh" }}>   
+                  <Field
+                        name="pic"
+                        component={Upload}
+                        tempfile={setTempfiel}
+                      />  
                 </Card>
+                <> </>
                 <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
                   <ShopsCreEmpEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
+                  <div className="form-group row pt-5">
                     {/* First Name */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
+                     <SITMore name="emtitle"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/>                 
                       <Field
                         name="firstName"
-                        component={Input}
-                        placeholder="First Name"
-                        label="First Name"
+                        component={Select}
+                        placeholder="คำนำหน้าชื่อ"
+                        label="คำนำหน้า"
+                        sublabel="เลือกคำนำหน้าชื่อ"
                       />
                     </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
+                    
+                  </div>
+                  <div className="form-group row">                    
+                    <div className="col-lg-6">
+                          
                       <Field
                         name="lastName"
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
+                        placeholder="ชื่อ"
+                        label="ชื่อ"
+                        sublabel="ความยาวไม่เกิน 200 ตัวอักษร"
                       />
+                     
+                      
                     </div>
                     {/* Login */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <Field
                         name="userName"
                         component={Input}
-                        placeholder="Login"
-                        label="Login"
+                        placeholder="นามสกุล"
+                        label="นามสกุล"
+                        sublabel="ความยาวไม่เกิน 200 ตัวอักษร"
                       />
                     </div>
                   </div>
-                  {/* Email */}
                   <div className="form-group row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
+                    <SITMore name="empos"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/>        
                       <Field
-                        type="email"
-                        name="email"
+                        name="firstName"
+                        component={Select}
+                        placeholder="ตำแหน่ง"
+                        label="ตำแหน่ง"
+                        sublabel="เลือกคำนำหน้าชื่อ"
+                      />
+                    </div>
+                    
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-lg-12">
+                      <Field
+                        name="firstName"
                         component={Input}
-                        placeholder="Email"
-                        label="Email"
+                        placeholder="ลักษณะงาน"
+                        label=""
                       />
-                    </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
+                    </div>                    
+                  </div>
+                  <div className="form-group row ">
+                    <div className="col-lg-12">
+                      <Field
+                        name="firstName"
+                        component={Input}
+                        placeholder="ที่อยู่"
+                        label="ความยาวไม่เกิน 200 ตัวอักษร"
                       />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
+                    </div>                    
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-lg-6">
                       <Field
                         name="ipAddress"
                         component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share ShopsCreEmp IP Address with anyone else"
+                        placeholder="โทรศัพท์"
+                        label="โทรศัพท์"
+                        customFeedbackLabel="หมายเลขโทรศัพท์"
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="สังกัด"
+                        label="สังกัด"
+                        customFeedbackLabel="พนักงานประจำร้าน"
                       />
                     </div>
                   </div>
+                  <div className="form-group row ">
+                    
+                    {/* Login */}
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Input}
+                        placeholder="รหัสไปรษณีย์"
+                        label="รหัสไปรษณีย์"
+                        sublabel=""
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="จังหวัด"
+                        label="จังหวัด"
+                        sublabel=""
+                      />
+                    </div>                   
+                    
+                  </div>
+                 
+                  <div className="form-group row ">
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="อำเภอ"
+                        label="อำเภอ"
+                        sublabel=""
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Select}
+                        placeholder="ตำบล"
+                        label="ตำบล"
+                        customFeedbackLabel=""
+                      />
+                    </div>
+                  </div>
+                  <hr/>
                   <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
+                   {/* Login */}
+                   <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Input}
+                        placeholder="ชื่อผู้ใช้"
+                        label="ชื่อผู้ใช้"
+                        sublabel=""
+                      />
                     </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
-                    </div>
+                    <div className="col-lg-6">
+                      <Field
+                        name="ipAddress"
+                        component={Input}
+                        type="password"
+                        placeholder="รหัสผ่าน"
+                        label="รหัสผ่าน"
+                        sublabel=""
+                      />
+                    </div>   
                   </div>
                 </Card>
 

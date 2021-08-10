@@ -13,10 +13,13 @@ export {DatePickerField} from "./forms/DatePickerField";
 export {FieldFeedbackLabel} from "./forms/FieldFeedbackLabel";
 export {FormAlert} from "./forms/FormAlert";
 export {Input} from "./forms/Input";
+export {Textarea} from "./forms/Textarea";
+export {SITMore} from "./forms/sitmore";
 export {Select} from "./forms/Select";
 export {Switch} from "./forms/sit-switch";
 export {Checkbox} from "./forms/Checkbox";
 export {HeaderCheckbox} from "./forms/HeaderCheckbox";
+export {AutoComplete} from "./forms/AutoComplete";
 export {Upload} from "./forms/sit-upload";
 
 

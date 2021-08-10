@@ -48,6 +48,7 @@ export function PuyPursUIProvider({PuyPursUIEvents, children}) {
     setQueryParams,
     initPuyPur,
     newShopsPageCreshopButtonClick: PuyPursUIEvents.newShopsPageCreshopButtonClick,
+    openReciveButtonClick: PuyPursUIEvents.openReciveButtonClick,
     newPuyPurButtonClick: PuyPursUIEvents.newPuyPurButtonClick,
     openEditPuyPurDialog: PuyPursUIEvents.openEditPuyPurDialog,
     openDeletePuyPurDialog: PuyPursUIEvents.openDeletePuyPurDialog,

@@ -1,47 +1,42 @@
 import React from "react";
-import {useField} from "formik";
 import {FieldFeedbackLabel} from "./FieldFeedbackLabel";
 
 const getFieldCSSClasses = (touched, errors) => {
-  const classes = ["form-control", "form-control-solid"];
+  const classes = ["form-control"];
   if (touched && errors) {
-    classes.push("is-invalid-select");
+    classes.push("is-invalid");
   }
 
   if (touched && !errors) {
-    classes.push("is-valid-select");
+    classes.push("is-valid");
   }
 
   return classes.join(" ");
 };
 
-export function Select({
+export function Textarea({
+  field, // { name, value, onChange, onBlur }
+  form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   label,
-  withFeedbackLabel = true,
-  type = "text",
-  customFeedbackLabel,
-  children,
   sublabel,
+  withFeedbackLabel = true,
+  customFeedbackLabel,
   ...props
 }) {
-  const [field, meta] = useField(props);
-  const { touched, error } = meta;
   return (
     <>
       {label}
-      <select
-        className={getFieldCSSClasses(touched, error)}
+      <textarea
+        className={getFieldCSSClasses(touched[field.name], errors[field.name])}
         {...field}
         {...props}
-      >
-        {children}
-      </select>
+      />
       {withFeedbackLabel && (
         <FieldFeedbackLabel
-          erros={error}
-          touched={touched}
-          label={label}
+          error={errors[field.name]}
+          touched={touched[field.name]}
           sublabel={sublabel}
+          label={label}
           customFeedbackLabel={customFeedbackLabel}
         />
       )}

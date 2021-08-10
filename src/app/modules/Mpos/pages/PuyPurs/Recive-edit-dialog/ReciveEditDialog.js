@@ -1,14 +1,12 @@
 import React, { useEffect, useMemo } from "react";
-import { Card, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../_redux/PuyPurs/PuyPursActions";
-import { PuyPurEditDialogHeader } from "./PuyPurEditDialogHeader";
-import { PuyPurEditForm } from "./PuyPurEditForm";
+import { ReciveEditDialogHeader } from "./ReciveEditDialogHeader";
+import { ReciveEditForm } from "./ReciveEditForm";
 import { usePuyPursUIContext } from "../PuyPursUIContext";
-import { Col } from "react-bootstrap";
-import { Row } from "react-bootstrap";
 
-export function PuyPurEditPage({ id, show, onHide }) {
+export function ReciveEditDialog({ id, show, onHide }) {
   // PuyPurs UI Context
   const PuyPursUIContext = usePuyPursUIContext();
   const PuyPursUIProps = useMemo(() => {
@@ -43,15 +41,20 @@ export function PuyPurEditPage({ id, show, onHide }) {
     }
   };
   return (
-    <div style={{ display: show ? 'block' : 'none' }}>
-      <PuyPurEditForm
+    <Modal
+      size="lg"
+      show={show}
+      onHide={onHide}
+      aria-labelledby="example-modal-sizes-title-lg"
+    >
+      <ReciveEditDialogHeader id={id} />
+      <ReciveEditForm
         savePuyPur={savePuyPur}
         actionsLoading={actionsLoading}
         PuyPur={PuyPurForEdit || PuyPursUIProps.initPuyPur}
         onHide={onHide}
-        id={id}
       />
-    </div>
-   
+    </Modal>
+
   );
 }
