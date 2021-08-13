@@ -14,12 +14,14 @@ export function PuySupEditDialogHeader({ id,onHide }) {
     shallowEqual
   );
 
+  let til = useLang()=='en'?"New supplier":"เพิ่ม ซัพพลายเออร์";
+  let tilE = useLang()=='en'?"Edit supplier":"แก้ไข ซัพพลายเออร์";
   const [title, setTitle] = useState("");
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New PuySup";
+    let _title = id ? "" :til;
     if (PuySupForEdit && id) {
-      _title = `Edit PuySup '${PuySupForEdit.firstName} ${PuySupForEdit.lastName}'`;
+      _title = `${tilE} '${PuySupForEdit.firstName} ${PuySupForEdit.lastName}'`;
     }
 
     setTitle(_title);

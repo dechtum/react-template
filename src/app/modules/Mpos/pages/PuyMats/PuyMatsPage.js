@@ -3,6 +3,9 @@ import { Route } from "react-router-dom";
 import { PuyMatsLoadingDialog } from "./PuyMats-loading-dialog/PuyMatsLoadingDialog";
 import { PuyMatEditDialog } from "./PuyMat-edit-dialog/PuyMatEditDialog";
 import { PuyMatEditPage } from "./PuyMat-edit-page/PuyMatEditDialog";
+import { GroupDialog } from "./group-dialog/GroupDialog";
+import { UnitDialog } from "./unit-dialog/UnitDialog";
+import { ScanDialog } from "./scan-dialog/ScanDialog";
 import { PuyMatDeleteDialog } from "./PuyMat-delete-dialog/PuyMatDeleteDialog";
 import { PuyMatsDeleteDialog } from "./PuyMats-delete-dialog/PuyMatsDeleteDialog";
 import { PuyMatsFetchDialog } from "./PuyMats-fetch-dialog/PuyMatsFetchDialog";
@@ -22,6 +25,15 @@ export function PuyMatsPage({ history }) {
   history.location.pathname.split("/")[3];
 
   const PuyMatsUIEvents = {
+    openScanDialog: (id) => {     
+      history.push(`${pages}/pagenew/scan`);
+    },
+    openUnitDialog: (id) => {     
+      history.push(`${pages}/pagenew/unit`);
+    },
+    openGroupDialog: (id) => {     
+      history.push(`${pages}/pagenew/group`);
+    },
     newShopsPageCreshopButtonClick: () => {
       store.dispatch({type:"pagehistory",value:1})
       history.push(`${pages}/pagenew`);
@@ -55,6 +67,36 @@ export function PuyMatsPage({ history }) {
   return (
     <PuyMatsUIProvider PuyMatsUIEvents={PuyMatsUIEvents}>
       <PuyMatsLoadingDialog />
+      <Route path={`${pages}/pagenew/scan`}>
+        {({ history, match }) => (
+          <ScanDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
+      <Route path={`${pages}/pagenew/unit`}>
+        {({ history, match }) => (
+          <UnitDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
+      <Route path={`${pages}/pagenew/group`}>
+        {({ history, match }) => (
+          <GroupDialog
+            show={match != null}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
       <Route path={`${pages}/pagenew`}>
         {({ history, match }) => (
           <PuyMatEditPage

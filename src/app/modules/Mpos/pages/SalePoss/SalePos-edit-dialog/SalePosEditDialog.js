@@ -46,8 +46,9 @@ export function SalePosEditDialog({ id, show, onHide }) {
       show={show}
       onHide={onHide}
       aria-labelledby="example-modal-sizes-title-lg"
+      centered
     >
-      <SalePosEditDialogHeader id={id} />
+      <SalePosEditDialogHeader id={id}  onHide={onHide}/>
       <SalePosEditForm
         saveSalePos={saveSalePos}
         actionsLoading={actionsLoading}

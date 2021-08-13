@@ -1,0 +1,35 @@
+ul.clasi{
+    padding:0px;
+    list-style: none;
+    overflow-x: scroll;
+    width: 100%;
+    display: inline-flex;    
+}
+ul.clasi li {
+    margin: 0px;    
+    height: 13em;
+    margin: 5px;
+    cursor: pointer;
+    width:200px;
+    min-width: 200px;
+}
+.itme-bast-clasi > div{
+    text-align: center;
+}
+.itme-bast-clasi > div:nth-child(2){
+   
+    height: 9.7em;    
+    text-align: center;
+    width:100%;
+}
+.itme-bast-clasi > div:nth-child(2) > img{    
+    justify-content: center;
+    height:100%;    
+    width:90%;
+}
+.itme-bast-clasi > div:nth-child(3){
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width:100%;
+}

@@ -24,7 +24,7 @@ export function PuySupsCard() {
 
   return (
     <Card>
-      <CardHeader title="PuySups list">
+      <CardHeader title={useLang()=='en'?"Supplier":"ซัพพลายเออร์"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function PuySupsCard() {
 
       </CardHeader>
       <CardBody>
-        <PuySupsFilter  name="New"/>
+        <PuySupsFilter  name= {useLang()=='en'?"New":"เพิ่ม"}/>
         {PuySupsUIProps.ids.length > 0 && <PuySupsGrouping />}
         <PuySupsTable />
       </CardBody>

@@ -10,7 +10,13 @@ import {
   Input,
   Select,
   DatePickerField,
+  AntSwitchs
 } from "../../../../../../_metronic/_partials/controls";
+import {Addon} from './addon'
+import {Itemnumber} from './itemnumber'
+import {Listitemproduct} from './listitemproduct'
+import {Listitemtype} from './listitemtype'
+import {Sweetness} from './sweetness'
 
 // Validation schema
 const SalePosEditSchema = Yup.object().shape({
@@ -57,78 +63,52 @@ export function SalePosEditForm({
                 </div>
               )}
               <Form className="form form-label-right">
+                <div className="form-group row">                 
+                  <div className="col-lg-12">
+                    <div className="ml-auto">
+                      <div>รายการสิ้นค้า</div>
+                      <div><small>รายการที่กำหนดไว้ใน หมวดขาย - รายการสินค้า</small></div>
+                    </div>
+                    <Listitemproduct/>
+                  </div>                  
+                </div>
                 <div className="form-group row">
                   {/* First Name */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="firstName"
-                      component={Input}
-                      placeholder="First Name"
-                      label="First Name"
-                    />
-                  </div>
-                  {/* Last Name */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="lastName"
-                      component={Input}
-                      placeholder="Last Name"
-                      label="Last Name"
-                    />
-                  </div>
-                  {/* Login */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="userName"
-                      component={Input}
-                      placeholder="Login"
-                      label="Login"
-                    />
-                  </div>
+                  <div className="col-lg-12">
+                    <div className="ml-auto">
+                      <div>รูปแบบ</div>
+                      <div><small>รายการที่กำหนดไว้ใน หมวดขาย - รูปแบบ</small></div>
+                    </div>
+                    <Listitemtype/>
+                  </div>                  
                 </div>
-                {/* Email */}
                 <div className="form-group row">
-                  <div className="col-lg-4">
-                    <Field
-                      type="email"
-                      name="email"
-                      component={Input}
-                      placeholder="Email"
-                      label="Email"
-                    />
-                  </div>
-                  {/* Date of birth */}
-                  <div className="col-lg-4">
-                    <DatePickerField
-                      name="dateOfBbirth"
-                      label="Date of Birth"
-                    />
-                  </div>
-                  {/* IP Address */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="ipAddress"
-                      component={Input}
-                      placeholder="IP Address"
-                      label="IP Address"
-                      customFeedbackLabel="We'll never share SalePos IP Address with anyone else"
-                    />
+                  {/* First Name */}
+                  <div className="col-lg-12">
+                    <div className="ml-auto">
+                      <div>จำนวน</div>
+                      <div><small>.</small></div>
+                    </div>
+                    <Itemnumber/>
+                  </div>                  
+                </div>
+                <div className="form-group row">
+                  {/* First Name */}
+                  <div className="col-lg-12">
+                    <div className="ml-auto">
+                      <div>เพิ่ม</div>
+                      <div><small>ความหวาน</small></div>
+                    </div>
+                    <Sweetness />
                   </div>
                 </div>
                 <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-4">
-                    <Select name="Gender" label="Gender">
-                      <option value="Female">Female</option>
-                      <option value="Male">Male</option>
-                    </Select>
-                  </div>
-                  {/* Type */}
-                  <div className="col-lg-4">
-                    <Select name="type" label="Type">
-                      <option value="0">Business</option>
-                      <option value="1">Individual</option>
-                    </Select>
+                  {/* First Name */}
+                  <div className="col-lg-12">
+                    <div className="ml-auto">
+                      <div><small></small></div>
+                    </div>
+                    <Addon />
                   </div>
                 </div>
               </Form>

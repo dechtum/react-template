@@ -13,13 +13,14 @@ export function StockCountEditDialogHeader({ id,onHide }) {
     }),
     shallowEqual
   );
-
+  let til = useLang()=='en'?"Material":"วัตถุดิบ";
+  let tilE = useLang()=='en'?"Material":"วัตถุดิบ";
   const [title, setTitle] = useState("");
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New StockCount";
+    let _title = id ? "" : til;
     if (StockCountForEdit && id) {
-      _title = `Edit StockCount '${StockCountForEdit.firstName} ${StockCountForEdit.lastName}'`;
+      _title = `${tilE} '${StockCountForEdit.firstName} ${StockCountForEdit.lastName}'`;
     }
 
     setTitle(_title);

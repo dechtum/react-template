@@ -1,0 +1,35 @@
+ul.pos{
+    padding:0px;
+    list-style: none;
+    overflow-x: scroll;
+    width: 100%;
+    display: inline-flex;    
+}
+ul.pos li {
+    margin: 0px;    
+    height: 10em;
+    margin: 5px;
+    cursor: pointer;
+    width:150px;
+    min-width: 150px;
+}
+.itme-bast-sale > div{
+    text-align: center;
+}
+.itme-bast-sale > div:nth-child(2){
+   
+    height: 6.7em;    
+    text-align: center;
+    width:100%;
+}
+.itme-bast-sale > div:nth-child(2) > img{    
+    justify-content: center;
+    height:100%;    
+    width:90%;
+}
+.itme-bast-sale > div:nth-child(3){
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width:100%;
+}

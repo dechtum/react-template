@@ -2,18 +2,24 @@
 // Data validation is based on Yup
 // Please, be familiar with article first:
 // https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
-import React from "react";
+import React ,{ useMemo } from "react";
 import { Card, Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { PuyMatEditDialogHeader } from "./PuyMatEditDialogHeader";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import { usePuyMatsUIContext } from "./../PuyMatsUIContext";
 
 
 import {
   Input,
   Select,
   Switch,
+  Upload,
+  SITMore,
   DatePickerField,
+  Scaner,
+  Textarea,
 } from "../../../../../../_metronic/_partials/controls";
 
 // Validation schema
@@ -43,12 +49,39 @@ export function PuyMatEditForm({
   onHide,
   id,
 }) {
+  const usePuyMatsUIContexts = usePuyMatsUIContext();
+  const usePuyMatsUIProps = useMemo(() => {
+    return {
+      ids: usePuyMatsUIContexts.ids,
+      openGroupDialog: usePuyMatsUIContexts.openGroupDialog,
+      openUnitDialog: usePuyMatsUIContexts.openUnitDialog,
+      openScanDialog: usePuyMatsUIContexts.openScanDialog,
+    };
+  }, [usePuyMatsUIContexts]);
+  const [tempfile,setTempfiel] = React.useState('');
+  const [lang,setLang] = React.useState(useLang());
   const [state, setState] = React.useState({
     active: false
   })
   const handleChange = (e, name) => {
     console.log(e.target.checked);
     setState({ ...state, [name]: e.target.checked });
+  }
+  function handleClick(e){
+    console.log(e.target.name);
+    switch (e.target.name) {
+      case 'group':
+        usePuyMatsUIProps.openGroupDialog(e.target.name);
+        break;
+      case 'unit':
+        usePuyMatsUIProps.openUnitDialog(e.target.name);
+        break;
+      case 'scaner':
+        usePuyMatsUIProps.openScanDialog(e.target.name);
+        break;
+      default:
+        break;
+    }
   }
   return (
     <>
@@ -69,88 +102,93 @@ export function PuyMatEditForm({
                 </div>
               )}
               <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
+                <Card className="col-md-4 pt-3 pb-3" style={{ height: "38vh" }}>   
+                  <Field
+                        name="pic"
+                        component={Upload}
+                        tempfile={setTempfiel}
+                      />  
                 </Card>
                 <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
                   <PuyMatEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
-                    {/* First Name */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="firstName"
-                        component={Input}
-                        placeholder="First Name"
-                        label="First Name"
-                      />
-                    </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
+                  <div  className=" row pt-3">
+                      <div className="col-lg-12">
+                        <div className="d-flex justify-content-end">
+                            <div className="form-group">
+                              <div className="text-right">
+                                <a className="text-primary" >ค้นหาจากรหัสสินค้า</a>
+                              </div>
+                            </div>
+                            <>  </>
+                            <div className="form-group">
+                              <div className="text-right">
+                                <a className="text-primary" name="scaner" onClick={handleClick}>แสกนคิวอาร์โค้ด</a>
+                              </div>
+                              <div className="text-right"><small>กรณีสังจากมิสเตอร์คอฟฟี</small></div>                              
+                            </div>             
+                        </div>                                  
+                      </div>   
+                  </div>
+                  <div className=" row">                    
+                    <div className="col-lg-6">                     
                       <Field
                         name="lastName"
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
+                        placeholder="รหัสสินค้า"
+                        label="รหัสสินค้า"
+                        sublabel=""
                       />
+                     
+                      
                     </div>
                     {/* Login */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
+                    <SITMore name="group"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/> 
                       <Field
                         name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
+                        component={Select}
+                        placeholder="กลุ่มสินค้า"
+                        label="กลุ่มสินค้า"
+                        sublabel="เลือกกลุ่มสินค้า"
                       />
                     </div>
                   </div>
-                  {/* Email */}
-                  <div className="form-group row">
-                    <div className="col-lg-4">
+                  <div className=" row">                    
+                    <div className="col-lg-6">
+                          
                       <Field
-                        type="email"
-                        name="email"
+                        name="lastName"
                         component={Input}
-                        placeholder="Email"
-                        label="Email"
-                      />
+                        placeholder="กรอกชือสินค้า"
+                        label="วัตถุดิบ"
+                        sublabel=""
+                      />                     
+                      
                     </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
+                    {/* Login */}
+                    <div className="col-lg-6">
+                      <SITMore name="unit"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/>  
                       <Field
-                        name="ipAddress"
-                        component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share PuyMat IP Address with anyone else"
+                        name="userName"
+                        component={Select}
+                        placeholder="หน่วย"
+                        label="หน่วย"
+                        sublabel="เลือกหน่วย"
                       />
                     </div>
                   </div>
                   <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
+                    <div className="col-lg-12">
+                    <Field
+                          name="lastName"
+                          component={Textarea}
+                          placeholder="รายละเอียด"
+                          label="รายละเอียด"
+                          sublabel=""
+                        />
                     </div>
                   </div>
                 </Card>
-
-
               </Form>
             </Modal.Body>
             <Modal.Footer className=" col-12  pl-3 pr-3" >
@@ -167,7 +205,7 @@ export function PuyMatEditForm({
                     onClick={onHide}
                     className="btn btn-light btn-elevate"
                   >
-                    Cancel
+                   {lang=='en'?'Cancel':'ยกเลิก'} 
                   </button>
                   <> </>
                   <button
@@ -175,7 +213,7 @@ export function PuyMatEditForm({
                     onClick={() => handleSubmit()}
                     className="btn btn-primary btn-elevate"
                   >
-                    Save
+                    {lang=='en'?'Save':'บันทึก'} 
                   </button>
                 </div>
               </div>

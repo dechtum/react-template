@@ -24,7 +24,7 @@ export function StockMatsCard() {
 
   return (
     <Card>
-      <CardHeader title="StockMats list">
+      <CardHeader title={useLang()=='en'?"Material Stock":"สต๊อกวัตถุดิบ"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function StockMatsCard() {
 
       </CardHeader>
       <CardBody>
-        <StockMatsFilter  name="New"/>
+        <StockMatsFilter  name={useLang()=='en'?"Export to excel":"ส่งออกเป็น excel"}/>
         {StockMatsUIProps.ids.length > 0 && <StockMatsGrouping />}
         <StockMatsTable />
       </CardBody>

@@ -15,12 +15,13 @@ export function SalePosEditDialogHeader({ id,onHide }) {
   );
 
   const [title, setTitle] = useState("");
+  const [lang, setLang] = useState(useLang());
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New SalePos";
-    if (SalePosForEdit && id) {
-      _title = `Edit SalePos '${SalePosForEdit.firstName} ${SalePosForEdit.lastName}'`;
-    }
+    let _title = lang=='en'?'Sale items' : "รายการสิ้นค้า";
+    // if (SalePosForEdit && id) {
+    //   _title = `Edit SalePos '${SalePosForEdit.firstName} ${SalePosForEdit.lastName}'`;
+    // }
 
     setTitle(_title);
     // eslint-disable-next-line

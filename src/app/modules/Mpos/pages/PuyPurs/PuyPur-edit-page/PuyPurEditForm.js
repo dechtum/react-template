@@ -7,9 +7,9 @@ import { Card, Modal, Tab, Tabs } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { PuyPurEditDialogHeader } from "./PuyPurEditDialogHeader";
-import { Tab1,Tab2,Tab3 } from "./tab/index";
+import { Tab1, Tab2, Tab3 } from "./tab/index";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
-import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
+import { ModalProgressBar } from "../../../../../../_metronic/_partials/controls";
 
 import {
   Input,
@@ -47,12 +47,12 @@ export function PuyPurEditForm({
   onHide,
   id,
 }) {
-  let btnOk = useLang() == 'en'?'Save':'บันทึก';
-  let btnCancel = useLang() == 'en'?'Cancel':'ยกเลิก';
-  let tab1 = useLang() == 'en'?'Purchase Order':'ใบสั่งซื้อ';
-  let tab2 = useLang() == 'en'?'Receipt':'ใบรับสินค้า';
-  let tab3 = useLang() == 'en'?'Payment':'ใบสำคัญจ่าย';
-  const [tempfile,setTempfiel] = React.useState('');
+  let btnOk = useLang() == 'en' ? 'Save' : 'บันทึก';
+  let btnCancel = useLang() == 'en' ? 'Cancel' : 'ยกเลิก';
+  let tab1 = useLang() == 'en' ? 'Purchase Order' : 'ใบสั่งซื้อ';
+  let tab2 = useLang() == 'en' ? 'Receipt' : 'ใบรับสินค้า';
+  let tab3 = useLang() == 'en' ? 'Payment' : 'ใบสำคัญจ่าย';
+  const [tempfile, setTempfiel] = React.useState('');
   const [state, setState] = React.useState({
     active: false
   })
@@ -71,58 +71,68 @@ export function PuyPurEditForm({
         }}
       >
         {({ handleSubmit }) => (
-          <div className="row">
-            <Modal.Body className="overlay overlay-block cursor-default pt-0">
+          <div className=" row">
+            <Modal.Body className="overlay overlay-block cursor-default pt-0 col-12">
               {actionsLoading && (
                 <div className="overlay-layer bg-transparent">
                   <div className="spinner spinner-lg spinner-success" />
                 </div>
               )}
-              <Form className="form form-label-right">  
+              <Form className="form form-label-right ">
                 <Tabs>
-                    <Tab eventKey="Tab1" title={tab1} >
-                      <PuyPurEditDialogHeader lbl={tab1}  id={id} onHide={onHide} />
-                      <Tab1 id={id} onHide={onHide} />
-                      
-                    </Tab>
-                    <Tab eventKey="Tab2" title={tab2}>
+                  <Tab eventKey="Tab1" title={tab1} >
+                    <Card className="col-md-12" aria-labelledby="example-modal-sizes-title-lg">
+                      <PuyPurEditDialogHeader lbl={tab1} id={id} onHide={onHide} />
+                      <div className="form-group row">
+                        <Tab1 id={id} onHide={onHide} />
+                      </div>
+                    </Card>
+                  </Tab>
+                  <Tab eventKey="Tab2" title={tab2}>
+                    <Card className="col-md-12" aria-labelledby="example-modal-sizes-title-lg">
                       <PuyPurEditDialogHeader lbl={tab2} id={id} onHide={onHide} />
-                      <Tab2 id={id} onHide={onHide} />
-                    </Tab>
-                    <Tab eventKey="Tab3" title={tab3}>
+                      <div className="form-group row">
+                        <Tab2 id={id} onHide={onHide} />
+                      </div>
+                    </Card>
+                  </Tab>
+                  <Tab eventKey="Tab3" title={tab3}>
+                    <Card className="col-md-12" aria-labelledby="example-modal-sizes-title-lg">
                       <PuyPurEditDialogHeader lbl={tab3} id={id} onHide={onHide} />
-                     
-                    </Tab>
-                  </Tabs>         
-                 
+                      <div className="form-group row">
+                        <Tab3 id={id} onHide={onHide} />
+                      </div>
+                    </Card>
+                  </Tab>
+                </Tabs>
               </Form>
             </Modal.Body>
-            <Modal.Footer className=" col-12  pl-3 pr-3" >
-              <Card style={{width:'100%'}} className="p-3">
-              <div className="d-flex" style={{width:'100%'}}>
-                <div
-                  className="mr-auto "
-                >
-                  <Switch onChange={(e) => handleChange(e, 'active')} checked={state.active} />
-                </div>
-                <div className="ml-auto" >
-                  <button
-                    type="button"
-                    onClick={onHide}
-                    className="btn btn-light btn-elevate"
+            <Modal.Footer className=" col-12 pt-0" >
+              <Card style={{ width: '100%' }} className="p-3 ">
+                <div className="d-flex" style={{ width: '100%' }}>
+                  <div
+                    className="mr-auto "
                   >
-                    {btnCancel}
-                  </button>
-                  <> </>
-                  <button
-                    type="submit"
-                    onClick={() => handleSubmit()}
-                    className="btn btn-primary btn-elevate"
-                  >
-                    {btnOk}
-                  </button>
+                    <Switch onChange={(e) => handleChange(e, 'active')} checked={state.active} />
+                  </div>
+                  <div className="ml-auto" >
+                    <button
+                      type="button"
+                      onClick={onHide}
+                      className="btn btn-light btn-elevate"
+                    >
+                      {btnCancel}
+                    </button>
+                    <> </>
+                    <button
+                      type="submit"
+                      onClick={() => handleSubmit()}
+                      className="btn btn-primary btn-elevate"
+                    >
+                      {btnOk}
+                    </button>
+                  </div>
                 </div>
-              </div>
               </Card>
 
             </Modal.Footer>

@@ -24,7 +24,7 @@ export function PuyMatsCard() {
 
   return (
     <Card>
-      <CardHeader title="PuyMats list">
+      <CardHeader title={useLang()=='en'?"Material":"วัตถุดิบ"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
             {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function PuyMatsCard() {
 
       </CardHeader>
       <CardBody>
-        <PuyMatsFilter  name="New"/>
+        <PuyMatsFilter  name={useLang()=='en'?"New":"เพิ่ม"}/>
         {PuyMatsUIProps.ids.length > 0 && <PuyMatsGrouping />}
         <PuyMatsTable />
       </CardBody>

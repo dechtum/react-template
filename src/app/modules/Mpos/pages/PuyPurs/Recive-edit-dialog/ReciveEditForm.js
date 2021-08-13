@@ -12,6 +12,7 @@ import {
   DatePickerField,
 } from "../../../../../../_metronic/_partials/controls";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {ReciveTables} from './table/ReciveTables'
 
 // Validation schema
 const PuyPurEditSchema = Yup.object().shape({
@@ -61,26 +62,8 @@ export function ReciveEditForm({
               )}
               <Form className="form form-label-right">  
                 <div className="form-group row">
-                 <div className="col-lg-2">
-                    
-                  </div>
-                  {/* First Name */}
-                  <div className="col-lg-4">
-                    <span>สินค้า</span>
-                  </div>
-                  {/* Last Name */}
-                  <div className="col-lg-4">
-                    <span>สินค้า</span>
-                  </div>
-                  {/* Login */}
-                  <div className="col-lg-2">
-                    <Field
-                      name="userName"
-                      component={Input}
-                      placeholder="จำนวน"
-                      label="จำนวน"
-                    />
-                  </div>
+                  <ReciveTables/>
+                 
                 </div>                
               </Form>
             </Modal.Body>

@@ -2,7 +2,7 @@ import { Card, Modal, Container, Row, Col, Table } from 'react-bootstrap'
 import React from 'react'
 import { Formik, Form, Field } from "formik";
 import { useLang, setLanguage } from "./../../../../../../../_metronic/i18n";
-import {Tables} from './tab1/tables'
+import { Tables } from './tab1/tables'
 
 import {
     Input,
@@ -20,7 +20,7 @@ import {
 export function Tab1() {
     return (
         <>
-            <Container className="pt-3 pb-3" >
+            <div className="col-md-12 pt-3 pb-3" >
                 <div className="row">
                     <div className="col-md-4">
                         <Field
@@ -107,13 +107,16 @@ export function Tab1() {
                         />
                     </div>
                 </div>
-            </Container>
+            </div>
 
             <div className="d-flex flex-column-fluid" style={{ height: "10px", width: "100%", background: '#EEF0F8' }}></div>
-            <Modal.Header>
-                <Modal.Title>ข้อมูลซัพพลายเออร์</Modal.Title>
-            </Modal.Header>
-            <Container className="pt-3 pb-3" >
+            <div className="col-12">
+                <Modal.Header>
+                    <Modal.Title>ข้อมูลซัพพลายเออร์</Modal.Title>
+                </Modal.Header>
+            </div>
+
+            <div className="col-md-12 pt-3 pb-3" >
                 <div className="row">
                     <div className="col-md-6">
                         <SITMore name="emtitle" label={useLang() == 'en' ? 'more' : 'เพิ่มเติม'} />
@@ -155,15 +158,18 @@ export function Tab1() {
                         />
                     </div>
                 </div>
-            </Container>
+            </div>
 
             <div className="d-flex flex-column-fluid" style={{ height: "10px", width: "100%", background: '#EEF0F8' }}></div>
-            <Modal.Header>
-                <Modal.Title>รายการ</Modal.Title>
-            </Modal.Header>
-            <Container className="pt-3 pb-3" >
-                <Tables itemRow={[]}/>
-            </Container>
+            <div className="col-12">
+                <Modal.Header>
+                    <Modal.Title>รายการ</Modal.Title>
+                </Modal.Header>
+            </div>
+
+            <div className="col-md-12 pt-3 pb-3" >
+                <Tables itemRow={[]} />
+            </div>
 
 
         </>

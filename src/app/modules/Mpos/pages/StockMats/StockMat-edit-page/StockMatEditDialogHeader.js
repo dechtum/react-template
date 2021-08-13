@@ -13,13 +13,14 @@ export function StockMatEditDialogHeader({ id,onHide }) {
     }),
     shallowEqual
   );
-
+  let til = useLang()=='en'?"Material":"วัตถุดิบ";
+  let tilE = useLang()=='en'?"Material":"วัตถุดิบ";
   const [title, setTitle] = useState("");
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New StockMat";
+    let _title = id ? "" :til;
     if (StockMatForEdit && id) {
-      _title = `Edit StockMat '${StockMatForEdit.firstName} ${StockMatForEdit.lastName}'`;
+      _title = `${tilE} '${StockMatForEdit.firstName} ${StockMatForEdit.lastName}'`;
     }
 
     setTitle(_title);

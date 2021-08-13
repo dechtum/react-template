@@ -24,7 +24,7 @@ export function StockCountsCard() {
 
   return (
     <Card>
-      <CardHeader title="StockCounts list">
+      <CardHeader title={useLang()=='en'?"Stock Count":"นับสต๊อก"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function StockCountsCard() {
 
       </CardHeader>
       <CardBody>
-        <StockCountsFilter  name="New"/>
+        <StockCountsFilter nameEx={useLang()=='en'?"Export To Excel":"ส่งออกเป็น excel"}  name={useLang()=='en'?"Stock Count":"สร้างรายนับสต๊อก"}/>
         {StockCountsUIProps.ids.length > 0 && <StockCountsGrouping />}
         <StockCountsTable />
       </CardBody>

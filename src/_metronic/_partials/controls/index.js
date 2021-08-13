@@ -21,6 +21,13 @@ export {Checkbox} from "./forms/Checkbox";
 export {HeaderCheckbox} from "./forms/HeaderCheckbox";
 export {AutoComplete} from "./forms/AutoComplete";
 export {Upload} from "./forms/sit-upload";
+export {AntSwitchs} from "./forms/AntSwitchs";
+
+
+// Scaner
+export {Scaner} from "./scaner/Scaner";
+export {Baccode} from "./scaner/Barcode";
+
 
 
 // Paginations

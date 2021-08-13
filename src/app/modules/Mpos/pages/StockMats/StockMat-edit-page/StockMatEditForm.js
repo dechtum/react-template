@@ -7,13 +7,17 @@ import { Card, Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { StockMatEditDialogHeader } from "./StockMatEditDialogHeader";
-
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 import {
   Input,
   Select,
   Switch,
+  Upload,
+  SITMore,
   DatePickerField,
+  Scaner,
+  Textarea,
 } from "../../../../../../_metronic/_partials/controls";
 
 // Validation schema
@@ -43,12 +47,30 @@ export function StockMatEditForm({
   onHide,
   id,
 }) {
+  const [tempfile,setTempfiel] = React.useState('');
+  const [lang,setLang] = React.useState(useLang());
   const [state, setState] = React.useState({
     active: false
   })
   const handleChange = (e, name) => {
     console.log(e.target.checked);
     setState({ ...state, [name]: e.target.checked });
+  }
+  function handleClick(e){
+    console.log(e.target.name);
+    switch (e.target.name) {
+      case 'group':
+        
+        break;
+      case 'unit':
+       
+        break;
+      case 'scaner':
+      
+        break;
+      default:
+        break;
+    }
   }
   return (
     <>
@@ -69,83 +91,78 @@ export function StockMatEditForm({
                 </div>
               )}
               <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
+                <Card className="col-md-4 pt-3 pb-3" style={{ height: "38vh" }}>   
+                  <Field
+                        name="pic"
+                        component={Upload}
+                        tempfile={setTempfiel}
+                      />  
                 </Card>
                 <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
                   <StockMatEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
-                    {/* First Name */}
-                    <div className="col-lg-4">
+                  
+                  <div className=" row">                    
+                    <div className="col-lg-6">                     
                       <Field
-                        name="firstName"
-                        component={Input}
-                        placeholder="First Name"
-                        label="First Name"
-                      />
-                    </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
-                      <Field
+                       readOnly={true}
                         name="lastName"
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
+                        placeholder="รหัสสินค้า"
+                        label="รหัสสินค้า"
+                        sublabel=""
                       />
+                     
+                      
                     </div>
                     {/* Login */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
+                   
                       <Field
+                        readOnly={true}
                         name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
+                        component={Select}
+                        placeholder="กลุ่มสินค้า"
+                        label="กลุ่มสินค้า"
+                        sublabel="เลือกกลุ่มสินค้า"
                       />
                     </div>
                   </div>
-                  {/* Email */}
-                  <div className="form-group row">
-                    <div className="col-lg-4">
+                  <div className=" row">                    
+                    <div className="col-lg-6">
+                          
                       <Field
-                        type="email"
-                        name="email"
+                        readOnly={true}
+                        name="lastName"
                         component={Input}
-                        placeholder="Email"
-                        label="Email"
-                      />
+                        placeholder="กรอกชือสินค้า"
+                        label="วัตถุดิบ"
+                        sublabel=""
+                      />                     
+                      
                     </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
+                    {/* Login */}
+                    <div className="col-lg-6">
+                      
                       <Field
-                        name="ipAddress"
-                        component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share StockMat IP Address with anyone else"
+                        readOnly={true}
+                        name="userName"
+                        component={Select}
+                        placeholder="หน่วย"
+                        label="หน่วย"
+                        sublabel="เลือกหน่วย"
                       />
                     </div>
                   </div>
                   <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
+                    <div className="col-lg-12">
+                    <Field
+                      readOnly={true}
+                          name="lastName"
+                          component={Textarea}
+                          placeholder="รายละเอียด"
+                          label="รายละเอียด"
+                          sublabel=""
+                        />
                     </div>
                   </div>
                 </Card>

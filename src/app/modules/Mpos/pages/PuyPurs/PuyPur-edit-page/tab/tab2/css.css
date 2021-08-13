@@ -2,6 +2,7 @@
     overflow-x: scroll;
 }
 .sit-list{
+    width: 100%;
     list-style: none;
     padding-left: 0px;
 }

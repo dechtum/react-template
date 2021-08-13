@@ -22,7 +22,7 @@ const prepareFilter = (queryParams, values) => {
   return newQueryParams;
 };
 
-export function StockCountsFilter({ listLoading,name}) {
+export function StockCountsFilter({ listLoading,name,nameEx}) {
   // StockCounts UI Context
   const StockCountsUIContext = useStockCountsUIContext();
   const StockCountsUIProps = useMemo(() => {
@@ -124,8 +124,15 @@ export function StockCountsFilter({ listLoading,name}) {
 
                 </small>
               </div>
-              <div className="col-lg-6" >
+              <div className="col-lg-6" >               
                 <div className="float-sm-right">
+                  <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={()=>alert()}
+                      >{nameEx}
+                  </button>
+                  <> </>
                   <button
                       type="button"
                       className="btn btn-primary"

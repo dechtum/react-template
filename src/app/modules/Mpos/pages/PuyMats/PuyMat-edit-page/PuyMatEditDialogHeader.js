@@ -14,12 +14,14 @@ export function PuyMatEditDialogHeader({ id,onHide }) {
     shallowEqual
   );
 
+  let til = useLang()=='en'?"New Material":"เพิ่ม วัตถุดิบ";
+  let tilE = useLang()=='en'?"Edit Material":"แก้ไข วัตถุดิบ";
   const [title, setTitle] = useState("");
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New PuyMat";
+    let _title = id ? "" :til;
     if (PuyMatForEdit && id) {
-      _title = `Edit PuyMat '${PuyMatForEdit.firstName} ${PuyMatForEdit.lastName}'`;
+      _title = `${tilE} '${PuyMatForEdit.firstName}'`;
     }
 
     setTitle(_title);
