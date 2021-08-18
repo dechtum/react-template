@@ -24,7 +24,7 @@ export function ServiceAlsCard() {
 
   return (
     <Card>
-      <CardHeader title="ServiceAls list">
+      <CardHeader title={useLang()=='en'?"Report a problem":"แจังปัญหา"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function ServiceAlsCard() {
 
       </CardHeader>
       <CardBody>
-        <ServiceAlsFilter  name="New"/>
+        {/* <ServiceAlsFilter  name="New"/> */}
         {ServiceAlsUIProps.ids.length > 0 && <ServiceAlsGrouping />}
         <ServiceAlsTable />
       </CardBody>

@@ -31,7 +31,7 @@ export function HeaderMenu({ layoutProps }) {
             </li>
             {/*end::1 Level*/}
             <li className={`menu-item`}>
-                <span className="menu-text">{window.localStorage.getItem('News')}</span>
+                <span className="menu-text">{lang=="th"?window.localStorage.getItem('NEWTH'):window.localStorage.getItem('NEWEN')}</span>
             </li>
         </ul>
         {/*end::Header Nav*/}

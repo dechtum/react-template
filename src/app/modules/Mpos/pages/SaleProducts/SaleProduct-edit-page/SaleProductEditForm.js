@@ -2,18 +2,26 @@
 // Data validation is based on Yup
 // Please, be familiar with article first:
 // https://hackernoon.com/react-form-validation-with-formik-and-yup-8b76bda62e10
-import React from "react";
+import React,{useMemo} from "react";
 import { Card, Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { SaleProductEditDialogHeader } from "./SaleProductEditDialogHeader";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import { useSaleProductsUIContext } from "../SaleProductsUIContext";
+import {Mat} from './mat'
+import {AddOn} from './addOn'
 
 
 import {
   Input,
   Select,
   Switch,
+  Upload,
+  SITMore,
   DatePickerField,
+  Scaner,
+  Textarea,
 } from "../../../../../../_metronic/_partials/controls";
 
 // Validation schema
@@ -43,6 +51,20 @@ export function SaleProductEditForm({
   onHide,
   id,
 }) {
+   // SaleProducts UI Context
+   const SaleProductsUIContext = useSaleProductsUIContext();
+   const SaleProductsUIProps = useMemo(() => {
+     return {
+       ids: SaleProductsUIContext.ids,
+       setIds: SaleProductsUIContext.setIds,
+       queryParams: SaleProductsUIContext.queryParams,
+       setQueryParams: SaleProductsUIContext.setQueryParams,
+       openEditSaleProductDialog: SaleProductsUIContext.openEditSaleProductDialog,
+       openUnitSaleProductDialog: SaleProductsUIContext.openUnitSaleProductDialog,
+     };
+   }, [SaleProductsUIContext]);
+  const [tempfile,setTempfiel] = React.useState('');
+  const [lang,setLang] = React.useState(useLang());
   const [state, setState] = React.useState({
     active: false
   })
@@ -50,6 +72,65 @@ export function SaleProductEditForm({
     console.log(e.target.checked);
     setState({ ...state, [name]: e.target.checked });
   }
+  function handleClick(e){
+    console.log(e.target.name);
+    switch (e.target.name) {
+      case 'group':
+        SaleProductsUIProps.openEditSaleProductDialog(e.target.name);
+        break;
+      case 'unit':
+        SaleProductsUIProps.openUnitSaleProductDialog(e.target.name)
+        break;
+      default:
+        break;
+    }
+  }
+  let Detail = [
+    {
+        'id': 1, 'title': 'ร้อน', 'items': [
+            { 'id': 1, 'name': '1', 'number': '20', 'unit': 'ชิ้น' },
+            { 'id': 2, 'name': '1', 'number': '20', 'unit': 'ใบ' },
+            { 'id': 3, 'name': '1', 'number': '20', 'unit': 'กรัม' },
+        ]
+    },
+    {
+        'id': 2, 'title': 'เย็น', 'items': [
+            { 'id': 1, 'name': '1', 'number': '20', 'unit': '3' },
+            { 'id': 2, 'name': '1', 'number': '20', 'unit': '3' },
+            { 'id': 3, 'name': '1', 'number': '20', 'unit': '3' },
+        ]
+    },
+    {
+        'id': 3, 'title': 'ปั่น', 'items': [
+            { 'id': 1, 'name': '1', 'number': '20', 'unit': '3' },
+            { 'id': 2, 'name': '1', 'number': '20', 'unit': '3' },
+            { 'id': 3, 'name': '1', 'number': '20', 'unit': '3' },
+        ]
+    },
+]
+let Detail1 = [
+  {
+      'id': 1, 'title': 'หยานน้อย', 'items': [
+          { 'id': 1, 'name': '1', 'number': '50', 'unit': '' },
+          { 'id': 2, 'name': '1', 'number': '50', 'unit': '' },
+          { 'id': 3, 'name': '1', 'number': '50', 'unit': '' },
+      ]
+  },
+  {
+      'id': 2, 'title': 'หวานปกติ', 'items': [
+          { 'id': 1, 'name': '1', 'number': '100', 'unit': '' },
+          { 'id': 2, 'name': '1', 'number': '100', 'unit': '' },
+          { 'id': 3, 'name': '1', 'number': '100', 'unit': '' },
+      ]
+  },
+  {
+      'id': 3, 'title': 'หวานมาก', 'items': [
+          { 'id': 1, 'name': '1', 'number': '150', 'unit': '' },
+          { 'id': 2, 'name': '1', 'number': '150', 'unit': '' },
+          { 'id': 3, 'name': '1', 'number': '150', 'unit': '' },
+      ]
+  }
+]
   return (
     <>
       <Formik
@@ -69,88 +150,85 @@ export function SaleProductEditForm({
                 </div>
               )}
               <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
+                <Card className="col-md-4 pt-3 pb-3" style={{ height: "43vh" }}>   
+                  <Field
+                        name="pic"
+                        component={Upload}
+                        tempfile={setTempfiel}
+                      />  
                 </Card>
                 <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
                   <SaleProductEditDialogHeader id={id} onHide={onHide} />
                   <div className="form-group row">
                     {/* First Name */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <Field
                         name="firstName"
                         component={Input}
-                        placeholder="First Name"
-                        label="First Name"
+                        placeholder="ตั้งชื่อสินค้าที่ต้องการ  (Auto Complete)"
+                        label="ชื่อสินค้า"
                       />
-                    </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
+                    </div>  
+                    <div className="col-lg-6">
                       <Field
-                        name="lastName"
+                        name="firstName"
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
+                        placeholder="ราคาขาย"
+                        label="ราคา"
                       />
-                    </div>
-                    {/* Login */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
-                      />
-                    </div>
-                  </div>
-                  {/* Email */}
+                    </div>                   
+                  </div>    
                   <div className="form-group row">
-                    <div className="col-lg-4">
+                    {/* First Name */}
+                    <div className="col-lg-6">
+                    <SITMore name="group"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/> 
                       <Field
-                        type="email"
-                        name="email"
-                        component={Input}
-                        placeholder="Email"
-                        label="Email"
+                        name="firstName"
+                        component={Select}
+                        placeholder="เลือกกลุ่มสินค้า"
+                        label="กลุ่ม"
+                        sublabel="กลุ่มสินค้า"
                       />
-                    </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
+                    </div>  
+                    <div className="col-lg-6">
+                    <SITMore name="unit"  label={lang=='en'?'more':'เพิ่มเติม'} onClick={handleClick}/> 
                       <Field
-                        name="ipAddress"
-                        component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share SaleProduct IP Address with anyone else"
+                        name="firstName"
+                        component={Select}
+                        placeholder="เลือกหน่วยนับ"
+                        label="หน่วย"
+                        sublabel="หน่วยนับสินค้า"
                       />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
-                    </div>
-                  </div>
+                    </div> 
+                    <div className="col-lg-12">
+                      <Field
+                        name="firstName"
+                        component={Textarea}
+                        placeholder="รายละเอียด"
+                        label="รายละเอียด"
+                        sublabel=""
+                      />
+                    </div>                  
+                  </div>   
+                         
                 </Card>
-
-
+               
+                <div  className="col-md-12 mt-1 card">
+                  <Card.Header>
+                   <h3>วัตถุดิบ</h3>
+                  </Card.Header>
+                  <div className="row">
+                    <Mat Detail={JSON.stringify(Detail)}/>
+                  </div> 
+                </div>
+                <div  className="col-md-12 mt-1 card">
+                  <Card.Header>
+                  <h3>เพิ่ม-ลด ส่วนผสม</h3>
+                  </Card.Header>
+                  <div className="row">
+                    <AddOn Detail={JSON.stringify(Detail1)}/>
+                  </div> 
+                </div>
               </Form>
             </Modal.Body>
             <Modal.Footer className=" col-12  pl-3 pr-3" >

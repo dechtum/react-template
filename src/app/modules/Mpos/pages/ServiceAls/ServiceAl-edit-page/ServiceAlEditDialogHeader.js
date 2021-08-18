@@ -15,11 +15,11 @@ export function ServiceAlEditDialogHeader({ id,onHide }) {
   );
 
   const [title, setTitle] = useState("");
+  let _title = useLang()=='en'?'Report a problem':'แจังปัญหา';
   // Title couting
-  useEffect(() => {
-    let _title = id ? "" : "New ServiceAl";
+  useEffect(() => {    
     if (ServiceAlForEdit && id) {
-      _title = `Edit ServiceAl '${ServiceAlForEdit.firstName} ${ServiceAlForEdit.lastName}'`;
+      _title = `ServiceAl '${ServiceAlForEdit.firstName} ${ServiceAlForEdit.lastName}'`;
     }
 
     setTitle(_title);

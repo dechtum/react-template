@@ -1,0 +1,70 @@
+ul.pos{
+    padding:0px;
+    list-style: none;
+    overflow-x: scroll;
+    width: 100%;
+    display: inline-flex;    
+}
+ul.pos li {
+    margin: 0px;    
+    height: 10em;
+    margin: 5px;
+    cursor: pointer;
+    width:150px;
+    min-width: 150px;
+}
+.itme-bast-sale > div{
+    text-align: center;
+}
+.itme-bast-sale > div:nth-child(2){
+   
+    height: 6.7em;    
+    text-align: center;
+    width:100%;
+}
+.itme-bast-sale > div:nth-child(2) > img{    
+    justify-content: center;
+    height:100%;    
+    width:90%;
+}
+.itme-bast-sale > div:nth-child(3){
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width:100%;
+}
+.b-line{
+    cursor: pointer;
+    outline-style: none;  
+    border: none;
+    width: 10em;
+    border-bottom: 1px solid rgba(0, 0, 255, 0.3);
+}
+.b-line:hover{
+    border-bottom: 1px solid rgba(0, 0, 255, 1);
+}
+.b-line-none{
+    margin: 0px;
+    pointer-events: none;
+    cursor: pointer;
+    outline-style: none;
+    /* border:none; */
+    width: 5em;
+    text-align: center;
+}
+.btn-del{
+    float: right;
+    z-index: 9999;
+    color: gray;
+    size: 1pt;
+    position: absolute;
+    top: -15px;
+    right: -20px;
+}
+.btn-del:hover{
+    color: red;
+    z-index: 9999;
+}
+.pane-tab{
+    position: relative;
+}

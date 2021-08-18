@@ -68,7 +68,7 @@ export function SalePossCard() {
             <> </>
             <button
               type="submit"
-              onClick={() => alert()}
+              onClick={() => SalePossUIProps.newSalePosButtonClick()}
               className="btn btn-primary btn-elevate"
             >
               สร้างการขาย

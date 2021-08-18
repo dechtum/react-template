@@ -5,8 +5,6 @@ import * as actions from "../../../_redux/ServiceAls/ServiceAlsActions";
 import { ServiceAlEditDialogHeader } from "./ServiceAlEditDialogHeader";
 import { ServiceAlEditForm } from "./ServiceAlEditForm";
 import { useServiceAlsUIContext } from "../ServiceAlsUIContext";
-import { Col } from "react-bootstrap";
-import { Row } from "react-bootstrap";
 
 export function ServiceAlEditPage({ id, show, onHide }) {
   // ServiceAls UI Context
@@ -43,8 +41,7 @@ export function ServiceAlEditPage({ id, show, onHide }) {
     }
   };
   return (
-    <div style={{ display: show ? 'block' : 'none' }}>
-
+    <>
       <ServiceAlEditForm
         saveServiceAl={saveServiceAl}
         actionsLoading={actionsLoading}
@@ -52,7 +49,7 @@ export function ServiceAlEditPage({ id, show, onHide }) {
         onHide={onHide}
         id={id}
       />
-    </div>
+    </>
    
   );
 }

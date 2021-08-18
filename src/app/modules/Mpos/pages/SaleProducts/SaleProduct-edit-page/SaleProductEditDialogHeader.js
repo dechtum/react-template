@@ -15,11 +15,12 @@ export function SaleProductEditDialogHeader({ id,onHide }) {
   );
 
   const [title, setTitle] = useState("");
+  const til = useLang()=='en'?"Product details":"รายละเอียดสินค้า";
   // Title couting
   useEffect(() => {
-    let _title = id ? "" : "New SaleProduct";
+    let _title = id ? "" : til;
     if (SaleProductForEdit && id) {
-      _title = `Edit SaleProduct '${SaleProductForEdit.firstName} ${SaleProductForEdit.lastName}'`;
+      _title = `${til} '${SaleProductForEdit.firstName} ${SaleProductForEdit.lastName}'`;
     }
 
     setTitle(_title);

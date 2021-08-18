@@ -20,6 +20,7 @@ import * as uiHelpers from "../ServiceContractsUIHelpers";
 import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useServiceContractsUIContext } from "../ServiceContractsUIContext";
+import {Total} from './total'
 
 export function ServiceContractsTable() {
   // ServiceContracts UI Context
@@ -62,34 +63,34 @@ export function ServiceContractsTable() {
     },
     {
       dataField: "firstName",
-      text: "Firstname",
+      text: "เลขที่ใบเสร็จรับเงิน",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "lastName",
-      text: "Lastname",
+      text: "รายการ",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "email",
-      text: "Email",
+      text: "วันเริ่ม",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "gender",
-      text: "Gender",
+      text: "วันสินสุด",
       sort: false,
       sortCaret: sortCaret,
     },
     {
       dataField: "status",
-      text: "Status",
+      text: "ราคา",
       sort: true,
       sortCaret: sortCaret,
       formatter: columnFormatters.StatusColumnFormatter,
@@ -97,25 +98,11 @@ export function ServiceContractsTable() {
     },
     {
       dataField: "type",
-      text: "Type",
+      text: "",
       sort: true,
       sortCaret: sortCaret,
       formatter: columnFormatters.TypeColumnFormatter,
-    },
-    {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        openEditServiceContractDialog: ServiceContractsUIProps.openEditServiceContractDialog,
-        openDeleteServiceContractDialog: ServiceContractsUIProps.openDeleteServiceContractDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
-    },
+    }
   ];
   // Table pagination properties
   const paginationOptions = {
@@ -157,6 +144,7 @@ export function ServiceContractsTable() {
                 <PleaseWaitMessage entities={entities} />
                 <NoRecordsFoundMessage entities={entities} />
               </BootstrapTable>
+              <Total/>
             </Pagination>
           );
         }}

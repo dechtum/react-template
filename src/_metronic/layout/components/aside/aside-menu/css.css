@@ -1,0 +1,10 @@
+.theme-select{
+    width: 150px;
+    height: 30px;
+    padding: 5px;
+    color: black;
+  }
+  select option { color: black; }
+  select option:first-child{
+    color: gray;
+}

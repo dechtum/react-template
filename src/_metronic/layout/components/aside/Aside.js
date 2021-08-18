@@ -28,7 +28,7 @@ export function Aside() {
           <Brand/>
 
           {/* begin::Aside Menu */}
-          <div id="kt_aside_menu_wrapper" className="aside-menu-wrapper flex-column-fluid">
+          <div id="kt_aside_menu_wrapper" className="aside-menu-wrapper flex-column-fluid" style={{marginTop:'0px'}}>
             {layoutProps.disableAsideSelfDisplay && (
               <>
                 {/* begin::Header Logo */}

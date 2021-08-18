@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 export function SaleProductEditDialogHeader({ id }) {
   // SaleProducts Redux state
@@ -15,11 +16,12 @@ export function SaleProductEditDialogHeader({ id }) {
 
   const [title, setTitle] = useState("");
   // Title couting
+
+  let _title = useLang()=='en'?"Add Group":"เพิ่ม กลุ่ม";
   useEffect(() => {
-    let _title = id ? "" : "New SaleProduct";
-    if (SaleProductForEdit && id) {
-      _title = `Edit SaleProduct '${SaleProductForEdit.firstName} ${SaleProductForEdit.lastName}'`;
-    }
+    // if (SaleProductForEdit && id) {
+    //   _title = `เพิ่ม กลุ่ม`;
+    // }
 
     setTitle(_title);
     // eslint-disable-next-line

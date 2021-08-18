@@ -1,0 +1,13 @@
+.btn-edit{
+    position: absolute;
+    cursor: pointer;
+    right: 30px;   
+    z-index: 11; 
+}
+.border-none{
+    border: none;
+    pointer-events: none;
+    outline-style: none;
+    width: 100%;
+    resize: none;
+}

@@ -6,10 +6,12 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 import {
   Input,
   Select,
   DatePickerField,
+  Textarea,
 } from "../../../../../../_metronic/_partials/controls";
 
 // Validation schema
@@ -38,6 +40,7 @@ export function SaleProductEditForm({
   actionsLoading,
   onHide,
 }) {
+  const [lang,setLang]=React.useState(useLang())
   return (
     <>
       <Formik
@@ -59,77 +62,26 @@ export function SaleProductEditForm({
               <Form className="form form-label-right">
                 <div className="form-group row">
                   {/* First Name */}
-                  <div className="col-lg-4">
+                  <div className="col-lg-12">
                     <Field
-                      name="firstName"
+                      name="group_name"
                       component={Input}
-                      placeholder="First Name"
-                      label="First Name"
+                      placeholder={lang=='en'?'Name':"ชื่อกลุ่มสินค้า"}
+                      label={lang=='en'?'Name':"ชื่อกลุ่มสินค้า"}
                     />
                   </div>
-                  {/* Last Name */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="lastName"
-                      component={Input}
-                      placeholder="Last Name"
-                      label="Last Name"
-                    />
-                  </div>
-                  {/* Login */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="userName"
-                      component={Input}
-                      placeholder="Login"
-                      label="Login"
-                    />
-                  </div>
-                </div>
-                {/* Email */}
-                <div className="form-group row">
-                  <div className="col-lg-4">
-                    <Field
-                      type="email"
-                      name="email"
-                      component={Input}
-                      placeholder="Email"
-                      label="Email"
-                    />
-                  </div>
-                  {/* Date of birth */}
-                  <div className="col-lg-4">
-                    <DatePickerField
-                      name="dateOfBbirth"
-                      label="Date of Birth"
-                    />
-                  </div>
-                  {/* IP Address */}
-                  <div className="col-lg-4">
-                    <Field
-                      name="ipAddress"
-                      component={Input}
-                      placeholder="IP Address"
-                      label="IP Address"
-                      customFeedbackLabel="We'll never share SaleProduct IP Address with anyone else"
-                    />
-                  </div>
+                               
                 </div>
                 <div className="form-group row">
-                  {/* Gender */}
-                  <div className="col-lg-4">
-                    <Select name="Gender" label="Gender">
-                      <option value="Female">Female</option>
-                      <option value="Male">Male</option>
-                    </Select>
-                  </div>
-                  {/* Type */}
-                  <div className="col-lg-4">
-                    <Select name="type" label="Type">
-                      <option value="0">Business</option>
-                      <option value="1">Individual</option>
-                    </Select>
-                  </div>
+                  
+                  <div className="col-lg-12">
+                    <Field
+                      name="group_detail"
+                      component={Textarea}
+                      placeholder={lang=='en'?'Discription':"รายละเอียด"}
+                      label={lang=='en'?'Discription':"รายละเอียด"}
+                    />
+                  </div>                  
                 </div>
               </Form>
             </Modal.Body>
@@ -139,7 +91,7 @@ export function SaleProductEditForm({
                 onClick={onHide}
                 className="btn btn-light btn-elevate"
               >
-                Cancel
+               {lang=='en'?'Cancel':'ยกเลิก'} 
               </button>
               <> </>
               <button
@@ -147,7 +99,7 @@ export function SaleProductEditForm({
                 onClick={() => handleSubmit()}
                 className="btn btn-primary btn-elevate"
               >
-                Save
+                {lang=='en'?'Save':'บันทึก'}
               </button>
             </Modal.Footer>
           </>

@@ -8,6 +8,7 @@ import paginationFactory, {
 } from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../../../_redux/Results/ResultsActions";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 import {
   getSelectRow,
   getHandlerTableChange,
@@ -20,9 +21,11 @@ import * as uiHelpers from "../ResultsUIHelpers";
 import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useResultsUIContext } from "../ResultsUIContext";
+import {Total} from './total'
 
 export function ResultsTable() {
   // Results UI Context
+  const[lang,setLang]=React.useState(useLang())
   const ResultsUIContext = useResultsUIContext();
   const ResultsUIProps = useMemo(() => {
     return {
@@ -55,67 +58,38 @@ export function ResultsTable() {
   const columns = [
     {
       dataField: "id",
-      text: "ID",
+      text: lang=='en'?"NO.":"ลำดับ",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "firstName",
-      text: "Firstname",
+      text: `รายการ`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "lastName",
-      text: "Lastname",
+      text: "จำนวน",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "email",
-      text: "Email",
+      text: "หน่วย",
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
       dataField: "gender",
-      text: "Gender",
+      text: "ราคา",
       sort: false,
       sortCaret: sortCaret,
-    },
-    {
-      dataField: "status",
-      text: "Status",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.StatusColumnFormatter,
-      headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "Type",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.TypeColumnFormatter,
-    },
-    {
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        openEditResultDialog: ResultsUIProps.openEditResultDialog,
-        openDeleteResultDialog: ResultsUIProps.openDeleteResultDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
-    },
+    }
   ];
   // Table pagination properties
   const paginationOptions = {
@@ -130,10 +104,7 @@ export function ResultsTable() {
       <PaginationProvider pagination={paginationFactory(paginationOptions)}>
         {({ paginationProps, paginationTableProps }) => {
           return (
-            <Pagination
-              isLoading={listLoading}
-              paginationProps={paginationProps}
-            >
+            <>
               <BootstrapTable
                 wrapperClasses="table-responsive"
                 bordered={false}
@@ -157,7 +128,8 @@ export function ResultsTable() {
                 <PleaseWaitMessage entities={entities} />
                 <NoRecordsFoundMessage entities={entities} />
               </BootstrapTable>
-            </Pagination>
+              <Total/>
+            </>
           );
         }}
       </PaginationProvider>

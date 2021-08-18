@@ -22,6 +22,7 @@ export {HeaderCheckbox} from "./forms/HeaderCheckbox";
 export {AutoComplete} from "./forms/AutoComplete";
 export {Upload} from "./forms/sit-upload";
 export {AntSwitchs} from "./forms/AntSwitchs";
+export {SITImage} from "./forms/sit-image";
 
 
 // Scaner

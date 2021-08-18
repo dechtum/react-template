@@ -55,17 +55,7 @@ export function ServiceAlsPage({ history }) {
   return (
     <ServiceAlsUIProvider ServiceAlsUIEvents={ServiceAlsUIEvents}>
       <ServiceAlsLoadingDialog />
-      <Route path={`${pages}/pagenew`}>
-        {({ history, match }) => (
-          <ServiceAlEditPage
-            show={match != null}
-            onHide={() => {
-              store.dispatch({type:"pagehistory",value:0})
-              history.push(`${pages}`);
-            }}
-          />
-        )}
-      </Route>
+      
       <Route path={`${pages}/new`}>
         {({ history, match }) => (
           <ServiceAlEditDialog
@@ -138,7 +128,7 @@ export function ServiceAlsPage({ history }) {
       style={{
         display:(store.getState().pagehistory == 0?'block':'none')
       }}>
-        <ServiceAlsCard/>
+        <ServiceAlEditPage/>
       </span>
     </ServiceAlsUIProvider>
   );

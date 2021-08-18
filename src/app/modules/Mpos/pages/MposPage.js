@@ -30,7 +30,7 @@ export default function MposPage() {
         <ContentRoute path="/mpos/ซื้อ/วัตถุดิบ" component={PuyMatsPage} />
         <ContentRoute path="/mpos/ซื้อ/สั่งซื้อ" component={PuyPursPage} />
         <ContentRoute path="/mpos/ซื้อ/ซัพฟลายเออร์" component={PuySupsPage} />
-        <ContentRoute path="/mpos/สรุป" component={ResultsPage} />
+        <ContentRoute path="/mpos/สรุป/สรุป" component={ResultsPage} />
         <ContentRoute path="/mpos/ขายสินค้า/ขายสินค้า" component={SalePossPage} />
         <ContentRoute path="/mpos/ขายสินค้า/สินค้า" component={SaleProductsPage} />
         <ContentRoute path="/mpos/บริการ/แจ้งปัญหา" component={ServiceAlsPage} />

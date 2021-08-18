@@ -35,7 +35,7 @@ export function SubHeader() {
     const breadcrumbs = (aside && aside.breadcrumbs.length > 0) ? aside.breadcrumbs : header.breadcrumbs;
     subheader.setBreadcrumbs(breadcrumbs);
     subheader.setTitle((aside && aside.title && aside.title.length > 0) ? aside.title : header.title);
-
+    
     // eslint-disable-next-line
   }, [location.pathname]);
 
@@ -72,7 +72,7 @@ export function SubHeader() {
               </h5>
 
             </div>
-
+              
 
             <BreadCrumbs items={subheader.breadcrumbs} />
           </div>

@@ -7,9 +7,11 @@ import { useSelector } from "react-redux";
 import objectPath from "object-path";
 import { useHtmlClassService } from "../../../_core/MetronicLayout";
 import { toAbsoluteUrl } from "../../../../_helpers";
+import { useLang, setLanguage } from "../../../../i18n";
 import { DropdownTopbarItemToggler } from "../../../../_partials/dropdowns";
 
 export function UserProfileDropdown() {
+  const [lang,setLang]=React.useState(useLang());
   const { user } = useSelector((state) => state.auth);
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
@@ -32,14 +34,14 @@ export function UserProfileDropdown() {
           }
         >
           <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
-            Hi,
+            {lang=='en'?'Hi,':'สวัสดีค่ะ '} 
           </span>{" "}
           <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
             {user.firstname} {user.lastname}
           </span>
           <span className="symbol symbol-35 symbol-light-success">
             <span className="symbol-label font-size-h5 font-weight-bold">
-              {user.firstname[0]}
+             {user.firstname[0]}
             </span>
           </span>
         </div>
@@ -49,15 +51,16 @@ export function UserProfileDropdown() {
           {/** ClassName should be 'dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl' */}
           {layoutProps.light && (
             <>
-              <div className="d-flex align-items-center p-8 rounded-top">
+              <div className="d-flex align-items-center p-8 rounded-top">                
                 <div className="symbol symbol-md bg-light-primary mr-3 flex-shrink-0">
-                  <img src={toAbsoluteUrl("/media/users/300_21.jpg")} alt="" />
+                  <img src={toAbsoluteUrl(user.pic)} alt="" />
+                 
                 </div>
                 <div className="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
                   {user.firstname} {user.lastname}
                 </div>
                 <span className="label label-light-success label-lg font-weight-bold label-inline">
-                  3 messages
+                3{lang=='en'?' messages':' ข้อความ'} 
                 </span>
               </div>
               <div className="separator separator-solid"></div>
@@ -75,7 +78,7 @@ export function UserProfileDropdown() {
             >
               <div className="symbol bg-white-o-15 mr-3">
                 <span className="symbol-label text-success font-weight-bold font-size-h4">
-                  {user.firstname[0]}
+                <img src={toAbsoluteUrl(user.pic)} alt="" style={{width:'100%',height:'100%'}}/>
                 </span>
                 {/*<img alt="Pic" className="hidden" src={user.pic} />*/}
               </div>
@@ -83,7 +86,7 @@ export function UserProfileDropdown() {
                 {user.firstname} {user.lastname}
               </div>
               <span className="label label-success label-lg font-weight-bold label-inline">
-                3 messages
+                3{lang=='en'?' messages':' ข้อความ'} 
               </span>
             </div>
           )}
@@ -97,19 +100,19 @@ export function UserProfileDropdown() {
               </div>
               <div className="navi-text">
                 <div className="font-weight-bold cursor-pointer">
-                  My Profile
+                  {lang=='en'?'My Profile':'ประวัติของฉัน'} 
                 </div>
                 <div className="text-muted">
-                  Account settings and more
+                  {lang=='en'?'Account settings and more':'การตั้งค่าบัญชีและอื่นๆ'} 
                   <span className="label label-light-danger label-inline font-weight-bold">
-                    update
+                    {lang=='en'?'update':'อัปเดต'} 
                   </span>
                 </div>
               </div>
             </div>
           </Link>
 
-          <a className="navi-item px-8">
+          {/* <a className="navi-item px-8">
             <div className="navi-link">
               <div className="navi-icon mr-2">
                 <i className="flaticon2-mail text-warning"></i>
@@ -143,7 +146,7 @@ export function UserProfileDropdown() {
                 <div className="text-muted">latest tasks and projects</div>
               </div>
             </div>
-          </a>
+          </a> */}
           <div className="navi-separator mt-3"></div>
 
           <div className="navi-footer  px-8 py-5">
@@ -151,10 +154,10 @@ export function UserProfileDropdown() {
               to="/logout"
               className="btn btn-light-primary font-weight-bold"
             >
-              Sign Out
+              {lang=='en'?'Sign Out':'ออกจากระบบ'} 
             </Link>
             <a href="#" className="btn btn-clean font-weight-bold">
-              Upgrade Plan
+              {lang=='en'?'Upgrade Plan':'อัพเกรดแผน'} 
             </a>
           </div>
         </div>

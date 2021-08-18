@@ -52,6 +52,7 @@ export function getCurrentUrl(location) {
 
 export function checkIsActive(location, url) {
     const current = getCurrentUrl(location);
+   
     if (!current || !url) {
         return  false;
     }

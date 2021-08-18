@@ -12,20 +12,15 @@ export function Itemnumber() {
     ]
     return (
         <div className="col-12">
-            <div className="row">
-                <div className="col-2 d-flex">
-                    
-                </div>
-                <div className="col-8 d-flex flex-row">
-                    <div className="btn btn-primary mr-auto"> ลด </div>
+            <div className="row">                
+                <div className="col-2 d-flex flex-row">
+                    <div className="btn btn-primary mr-auto" style={{borderRadius:'0px'}}>ลด </div>
                     <> </>
-                    <input type="text" className="form-control text-center" />
+                    <input type="text" className="form-control text-center" style={{width:'10em'}}/>
                     <> </>
-                    <div className="btn btn-primary">เพิ่ม</div>
+                    <div className="btn btn-primary" style={{borderRadius:'0px'}}>เพิ่ม</div>
                 </div>
-                <div className="col-2">
-                    
-                </div>
+                
             </div>
         </div>   
         

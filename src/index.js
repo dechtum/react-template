@@ -26,6 +26,8 @@ import {
 } from "./_metronic/layout";
 import {MetronicI18nProvider} from "./_metronic/i18n";
 
+import {AjaxDataAside} from './_metronic/layout/components/aside/__mocks__/mockAsideLib'
+
 /**
  * Base URL of the website.
  *
@@ -46,17 +48,23 @@ const { PUBLIC_URL } = process.env;
  *
  * @see https://github.com/axios/axios#interceptors
  */
-_redux.setupAxios(axios, store);
+new Promise((r,j)=>{
+  AjaxDataAside(r);
+})
+.then((v)=>{
+  _redux.setupAxios(axios, store);
 
-ReactDOM.render(
-  <MetronicI18nProvider>
-    <MetronicLayoutProvider>
-      <MetronicSubheaderProvider>
-        <MetronicSplashScreenProvider>
-          <App store={store} persistor={persistor} basename={PUBLIC_URL} />
-        </MetronicSplashScreenProvider>
-      </MetronicSubheaderProvider>
-    </MetronicLayoutProvider>
-  </MetronicI18nProvider>,
-  document.getElementById("root")
-);
+  ReactDOM.render(
+    <MetronicI18nProvider>
+      <MetronicLayoutProvider>
+        <MetronicSubheaderProvider>
+          <MetronicSplashScreenProvider>
+            <App store={store} persistor={persistor} basename={PUBLIC_URL} />
+          </MetronicSplashScreenProvider>
+        </MetronicSubheaderProvider>
+      </MetronicLayoutProvider>
+    </MetronicI18nProvider>,
+    document.getElementById("root")
+  );
+})
+

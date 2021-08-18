@@ -1,7 +1,9 @@
 import React, {useMemo} from "react";
 import {useHtmlClassService} from "../../_core/MetronicLayout";
+import { useLang, setLanguage } from "../../../i18n";
 
 export function Footer() {
+  const [lang,setLang]=React.useState(useLang());
   const today = new Date().getFullYear();
   const uiService = useHtmlClassService();
 
@@ -23,38 +25,38 @@ export function Footer() {
         <div className="text-dark order-2 order-md-1">
           <span className="text-muted font-weight-bold mr-2">{today.toString()}</span> &copy;{" "}
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://softintech.co.th"
             target="_blank"
             rel="noopener noreferrer"
             className="text-dark-75 text-hover-primary"
           >
-            Keenthemes
+            {lang=='en'?'Soft In Tech':"ซอฟต์ อิน เทค"}
           </a>
         </div>
         <div className="nav nav-dark order-1 order-md-2">
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://softintech.co.th"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link pr-3 pl-0"
           >
-            About
+            {lang=='en'?'About':"เกี่ยวกับ"}
           </a>
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://softintech.co.th"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link px-3"
           >
-            Team
+            {lang=='en'?'Team':"ทีม"}
           </a>
           <a
-            href="http://keenthemes.com/metronic"
+            href="https://softintech.co.th"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link pl-3 pr-0"
           >
-            Contact
+           {lang=='en'?'Contact':"ติดต่อ"} 
           </a>
         </div>
       </div>

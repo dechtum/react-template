@@ -10,11 +10,15 @@ import mockSalePos from "../../app/modules/Mpos/__mocks__/SalePoss/mockSalePos";
 import mockSaleProduct from "../../app/modules/Mpos/__mocks__/SaleProducts/mockSaleProduct";
 import mockServiceAl from "../../app/modules/Mpos/__mocks__/ServiceAls/mockServiceAl";
 import mockServiceContract from "../../app/modules/Mpos/__mocks__/ServiceContracts/mockServiceContract";
+import mockAside from "./../../_metronic/layout/components/aside/__mocks__/mockAside";
 
 export default function mockAxios(axios) {
-  window.localStorage.setItem("News","พิเศษซื้อกาแฟวันนี้ 10 กิโล ฟรี 1 กิโล");
+
+  window.localStorage.setItem("NEWEN","Special, buy coffee today 10 kg, free 1 kg.");
+  window.localStorage.setItem("NEWTH","พิเศษซื้อกาแฟวันนี้ 10 กิโล ฟรี 1 กิโล");
   const mock = new MockAdapter(axios, { delayResponse: 300 });
   mockAuth(mock);
+  mockAside(mock);
   mockShopsCreshop(mock);
   mockShopsCreEmp(mock);
   mockStockMat(mock);
@@ -24,6 +28,7 @@ export default function mockAxios(axios) {
   mockSalePos(mock);
   mockSaleProduct(mock);
   mockServiceAl(mock);
+  mockServiceContract(mock);
   mockServiceContract(mock);
   return mock;
 }

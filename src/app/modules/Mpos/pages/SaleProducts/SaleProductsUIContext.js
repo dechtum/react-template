@@ -50,6 +50,7 @@ export function SaleProductsUIProvider({SaleProductsUIEvents, children}) {
     newShopsPageCreshopButtonClick: SaleProductsUIEvents.newShopsPageCreshopButtonClick,
     newSaleProductButtonClick: SaleProductsUIEvents.newSaleProductButtonClick,
     openEditSaleProductDialog: SaleProductsUIEvents.openEditSaleProductDialog,
+    openUnitSaleProductDialog: SaleProductsUIEvents.openUnitSaleProductDialog,
     openDeleteSaleProductDialog: SaleProductsUIEvents.openDeleteSaleProductDialog,
     openDeleteSaleProductsDialog: SaleProductsUIEvents.openDeleteSaleProductsDialog,
     openFetchSaleProductsDialog: SaleProductsUIEvents.openFetchSaleProductsDialog,

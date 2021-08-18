@@ -7,13 +7,14 @@ import { Card, Modal } from "react-bootstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { ServiceAlEditDialogHeader } from "./ServiceAlEditDialogHeader";
-
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 import {
   Input,
   Select,
   Switch,
   DatePickerField,
+  Textarea,
 } from "../../../../../../_metronic/_partials/controls";
 
 // Validation schema
@@ -43,6 +44,7 @@ export function ServiceAlEditForm({
   onHide,
   id,
 }) {
+  const [lang,setLang]=React.useState(useLang())
   const [state, setState] = React.useState({
     active: false
   })
@@ -68,89 +70,51 @@ export function ServiceAlEditForm({
                   <div className="spinner spinner-lg spinner-success" />
                 </div>
               )}
-              <Form className="form form-label-right d-flex row">
-                <Card className="col-md-4 pt-3" style={{ height: "300px" }}>
-                  asdfdfsd
-                </Card>
-                <Card className="col-md-8" aria-labelledby="example-modal-sizes-title-lg">
+              <Form className="form form-label-right row">
+                <Card className="col-md-12" aria-labelledby="example-modal-sizes-title-lg">
                   <ServiceAlEditDialogHeader id={id} onHide={onHide} />
-                  <div className="form-group row">
-                    {/* First Name */}
-                    <div className="col-lg-4">
+                  <div className="form-group row pt-2">                    
+                    <div className="col-lg-6">
                       <Field
-                        name="firstName"
+                        name="company_name"
                         component={Input}
-                        placeholder="First Name"
-                        label="First Name"
+                        disabled
+                        placeholder={lang=='en'?'company name':'แสดงชือบริษัท'}
+                        label={lang=='en'?'Company/Store':'บริษัท / ร้านค้า'}
                       />
                     </div>
-                    {/* Last Name */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-6">
                       <Field
-                        name="lastName"
+                        name="emp_name"
+                        disabled
                         component={Input}
-                        placeholder="Last Name"
-                        label="Last Name"
-                      />
-                    </div>
-                    {/* Login */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="userName"
-                        component={Input}
-                        placeholder="Login"
-                        label="Login"
+                        placeholder={lang=='en'?'informer name':'แสดงชือผู้แจ้ง'}
+                        label={lang=='en'?'informer':'ผู้แจ้ง'}
                       />
                     </div>
                   </div>
-                  {/* Email */}
-                  <div className="form-group row">
-                    <div className="col-lg-4">
+                  <div className="form-group row">                    
+                    <div className="col-lg-12">
                       <Field
-                        type="email"
-                        name="email"
+                        name="title"
                         component={Input}
-                        placeholder="Email"
-                        label="Email"
+                        placeholder={lang=='en'?'Subject':'เรื่อง'}
+                        label={lang=='en'?'Subject':'เรื่อง'}
                       />
-                    </div>
-                    {/* Date of birth */}
-                    <div className="col-lg-4">
-                      <DatePickerField
-                        name="dateOfBbirth"
-                        label="Date of Birth"
-                      />
-                    </div>
-                    {/* IP Address */}
-                    <div className="col-lg-4">
-                      <Field
-                        name="ipAddress"
-                        component={Input}
-                        placeholder="IP Address"
-                        label="IP Address"
-                        customFeedbackLabel="We'll never share ServiceAl IP Address with anyone else"
-                      />
-                    </div>
+                    </div>                   
                   </div>
-                  <div className="form-group row">
-                    {/* Gender */}
-                    <div className="col-lg-4">
-                      <Select name="Gender" label="Gender">
-                        <option value="Female">Female</option>
-                        <option value="Male">Male</option>
-                      </Select>
-                    </div>
-                    {/* Type */}
-                    <div className="col-lg-4">
-                      <Select name="type" label="Type">
-                        <option value="0">Business</option>
-                        <option value="1">Individual</option>
-                      </Select>
-                    </div>
+                  <div className="form-group row">                    
+                    <div className="col-lg-12">
+                      <Field
+                        name="detial"
+                        rows={6}
+                        component={Textarea}
+                        placeholder={lang=='en'?'Description':'รายละเอียด'}
+                        label={lang=='en'?'Description':'รายละเอียด'}
+                      />
+                    </div>                   
                   </div>
                 </Card>
-
-
               </Form>
             </Modal.Body>
             <Modal.Footer className=" col-12  pl-3 pr-3" >
@@ -159,7 +123,7 @@ export function ServiceAlEditForm({
                 <div
                   className="mr-auto "
                 >
-                  <Switch onChange={(e) => handleChange(e, 'active')} checked={state.active} />
+                  <Switch onChange={(e) => handleChange(e, 'active')} lang={lang} checked={state.active} />
                 </div>
                 <div className="ml-auto" >
                   <button
@@ -167,7 +131,7 @@ export function ServiceAlEditForm({
                     onClick={onHide}
                     className="btn btn-light btn-elevate"
                   >
-                    Cancel
+                    {lang=='en'?'Cancel':'ยกเลิก'}
                   </button>
                   <> </>
                   <button
@@ -175,7 +139,7 @@ export function ServiceAlEditForm({
                     onClick={() => handleSubmit()}
                     className="btn btn-primary btn-elevate"
                   >
-                    Save
+                    {lang=='en'?'Save':'บันทึก'}
                   </button>
                 </div>
               </div>

@@ -1,392 +1,130 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { createContext, useContext, useState, useCallback, useMemo, useEffect } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "./../_redux/AsidesActions";
 import { useLocation } from "react-router";
 import { NavLink } from "react-router-dom";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl, checkIsActive } from "../../../../_helpers";
+import { useLang, setLanguage } from './../../../../i18n'
+import { Items } from './itemmenu/item'
+import Admin from '../__mocks__/AdminTable'
+import Saler from '../__mocks__/SalerTable'
+import AsideTableMock from '../__mocks__/AsideTableMock'
+
+
+import {
+  Input,
+  Select,
+  AutoComplete,
+  DatePickerField,
+} from "../../../../../_metronic/_partials/controls";
+import './css.css'
+
+const AsideUIContext = createContext();
+
+export function useAsidesUIContext() {
+    return useContext(AsideUIContext);
+}
 
 export function AsideMenuList({ layoutProps }) {
+  const[id,setId]=React.useState(undefined);
+  const [lang, setLang] = React.useState(useLang())
   const location = useLocation();
-  const getMenuItemActive = (url, hasSubmenu = false) => {
 
+  const initAside = {
+    id: undefined,
+    name: "",
+    tel: "",
+    address: "",
+    picture: "",
+    district_id: "",
+    province_id: "",
+    zipcode_id: "",
+    active: ""
+  };
+  const AsidesUIContext = useAsidesUIContext();
+
+  // Asides Redux state
+  const dispatch = useDispatch();
+  const { actionsLoading, AsideForEdit } = useSelector(
+    (state) => ({
+      actionsLoading: state.Asides.actionsLoading,
+      AsideForEdit: state.Asides.AsideForEdit,
+    }),
+    shallowEqual
+  );
+  
+  useEffect(() => {
+    // server call for getting Aside by id
+   // dispatch(actions.fetchAsides(AsideTableMock));
+   
+    dispatch(actions.fetchAsides(AsideTableMock)).then();
+  }, [id, dispatch]);
+
+  // server request for saving Aside
+  const saveAside = (Aside) => {
+    if (!id) {
+      // server request for creating Aside
+      dispatch(actions.createAside(Aside)).then();
+    } else {
+      // server request for updating Aside
+      dispatch(actions.updateAside(Aside)).then();
+    }
+  };
+
+  
+  const getMenuItemActive = (url, hasSubmenu = false) => {
     return checkIsActive(location, url)
       ? ` ${!hasSubmenu &&
       "menu-item-active"} menu-item-open menu-item-not-hightlighted`
       : "";
   };
 
+
   return (
     <>
-      {/* begin::Menu Nav */}
       <ul className={`menu-nav ${layoutProps.ulClasses}`}>
-        {/*begin::1 Level*/}
         <li
           className={`menu-item ${getMenuItemActive("/เลือกบริษัท", false)}`}
           aria-haspopup="true"
         >
-          <NavLink className="menu-link" to="/dashboard">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")} />
-            </span>
-            <span className="menu-text">เลือกบริษัท</span>
-          </NavLink>
-        </li>
-        {/*end::1 Level*/}
+          <div className="form-group pl-2 pr-2">
+            <select className="form-control form-control-solid theme-select">
+              <option value="0">{lang == 'en' ? 'Select Company/Store' : 'เลือกบริษัท/ร้านค้า'}</option>
+              {
+                AsideTableMock.map((val, key) => {
+                  
+                  return (
+                    <option key={key} value={val.id}>{val.name[lang]}</option>
+                  )
+                })
+              }
+            </select>
+          </div>
 
-        {/* Components */}
-        {/* begin::section */}
+        </li>
+
+        {/* .......................................... */}
         <li className="menu-section ">
-          <h4 className="menu-text">ผู้ดูแล</h4>
+          <h4 className="menu-text">{lang == 'en' ? 'Admin' : 'ผู้ดูแล'}</h4>
           <i className="menu-icon flaticon-more-v2"></i>
         </li>
-        {/* end:: section */}
-
-        {/* Material-UI */}
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/ร้านค้า",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/mpos">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">ร้านค้า</span>
-            <i className="menu-arrow" />
-          </NavLink>
-          <div className="menu-submenu ">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item  menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">ร้านค้า</span>
-                </span>
-              </li>
-
-              {/* Inputs */}
-              {/*begin::2 Level*/}
-              <li
-                className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/ร้านค้า",
-                  true
-                )}`}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ร้านค้า/สร้างร้านค้า"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">สร้างร้านค้า</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ร้านค้า/สร้างพนักงาน"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">สร้างพนักงาน</span>
-
-                </NavLink>
-
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/ซื้อ",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/google-material">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">ซื้อ</span>
-            <i className="menu-arrow" />
-          </NavLink>
-          <div className="menu-submenu ">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item  menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">ซื้อ</span>
-                </span>
-              </li>
-
-              {/* Inputs */}
-              {/*begin::2 Level*/}
-              <li
-                className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/ซื้อ",
-                  true
-                )}`}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ซื้อ/สั่งซื้อ"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">สั่งซื้อ</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ซื้อ/วัตถุดิบ"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">วัตถุดิบ</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ซื้อ/ซัพฟลายเออร์"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">ซัพฟลายเออร์</span>
-
-                </NavLink>
-
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
-
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/สต๊อก",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/mpos/สต๊อก">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">สต๊อก</span>
-            <i className="menu-arrow" />
-          </NavLink>
-          <div className="menu-submenu ">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item  menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">สต๊อก</span>
-                </span>
-              </li>
-
-              {/* Inputs */}
-              {/*begin::2 Level*/}
-              <li
-                className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/สต๊อก",
-                  true
-                )}`}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/สต๊อก/นับสต๊อก"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">นับสต๊อก</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/สต๊อก/สต๊อกวัตถุดิบ"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">สต๊อกวัตถุดิบ</span>
-
-                </NavLink>
-
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
-         {/* begin::section */}
-         <li className="menu-section ">
-          <h4 className="menu-text">ผู้ขาย</h4>
+        {/* .......................................... */}
+        {
+          <Items item={Admin} layoutProps={layoutProps} />
+        }
+        {/*  .....................................................................................................  */}
+        <li className="menu-section ">
+          <h4 className="menu-text">{lang == 'en' ? 'Saler' : 'ผู้ขาย'}</h4>
           <i className="menu-icon flaticon-more-v2"></i>
         </li>
-        {/*  */}
-        {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/ขาย",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/mpos/ขาย">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">ขาย</span>
-            <i className="menu-arrow" />
-          </NavLink>
-          <div className="menu-submenu ">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item  menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">ขาย</span>
-                </span>
-              </li>
-
-              {/* Inputs */}
-              {/*begin::2 Level*/}
-              <li
-                className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/ขาย",
-                  true
-                )}`}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ขายสินค้า/ขายสินค้า"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">ขายสินค้า[หน้าร้าน]</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/ขายสินค้า/สินค้า"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">สินค้า</span>
-
-                </NavLink>
-
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/สรุป",
-            true
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-           <NavLink className="menu-link menu-toggle" to="/mpos/สรุป">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">สรุป</span>
-          </NavLink>
-          </li>
+        {
+          <Items item={Saler} layoutProps={layoutProps} />
+        }
 
 
-          {/*begin::1 Level*/}
-        <li
-          className={`menu-item menu-item-submenu ${getMenuItemActive(
-            "/บริการ",
-            false
-          )}`}
-          aria-haspopup="true"
-          data-menu-toggle="hover"
-        >
-          <NavLink className="menu-link menu-toggle" to="/บริการ">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Cap-2.svg")} />
-            </span>
-            <span className="menu-text">บริการ</span>
-            <i className="menu-arrow" />
-          </NavLink>
-          <div className="menu-submenu ">
-            <i className="menu-arrow" />
-            <ul className="menu-subnav">
-              <li className="menu-item  menu-item-parent" aria-haspopup="true">
-                <span className="menu-link">
-                  <span className="menu-text">บริการ</span>
-                </span>
-              </li>
-
-              {/* Inputs */}
-              {/*begin::2 Level*/}
-              <li
-                className={`menu-item menu-item-submenu ${getMenuItemActive(
-                  "/บริการ",
-                  true
-                )}`}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/บริการ/แจ้งปัญหา"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">แจ้งปัญหา</span>
-
-                </NavLink>
-                <NavLink
-                  className="menu-link menu-toggle"
-                  to="/mpos/บริการ/ต่อสัญญา"
-                >
-                  <i className="menu-bullet menu-bullet-dot">
-                    <span />
-                  </i>
-                  <span className="menu-text">ต่อสัญญา</span>
-
-                </NavLink>
-
-              </li>
-
-            </ul>
-          </div>
-        </li>
-        {/*end::1 Level*/}
       </ul>
 
       {/* end::Menu Nav */}

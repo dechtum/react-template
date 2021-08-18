@@ -2,6 +2,7 @@ import {all} from "redux-saga/effects";
 import {combineReducers} from "redux";
 
 import * as auth from "../app/modules/Auth/_redux/authRedux";
+import {AsidesSlice} from "../_metronic/layout/components/aside/_redux/AsidesSlice";
 import {ShopsCreshopsSlice} from "../app/modules/Mpos/_redux/ShopsCreshops/ShopsCreshopsSlice";
 import {StockCountsSlice} from "../app/modules/Mpos/_redux/StockCounts/StockCountsSlice";
 import {PuyPursSlice} from "../app/modules/Mpos/_redux/PuyPurs/PuyPursSlice";
@@ -17,6 +18,7 @@ import {StockMatsSlice} from "../app/modules/Mpos/_redux/StockMats/StockMatsSlic
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
+  Asides: AsidesSlice.reducer,
   ShopsCreshops: ShopsCreshopsSlice.reducer,
   StockCounts: StockCountsSlice.reducer,
   PuyPurs: PuyPursSlice.reducer,
@@ -30,7 +32,6 @@ export const rootReducer = combineReducers({
   ShopsCreEmps: ShopsCreEmpsSlice.reducer,
   StockMats: StockMatsSlice.reducer,
 });
-
 export function* rootSaga() {
   yield all([auth.saga()]);
 }

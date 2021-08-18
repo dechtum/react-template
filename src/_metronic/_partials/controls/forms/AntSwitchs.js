@@ -108,15 +108,14 @@ const AntSwitch = withStyles(theme => ({
   checked: {},
 }))(Switch);
 
-export function AntSwitchs({label,checked}) {
+export function AntSwitchs({name,label,checked,onChange}) {
   const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedC: true,
+    [name]: checked,
   });
 
-  const handleChange = name => event => {
+  const handleChange = name => event => {    
     setState({ ...state, [name]: event.target.checked });
+    onChange(name,event.target.checked);
   };
 
   return (
@@ -126,8 +125,8 @@ export function AntSwitchs({label,checked}) {
           <Grid item>
             <AntSwitch
               checked={state.checkedC}
-              onChange={handleChange('checkedC')}
-              value="checkedC"
+              onChange={handleChange(name)}
+              value={name}
             />
           </Grid>
           <Grid item>{label}</Grid>

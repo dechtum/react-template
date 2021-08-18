@@ -7,6 +7,7 @@ import {
 } from "../../../../../_metronic/_partials/controls";
 import { ResultsFilter } from "./Results-filter/ResultsFilter";
 import { ResultsTable } from "./Results-table/ResultsTable";
+import { ResultsTableMat } from "./Results-table-mat/ResultsTableMat";
 import { ResultsGrouping } from "./Results-grouping/ResultsGrouping";
 import { useResultsUIContext } from "./ResultsUIContext";
 import { Link } from "react-router-dom";
@@ -23,8 +24,9 @@ export function ResultsCard() {
   }, [ResultsUIContext]);
 
   return (
+    <React.Fragment>
     <Card>
-      <CardHeader title="Results list">
+      <CardHeader title={useLang()=='en'?"Summary of sales today":"สรุปยอดขายวันนี้"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,10 +36,22 @@ export function ResultsCard() {
 
       </CardHeader>
       <CardBody>
-        <ResultsFilter  name="New"/>
+        {/* <ResultsFilter  name="New"/> */}
         {ResultsUIProps.ids.length > 0 && <ResultsGrouping />}
-        <ResultsTable />
+        <ResultsTable />     
       </CardBody>
     </Card>
+    <> </>
+    <Card>
+      <CardHeader title={useLang()=='en'?"Summary of raw materials used today":"สรุปวัตถุดิบที่ใช้วันนี้"}>
+      </CardHeader>
+      <CardBody>
+        {/* <ResultsFilter  name="New"/> */}
+        {ResultsUIProps.ids.length > 0 && <ResultsGrouping />}     
+        <ResultsTableMat/>
+      </CardBody>
+    </Card>
+    </React.Fragment>
+    
   );
 }

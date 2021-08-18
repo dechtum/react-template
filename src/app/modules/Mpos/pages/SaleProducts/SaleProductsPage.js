@@ -2,6 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { SaleProductsLoadingDialog } from "./SaleProducts-loading-dialog/SaleProductsLoadingDialog";
 import { SaleProductEditDialog } from "./SaleProduct-edit-dialog/SaleProductEditDialog";
+import { SaleProductUnitDialog } from "./SaleProduct-unit-dialog/SaleProductEditDialog";
 import { SaleProductEditPage } from "./SaleProduct-edit-page/SaleProductEditDialog";
 import { SaleProductDeleteDialog } from "./SaleProduct-delete-dialog/SaleProductDeleteDialog";
 import { SaleProductsDeleteDialog } from "./SaleProducts-delete-dialog/SaleProductsDeleteDialog";
@@ -31,8 +32,10 @@ export function SaleProductsPage({ history }) {
       history.push(`${pages}/new`);
     },
     openEditSaleProductDialog: (id) => {
-      store.dispatch({type:"pagehistory",value:3})
-      history.push(`${pages}/${id}/edit`);
+      history.push(`${pages}/${id}/group`);
+    },
+    openUnitSaleProductDialog: (id) => {
+      history.push(`${pages}/${id}/unit`);
     },
     openDeleteSaleProductDialog: (id) => {
       store.dispatch({type:"pagehistory",value:4})
@@ -77,14 +80,24 @@ export function SaleProductsPage({ history }) {
           />
         )}
       </Route>
-      <Route path={`${pages}/:id/edit`}>
+      <Route path={`${pages}/:id/unit`}>
+        {({ history, match }) => (
+          <SaleProductUnitDialog
+            show={match != null}
+            id={match && match.params.id}
+            onHide={() => {
+              history.push(`${pages}/pagenew`);
+            }}
+          />
+        )}
+      </Route>
+      <Route path={`${pages}/:id/group`}>
         {({ history, match }) => (
           <SaleProductEditDialog
             show={match != null}
             id={match && match.params.id}
             onHide={() => {
-              store.dispatch({type:"pagehistory",value:0})
-              history.push(`${pages}`);
+              history.push(`${pages}/pagenew`);
             }}
           />
         )}

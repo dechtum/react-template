@@ -24,8 +24,9 @@ export function Brand() {
     <>
       {/* begin::Brand */}
       <div
-          className={`brand flex-column-auto ${layoutProps.brandClasses}`}
+          className={`brand flex-column-auto ${layoutProps.brandClasses} `}
           id="kt_brand"
+          style={{height:'120px', background:`url(${toAbsoluteUrl("/media/bg/bg-2.jpg")})`}}
       >
         {/* begin::Logo */}
         <Link to="" className="brand-logo">
@@ -38,10 +39,10 @@ export function Brand() {
             {/* begin::Toggle */}
             <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
               <span className="svg-icon svg-icon-xl">
-                  <SVG src={toAbsoluteUrl("/media/svg/icons/Navigation/Angle-double-left.svg")}/>
+                  <SVG src={toAbsoluteUrl("/media/svg/icons/Navigation/Angle-left.svg")}/>  
               </span>
             </button>
-            {/* end::Toolbar */}
+            {/* end::Toolbar   Angle-double-left */}
             </>
         )}
       </div>

@@ -24,7 +24,7 @@ export function SaleProductsCard() {
 
   return (
     <Card>
-      <CardHeader title="SaleProducts list">
+      <CardHeader title={useLang()=='en'?"product list":"รายการสินค้า"}>
         <CardHeaderToolbar>
           <Link to="/dashboard">
           {useLang()=='en'?"back":"ย้อนกลับ"}
@@ -34,7 +34,7 @@ export function SaleProductsCard() {
 
       </CardHeader>
       <CardBody>
-        <SaleProductsFilter  name="New"/>
+        <SaleProductsFilter  name={useLang()=='en'?"create a product list":"สร้างสินค้า"}  name1={useLang()=='en'?"export to excel":"ส่งออกเป็น excel"}/>
         {SaleProductsUIProps.ids.length > 0 && <SaleProductsGrouping />}
         <SaleProductsTable />
       </CardBody>

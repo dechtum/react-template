@@ -22,7 +22,7 @@ const prepareFilter = (queryParams, values) => {
   return newQueryParams;
 };
 
-export function SaleProductsFilter({ listLoading,name}) {
+export function SaleProductsFilter({ listLoading,name,name1}) {
   // SaleProducts UI Context
   const SaleProductsUIContext = useSaleProductsUIContext();
   const SaleProductsUIProps = useMemo(() => {
@@ -130,10 +130,16 @@ export function SaleProductsFilter({ listLoading,name}) {
                       type="button"
                       className="btn btn-primary"
                       onClick={SaleProductsUIProps.newShopsPageCreshopButtonClick}
+                      >{name1}
+                  </button>
+                  <> </>
+                  <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={SaleProductsUIProps.newShopsPageCreshopButtonClick}
                       >{name}
                   </button>
                 </div>
-
               </div>
             </div>
           </form>

@@ -2,6 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { SalePossLoadingDialog } from "./SalePoss-loading-dialog/SalePossLoadingDialog";
 import { SalePosEditDialog } from "./SalePos-edit-dialog/SalePosEditDialog";
+import { SaleListSaleDialog } from "./SalePos-listsale-dialog/SaleListSaleDialog";
 import { SalePosEditPage } from "./SalePos-edit-page/SalePosEditDialog";
 import { SalePosDeleteDialog } from "./SalePos-delete-dialog/SalePosDeleteDialog";
 import { SalePossDeleteDialog } from "./SalePoss-delete-dialog/SalePossDeleteDialog";
@@ -28,7 +29,7 @@ export function SalePossPage({ history }) {
     },
     newSalePosButtonClick: () => {
       store.dispatch({type:"pagehistory",value:2})
-      history.push(`${pages}/new`);
+      history.push(`${pages}/pagelistsale`);
     },
     openEditSalePosDialog: (id) => {
       store.dispatch({type:"pagehistory",value:3})
@@ -66,9 +67,9 @@ export function SalePossPage({ history }) {
           />
         )}
       </Route>
-      <Route path={`${pages}/new`}>
+      <Route path={`${pages}/pagelistsale`}>
         {({ history, match }) => (
-          <SalePosEditDialog
+          <SaleListSaleDialog
             show={match != null}
             onHide={() => {
               store.dispatch({type:"pagehistory",value:0})
