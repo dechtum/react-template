@@ -27,18 +27,26 @@ export function ShopsCreshopsUIProvider({ShopsCreshopsUIEvents, children}) {
     });
   }, []);
 
-  const initShopsCreshop = {
-    id: undefined,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    gender: "Female",
-    status: 0,
-    dateOfBbirth: "",
-    ipAddress: "",
-    type: 1
-  };
+
+
+  const initShopsCreshop =  {
+    id:undefined,
+    name:{
+        th:'',
+        en:'',
+    },
+    nameth:'',
+    tex:'',
+    tel:'',
+    address:'',
+    picture:'',
+    district_id:'',
+    ampher_id:'',
+    province_id:'',
+    zipcode_id:'',
+    status:'1'
+  }; 
+
 
   const value = {
     queryParams,

@@ -41,6 +41,7 @@ export function Routes() {
         <Redirect to="/auth/login" />
       ) : (
         <Layout>
+                   
           <BasePage />
         </Layout>
       )}

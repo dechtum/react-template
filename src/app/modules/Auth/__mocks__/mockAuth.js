@@ -13,7 +13,7 @@ export default function mockAuth(mock) {
     if (email && password) {
       const user = userTableMock.find(
         x =>
-          x.email.toLowerCase() === email.toLowerCase() &&
+          x.username.toLowerCase() === email.toLowerCase() &&
           x.password === password
       );
 

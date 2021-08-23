@@ -15,7 +15,7 @@ import {ServiceAlsSlice} from "../app/modules/Mpos/_redux/ServiceAls/ServiceAlsS
 import {ServiceContractsSlice} from "../app/modules/Mpos/_redux/ServiceContracts/ServiceContractsSlice";
 import {ShopsCreEmpsSlice} from "../app/modules/Mpos/_redux/ShopsCreEmps/ShopsCreEmpsSlice";
 import {StockMatsSlice} from "../app/modules/Mpos/_redux/StockMats/StockMatsSlice";
-
+ 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
   Asides: AsidesSlice.reducer,

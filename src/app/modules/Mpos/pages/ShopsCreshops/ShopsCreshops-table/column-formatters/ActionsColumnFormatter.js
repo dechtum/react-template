@@ -15,18 +15,18 @@ export function ActionsColumnFormatter(
     <>
       <a
         title="Edit ShopsCreshop"
-        className="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+        className=" btn-icon btn-light btn-hover-primary btn-sm mx-3"
         onClick={() => openEditShopsCreshopDialog(row.id)}
       >
         <span className="svg-icon svg-icon-md svg-icon-primary">
           <SVG
-            src={toAbsoluteUrl("/media/svg/icons/Communication/Write.svg")}
+            src={toAbsoluteUrl("/media/svg/icons/Design/Edit.svg")}
           />
         </span>
       </a>
       <> </>
 
-      <a
+      {/* <a
         title="Delete ShopsCreshop"
         className="btn btn-icon btn-light btn-hover-danger btn-sm"
         onClick={() => openDeleteShopsCreshopDialog(row.id)}
@@ -34,7 +34,7 @@ export function ActionsColumnFormatter(
         <span className="svg-icon svg-icon-md svg-icon-danger">
           <SVG src={toAbsoluteUrl("/media/svg/icons/General/Trash.svg")} />
         </span>
-      </a>
+      </a> */}
     </>
   );
 }

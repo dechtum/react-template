@@ -24,6 +24,7 @@ export function findShopsCreshops(queryParams) {
 
 // UPDATE => PUT: update the ShopsCreshop on the server
 export function updateShopsCreshop(ShopsCreshop) {
+
   return axios.put(`${ShopsCreshopS_URL}/${ShopsCreshop.id}`, { ShopsCreshop });
 }
 

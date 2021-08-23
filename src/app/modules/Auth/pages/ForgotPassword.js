@@ -6,12 +6,16 @@ import * as Yup from "yup";
 import { injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
 import { requestPassword } from "../_redux/authCrud";
+import { useLang, setLanguage } from './../../../../_metronic/i18n'
+import {Forget} from './../__mocks__/mockAuthLib' 
 
 const initialValues = {
   email: "",
 };
 
+
 function ForgotPassword(props) {
+  const [lang,setLang]=React.useState(useLang())
   const { intl } = props;
   const [isRequested, setIsRequested] = useState(false);
   const ForgotPasswordSchema = Yup.object().shape({
@@ -42,18 +46,24 @@ function ForgotPassword(props) {
     initialValues,
     validationSchema: ForgotPasswordSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      requestPassword(values.email)
-        .then(() => setIsRequested(true))
-        .catch(() => {
-          setIsRequested(false);
-          setSubmitting(false);
-          setStatus(
-            intl.formatMessage(
-              { id: "AUTH.VALIDATION.NOT_FOUND" },
-              { name: values.email }
-            )
-          );
-        });
+      console.log(values.email);
+      new Promise((r,j)=>{
+        Forget(values.email,r)
+      }).then((v)=>{
+        console.log(v);
+        requestPassword(values.email)
+          .then(() => setIsRequested(true))
+          .catch(() => {
+            setIsRequested(false);
+            setSubmitting(false);
+            setStatus(
+              intl.formatMessage(
+                { id: "AUTH.VALIDATION.NOT_FOUND" },
+                { name: values.email }
+              )
+            );
+          });
+      })
     },
   });
 
@@ -63,9 +73,9 @@ function ForgotPassword(props) {
       {!isRequested && (
         <div className="login-form login-forgot" style={{ display: "block" }}>
           <div className="text-center mb-10 mb-lg-20">
-            <h3 className="font-size-h1">Forgotten Password ?</h3>
+            <h3 className="font-size-h1">{lang=='en'?'Forgotten Password ?':'ลืมรหัสผ่าน ?'}</h3>
             <div className="text-muted font-weight-bold">
-              Enter your email to reset your password
+            {lang=='en'?'Enter your email to reset your password':'ใส่อีเมลของคุณเพื่อรีเซ็ตรหัสผ่านของคุณ'}
             </div>
           </div>
           <form
@@ -101,7 +111,7 @@ function ForgotPassword(props) {
                 className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
                 disabled={formik.isSubmitting}
               >
-                Submit
+                 {lang=='en'?'Submit':'ตกลง'}
               </button>
               <Link to="/auth">
                 <button
@@ -109,7 +119,7 @@ function ForgotPassword(props) {
                   id="kt_login_forgot_cancel"
                   className="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4"
                 >
-                  Cancel
+                  {lang=='en'?'Cancel':'ยกเลิก'}
                 </button>
               </Link>
             </div>

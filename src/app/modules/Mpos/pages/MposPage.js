@@ -14,8 +14,10 @@ import { ShopsCreshopsPage } from "./ShopsCreshops/ShopsCreshopsPage";
 import { StockCountsPage } from "./StockCounts/StockCountsPage";
 import { StockMatsPage } from "./StockMats/StockMatsPage";
 
-export default function MposPage() {
+import {AjaxDataShopsCreshop} from './../__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
+export default function  MposPage() {
+ 
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
       <Switch>

@@ -1,4 +1,5 @@
 import {ajax} from 'sit-fetch'
+import {host,Token} from './../../../../../app/libs/config'
 import React, { useEffect, useMemo } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import AsideTableMock from "./AsideTableMock";
@@ -6,28 +7,44 @@ import axios from "axios";
 import $ from "jquery";
 
 export const AsideS_URL = "api/esss";
-let Token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3Q1NTU1ZHNmZHMiLCJwYXNzd29yZCI6IjEifQ.783MLtL0Zy8camMbvGk7nciKHQ6XBGAwlT9wZa8F8pw';
-let hosts = "http://192.168.1.103:81";
+// let Token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3Q1NTU1ZHNmZHMiLCJwYXNzd29yZCI6IjEifQ.783MLtL0Zy8camMbvGk7nciKHQ6XBGAwlT9wZa8F8pw';
+
 export async function AjaxDataAside(resove = "") {
+  console.log(Token);
+  if(Token==null){
+    //  window.location.href=`logout`
+  }
   new Promise((r, j) => {
-    ajax.Post(`${hosts}/shoplist`, Token, {
+    ajax.Post(`${host}/shoplist`, Token, {
       "registerId":"1",
       "shopId":[""]
   }, r);
-  }).then(data => {
-    console.log(data);
-    if (data != false) {
-      let da = data != "" ? JSON.parse(data) : "";
-      const das = Object.entries(da).map(([key, value], i) => {
-        const id = parseInt(value.id);
-        const active = value.active;
-
-        const newData = {
-          id,
-          active
+  }).then(data => {   
+    const res = JSON.parse(data)
+    if (res.statusCode == 200) {     
+      if(res.data.type =="REQUEST_SUCCESS"){
+        let da = res.data.content;
+        const das = Object.entries(da).map(([key, value], i) => {
+          const id = parseInt(value.id);
+          const newData =  {
+            id:id,
+            name:{
+                th:value.name,
+                en:value.name,
+            },
+            tel:value.tel,
+            address:value.address,
+            picture:value.picture,
+            district_id:value.district_id,
+            province_id:value.province_id,
+            zipcode_id:value.zipcode_id,
+            active: parseInt(value.active)
         };
-        //AsideTableMock.push(newData);
-      });
+        
+          AsideTableMock.push(newData);
+        });
+      }
+      
       if (resove != "") {
         resove(AsideTableMock);
       } else {
@@ -49,7 +66,7 @@ export const update = (id, data, userId, r = "") => {
 
   console.log(obj);
   const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/Aside/update`, Token, obj, r)
+    ajax.Post(`${host}/Aside/update`, Token, obj, r)
   );
   res.then(v => {
     console.log(v);
@@ -84,7 +101,7 @@ export const updatedbStatus = (id, status, r = "") => {
     }
   };
   const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/Aside/update`, Token, obj, r)
+    ajax.Post(`${host}/Aside/update`, Token, obj, r)
   );
   res.then(v => {
     console.log(v);
@@ -109,7 +126,7 @@ export const deletedb = (id, r = "") => {
     id: id
   };
   const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/Aside/delete`, Token, obj, r)
+    ajax.Post(`${host}/Aside/delete`, Token, obj, r)
   );
   res.then(v => {
     console.log(v);

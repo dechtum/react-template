@@ -10,6 +10,7 @@ import axios from "axios";
 import * as _redux from "./redux";
 import store, { persistor } from "./redux/store";
 import App from "./app/App";
+import {Token,host} from './app/libs/config'
 import "./index.scss"; // Standard version
 // import "./sass/style.react.rtl.css"; // RTL version
 import "./_metronic/_assets/plugins/keenthemes-icons/font/ki.css";
@@ -27,6 +28,7 @@ import {
 import {MetronicI18nProvider} from "./_metronic/i18n";
 
 import {AjaxDataAside} from './_metronic/layout/components/aside/__mocks__/mockAsideLib'
+import {AjaxDataShopsCreshop} from './app/modules/Mpos/__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
 /**
  * Base URL of the website.
@@ -49,11 +51,11 @@ const { PUBLIC_URL } = process.env;
  * @see https://github.com/axios/axios#interceptors
  */
 new Promise((r,j)=>{
-  AjaxDataAside(r);
+ AjaxDataShopsCreshop();
+ AjaxDataAside(r); 
 })
 .then((v)=>{
   _redux.setupAxios(axios, store);
-
   ReactDOM.render(
     <MetronicI18nProvider>
       <MetronicLayoutProvider>

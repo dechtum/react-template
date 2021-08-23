@@ -7,6 +7,9 @@ import {
 } from "../ShopsCreshopsUIHelpers";
 import * as actions from "../../../_redux/ShopsCreshops/ShopsCreshopsActions";
 import { useShopsCreshopsUIContext } from "../ShopsCreshopsUIContext";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import { updatedbStatus } from './../../../__mocks__/ShopsCreshops/mockShopsCreshopLib'
+
 
 const selectedShopsCreshops = (entities, ids) => {
   const _ShopsCreshops = [];
@@ -20,8 +23,12 @@ const selectedShopsCreshops = (entities, ids) => {
 };
 
 export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
+
+  const [lang, setLang] = React.useState(useLang())
+  const ShopsCreshopStatus = [lang == 'en' ? "Inactive" : "ไม่ใช้งาน", lang == 'en' ? "Active" : "ใช้งาน", "Pending", ""];
   // ShopsCreshops UI Context
   const ShopsCreshopsUIContext = useShopsCreshopsUIContext();
+
   const ShopsCreshopsUIProps = useMemo(() => {
     return {
       ids: ShopsCreshopsUIContext.ids,
@@ -31,13 +38,14 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
   }, [ShopsCreshopsUIContext]);
 
   // ShopsCreshops Redux state
-  const { ShopsCreshops, isLoading } = useSelector(
+  const { ShopsCreshops, isLoading, auth } = useSelector(
     (state) => ({
       ShopsCreshops: selectedShopsCreshops(
         state.ShopsCreshops.entities,
         ShopsCreshopsUIProps.ids
       ),
       isLoading: state.ShopsCreshops.actionsLoading,
+      auth: state.auth
     }),
     shallowEqual
   );
@@ -54,20 +62,30 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
 
   const dispatch = useDispatch();
   const updateStatus = () => {
-    // server request for update ShopsCreshops status by selected ids
-    dispatch(actions.updateShopsCreshopsStatus(ShopsCreshopsUIProps.ids, status)).then(
-      () => {
-        // refresh list after deletion
-        dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams)).then(
+   
+    new Promise((r, j) => {
+      updatedbStatus(ShopsCreshopsUIProps.ids, auth.authToken, auth.user.id, status, r);
+    })
+      .then((v) => {  
+              
+         // server request for update ShopsCreshops status by selected ids
+         dispatch(actions.updateShopsCreshopsStatus(ShopsCreshopsUIProps.ids, status)).then(
           () => {
-            // clear selections list
-            ShopsCreshopsUIProps.setIds([]);
-            // closing delete modal
-            onHide();
+            // refresh list after deletion
+            dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams)).then(
+              () => {
+                // clear selections list
+                setStatus(0)
+                console.log(v);
+                ShopsCreshopsUIProps.setIds([]);
+                // closing delete modal
+                onHide();
+              }
+            );
           }
         );
-      }
-    );
+      })
+
   };
 
   return (
@@ -78,7 +96,8 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">
-          Status has been updated for selected ShopsCreshops
+          {lang == 'en' ? 'Status is updated' : 'สถานะได้รับการอัปเดต'}
+
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="overlay overlay-block cursor-default">
@@ -92,9 +111,9 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
         <table className="table table table-head-custom table-vertical-center overflow-hidden">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>STATUS</th>
-              <th>ShopsCreshop</th>
+              <th>{lang == 'en' ? 'No.' : 'ลำดับ'}</th>
+              <th>{lang == 'en' ? 'STATUS' : 'สถานะ'}</th>
+              <th>{lang == 'en' ? 'SHOP' : 'ร้านค้า'}</th>
             </tr>
           </thead>
           <tbody>
@@ -103,17 +122,16 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
                 <td>{ShopsCreshop.id}</td>
                 <td>
                   <span
-                    className={`label label-lg label-light-${
-                      ShopsCreshopStatusCssClasses[ShopsCreshop.status]
-                    } label-inline`}
+                    className={`label label-lg label-light-${ShopsCreshopStatusCssClasses[ShopsCreshop.status]
+                      } label-inline`}
                   >
                     {" "}
-                    {ShopsCreshopStatusTitles[ShopsCreshop.status]}
+                    {ShopsCreshopStatus[ShopsCreshop.status]}
                   </span>
                 </td>
                 <td>
                   <span className="ml-3">
-                    {ShopsCreshop.lastName}, {ShopsCreshop.firstName}
+                    {ShopsCreshop.nameth}
                   </span>
                 </td>
               </tr>
@@ -128,9 +146,8 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
             value={status}
             onChange={(e) => setStatus(+e.target.value)}
           >
-            <option value="0">Suspended</option>
-            <option value="1">Active</option>
-            <option value="2">Pending</option>
+            <option value="0">{lang == 'en' ? 'Inactive' : 'ไม่ใช้งาน'}</option>
+            <option value="1">{lang == 'en' ? 'Active' : 'ใช้งาน'}</option>
           </select>
         </div>
         <div className="form-group">
@@ -139,14 +156,14 @@ export function ShopsCreshopsUpdateStateDialog({ show, onHide }) {
             onClick={onHide}
             className="btn btn-light btn-elevate mr-3"
           >
-            Cancel
+            {lang == 'en' ? 'Cancel' : 'ยกเลิก'}
           </button>
           <button
             type="button"
             onClick={updateStatus}
             className="btn btn-primary btn-elevate"
           >
-            Update Status
+            {lang == 'en' ? 'Update Status' : 'อัพเดทสถานะ'}
           </button>
         </div>
       </Modal.Footer>

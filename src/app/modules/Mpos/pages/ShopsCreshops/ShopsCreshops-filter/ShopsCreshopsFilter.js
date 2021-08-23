@@ -2,6 +2,9 @@ import React, { useMemo } from "react";
 import { Formik } from "formik";
 import { isEqual } from "lodash";
 import { useShopsCreshopsUIContext } from "../ShopsCreshopsUIContext";
+import { toAbsoluteUrl } from "../../../../../../_metronic/_helpers";
+import SVG from "react-inlinesvg";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 const prepareFilter = (queryParams, values) => {
   const { status, type, searchText } = values;
@@ -24,6 +27,7 @@ const prepareFilter = (queryParams, values) => {
 
 export function ShopsCreshopsFilter({ listLoading,name}) {
   // ShopsCreshops UI Context
+  const [lang,setLang]=React.useState(useLang())
   const ShopsCreshopsUIContext = useShopsCreshopsUIContext();
   const ShopsCreshopsUIProps = useMemo(() => {
     return {
@@ -78,17 +82,16 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
                   onBlur={handleBlur}
                   value={values.status}
                 >
-                  <option value="">All</option>
-                  <option value="0">Susspended</option>
-                  <option value="1">Active</option>
-                  <option value="2">Pending</option>
+                  <option value="">{lang=='en'?'All':'ทั้งหมด'}</option>
+                  <option value="0">{lang=='en'?'Inactive':'ไม่ได้ใช้งาน'}</option>
+                  <option value="1">{lang=='en'?'Active':'ใช้งาน'}</option>
                 </select>
                 <small className="form-text text-muted">
 
                 </small>
               </div>
               <div className="col-lg-2">
-                <select
+                {/* <select
                   className="form-control"
                   placeholder="Filter by Type"
                   name="type"
@@ -105,7 +108,7 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
                 </select>
                 <small className="form-text text-muted">
 
-                </small>
+                </small> */}
               </div>
               <div className="col-lg-2">
                 <input
@@ -130,7 +133,11 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
                       type="button"
                       className="btn btn-primary"
                       onClick={ShopsCreshopsUIProps.newShopsPageCreshopButtonClick}
-                      >{name}
+                      ><span className="svg-icon svg-icon-md svg-icon-ligth">
+                      <SVG
+                        src={toAbsoluteUrl("/media/svg/icons/Code/Plus.svg")}
+                      />
+                    </span>{name}
                   </button>
                 </div>
 

@@ -11,6 +11,8 @@ import { ShopsCreshopsGrouping } from "./ShopsCreshops-grouping/ShopsCreshopsGro
 import { useShopsCreshopsUIContext } from "./ShopsCreshopsUIContext";
 import { Link } from "react-router-dom";
 import { useLang, setLanguage } from "./../../../../../_metronic/i18n";
+import { toAbsoluteUrl } from "../../../../../_metronic/_helpers";
+import SVG from "react-inlinesvg";
 
 export function ShopsCreshopsCard() {
   const ShopsCreshopsUIContext = useShopsCreshopsUIContext();
@@ -34,6 +36,7 @@ export function ShopsCreshopsCard() {
 
       </CardHeader>
       <CardBody>
+      
         <ShopsCreshopsFilter  name={useLang()=='en'?"New":"เพิ่ม"}/>
         {ShopsCreshopsUIProps.ids.length > 0 && <ShopsCreshopsGrouping />}
         <ShopsCreshopsTable />

@@ -7,8 +7,14 @@ import Login from "./Login";
 import Registration from "./Registration";
 import ForgotPassword from "./ForgotPassword";
 import "../../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
+import { useLang, setLanguage } from './../../../../_metronic/i18n' 
 
 export function AuthPage() {
+  const [lang,setLang]=React.useState(useLang())
+  function handleClick(name){
+    setLanguage(name)
+    setLang(name)
+  }
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -21,9 +27,9 @@ export function AuthPage() {
           <div
             className="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10"
             style={{
-              backgroundImage: `url(${toAbsoluteUrl("/media/bg/bg-4.jpg")})`,
+              backgroundImage: `url(${toAbsoluteUrl("/media/bg/bg-1.jpg")})`,
             }}
-          >
+          > 
             {/*begin: Aside Container*/}
             <div className="d-flex flex-row-fluid flex-column justify-content-between">
               {/* start:: Aside header */}
@@ -39,11 +45,12 @@ export function AuthPage() {
               {/* start:: Aside content */}
               <div className="flex-column-fluid d-flex flex-column justify-content-center">
                 <h3 className="font-size-h1 mb-5 text-white">
-                  Welcome to Metronic!
+                  {lang=='en'?'Welcome to MPOS Service':'ยินดีต้อนรับสู่บริการ MPOS'}
                 </h3>
                 <p className="font-weight-lighter text-white opacity-80">
-                  The ultimate Bootstrap & React 16 admin theme framework for
-                  next generation web apps.
+                  {lang=='en'?'Service to help manage sales work for you.':'บริการช่วยจัดการงานขายเพื่อคุณ'}
+                  
+                 
                 </p>
               </div>
               {/* end:: Aside content */}
@@ -51,17 +58,14 @@ export function AuthPage() {
               {/* start:: Aside footer for desktop */}
               <div className="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
                 <div className="opacity-70 font-weight-bold	text-white">
-                  &copy; 2020 Metronic
+                  &copy; 2021 {lang=='en'?'Soft In Tech':'ซอฟต์ อิน เทค'}
                 </div>
                 <div className="d-flex">
                   <Link to="/terms" className="text-white">
-                    Privacy
+                   {lang=='en'?'Privacy':'ความเป็นส่วนตัว'}
                   </Link>
                   <Link to="/terms" className="text-white ml-10">
-                    Legal
-                  </Link>
-                  <Link to="/terms" className="text-white ml-10">
-                    Contact
+                    {lang=='en'?'Contact':'ติดต่อ'}
                   </Link>
                 </div>
               </div>
@@ -75,15 +79,20 @@ export function AuthPage() {
           <div className="d-flex flex-column flex-row-fluid position-relative p-7 overflow-hidden">
             {/*begin::Content header*/}
             <div className="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10">
+              <span className="mr-6">
+                <a onClick={()=>handleClick('th')}>TH</a>
+                <label className="mr-1 ml-1">|</label>
+                <a onClick={()=>handleClick('en')}>EN</a>
+              </span>
               <span className="font-weight-bold text-dark-50">
-                Don't have an account yet?
+                 {lang=='en'?"Don't have an account yet ?":'ไม่มีบัญชี ?'}
               </span>
               <Link
                 to="/auth/registration"
                 className="font-weight-bold ml-2"
                 id="kt_login_signup"
               >
-                Sign Up!
+                {lang=='en'?"Sign Up!":'สร้างบัญชี ?'}
               </Link>
             </div>
             {/*end::Content header*/}
@@ -109,24 +118,15 @@ export function AuthPage() {
             {/* begin::Mobile footer */}
             <div className="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
               <div className="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">
-                &copy; 2020 Metronic
+                &copy; 2021 {lang=='en'?'Soft In Tech':'ซอฟต์ อิน เทค'}
               </div>
               <div className="d-flex order-1 order-sm-2 my-2">
-                <Link to="/terms" className="text-dark-75 text-hover-primary">
-                  Privacy
-                </Link>
-                <Link
-                  to="/terms"
-                  className="text-dark-75 text-hover-primary ml-4"
-                >
-                  Legal
-                </Link>
-                <Link
-                  to="/terms"
-                  className="text-dark-75 text-hover-primary ml-4"
-                >
-                  Contact
-                </Link>
+              <Link to="/terms" className="text-white">
+                   {lang=='en'?'Privacy':'ความเป็นส่วนตัว'}
+                  </Link>
+                  <Link to="/terms" className="text-white ml-10">
+                    {lang=='en'?'Contact':'ติดต่อ'}
+                  </Link>
               </div>
             </div>
             {/* end::Mobile footer */}

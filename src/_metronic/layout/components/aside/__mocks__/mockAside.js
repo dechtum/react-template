@@ -19,6 +19,7 @@ export default function mockAside(mock) {
     const id = generateUserId();
     const newAside = {
       id,
+      tel,
       name,
       address,
       picture,

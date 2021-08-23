@@ -6,6 +6,7 @@ import { ShopsCreshopEditDialogHeader } from "./ShopsCreshopEditDialogHeader";
 import { ShopsCreshopEditForm } from "./ShopsCreshopEditForm";
 import { useShopsCreshopsUIContext } from "../ShopsCreshopsUIContext";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {update} from './../../../__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
 export function ShopsCreshopEditPage({ id, show, onHide }) {
   // ShopsCreshops UI Context
@@ -18,27 +19,47 @@ export function ShopsCreshopEditPage({ id, show, onHide }) {
 
   // ShopsCreshops Redux state
   const dispatch = useDispatch();
-  const { actionsLoading, ShopsCreshopForEdit } = useSelector(
+  const { actionsLoading, ShopsCreshopForEdit ,auth} = useSelector(
     (state) => ({
       actionsLoading: state.ShopsCreshops.actionsLoading,
       ShopsCreshopForEdit: state.ShopsCreshops.ShopsCreshopForEdit,
+      auth:state.auth
     }),
     shallowEqual
   );
 
   useEffect(() => {
     // server call for getting ShopsCreshop by id
+    
     dispatch(actions.fetchShopsCreshop(id));
+ 
   }, [id, dispatch]);
+ 
 
   // server request for saving ShopsCreshop
-  const saveShopsCreshop = (ShopsCreshop) => {
+  const saveShopsCreshop = (ShopsCreshop,setOnsave) => {
+   
     if (!id) {
       // server request for creating ShopsCreshop
-      dispatch(actions.createShopsCreshop(ShopsCreshop)).then(() => onHide());
+      new Promise((r,j)=>{        
+        update('',auth.authToken,auth.user.id,ShopsCreshop,r)
+      })
+      .then((v)=>{
+        console.log(v);
+        setOnsave(false)
+        dispatch(actions.createShopsCreshop(v)).then(() => onHide());
+      })
+      
     } else {
       // server request for updating ShopsCreshop
-      dispatch(actions.updateShopsCreshop(ShopsCreshop)).then(() => onHide());
+      new Promise((r,j)=>{        
+        update(id,auth.authToken,auth.user.id,ShopsCreshop,r)
+      })
+      .then((v)=>{
+        setOnsave(false)
+        dispatch(actions.updateShopsCreshop(v)).then(() => onHide());
+      })
+      
     }
   };
   return (
@@ -51,6 +72,7 @@ export function ShopsCreshopEditPage({ id, show, onHide }) {
         onHide={onHide}
         id={id}
         useLang={useLang()}
+        auth={auth}
       />
     </div>
 

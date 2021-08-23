@@ -21,6 +21,7 @@ import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useShopsCreshopsUIContext } from "../ShopsCreshopsUIContext";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {AjaxDataShopsCreshop} from "./../../../__mocks__/ShopsCreshops/mockShopsCreshopLib";
 
 export function ShopsCreshopsTable() {
   // ShopsCreshops UI Context
@@ -42,13 +43,14 @@ export function ShopsCreshopsTable() {
     shallowEqual
   );
   const { totalCount, entities, listLoading } = currentState;
-
+  
   // ShopsCreshops Redux state
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEffect(() => {    
     // clear selections list
     ShopsCreshopsUIProps.setIds([]);
     // server call by queryParams
+  
     dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ShopsCreshopsUIProps.queryParams, dispatch]);
@@ -56,56 +58,43 @@ export function ShopsCreshopsTable() {
   const columns = [
     {
       dataField: "id",
-      text: "ID",
+      text:  `${useLang()=='en'?'No.':'ลำดับที่'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "firstName",
-      text: `${useLang()=='en'?'Firstname':'for thai'}`,
+      dataField: "nameth",
+      text: `${useLang()=='en'?'name':'ชื่อ'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "lastName",
-      text: "Lastname",
+      dataField: "tel",
+      text:  `${useLang()=='en'?'Phone':'โทรศัพท์'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "email",
-      text: "Email",
+      dataField: "address",
+      text:  `${useLang()=='en'?'address':'ที่อยู่'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "gender",
-      text: "Gender",
-      sort: false,
-      sortCaret: sortCaret,
-    },
-    {
-      dataField: "status",
-      text: "Status",
+      dataField: "active",
+      text: `${useLang()=='en'?'status':'สถานะ'}`,
       sort: true,
       sortCaret: sortCaret,
       formatter: columnFormatters.StatusColumnFormatter,
       headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "Type",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.TypeColumnFormatter,
-    },
+    },   
     {
       dataField: "action",
-      text: "Actions",
+      text:  `${useLang()=='en'?'action':'การกระทำ'}`,
       formatter: columnFormatters.ActionsColumnFormatter,
       formatExtraData: {
         openEditShopsCreshopDialog: ShopsCreshopsUIProps.openEditShopsCreshopDialog,

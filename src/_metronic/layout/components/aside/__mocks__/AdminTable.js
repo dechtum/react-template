@@ -15,48 +15,7 @@ export default [
                 to: '/mpos/ร้านค้า/สร้างร้านค้า',
                 icon: 'menu-bullet-dot',
                 child: [
-                    {
-                        parent: {
-                            th: 'ร้านค้า1',
-                            en: 'Shop1'
-                        },
-                        to: '',
-                        icon: 'menu-bullet-dot',
-                        child: [
-                            {
-                                parent: {
-                                    th: 'ร้านค้า2',
-                                    en: 'Shop2'
-                                },
-                                to: '',
-                                icon: 'menu-bullet-dot',
-                                child: [
-                                    {
-                                        parent: {
-                                            th: 'ร้านค้า21',
-                                            en: 'Shop21'
-                                        },
-                                        to: '',
-                                        icon: 'menu-bullet-dot',
-                                        child: [
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                parent: {
-                                    th: 'ร้านค้า3',
-                                    en: 'Shop3'
-                                },
-                                to: '',
-                                icon: 'menu-bullet-dot',
-                                child: [
-
-                                ]
-                            }
-                        ]
-                    }
+                    
                 ]
             },
             {

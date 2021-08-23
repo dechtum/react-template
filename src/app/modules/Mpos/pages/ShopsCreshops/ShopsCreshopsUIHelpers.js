@@ -1,5 +1,7 @@
+
 export const ShopsCreshopStatusCssClasses = ["danger", "success", "info", ""];
-export const ShopsCreshopStatusTitles = ["Suspended", "Active", "Pending", ""];
+export const ShopsCreshopStatusTitles =["Inactive", "Active", "Pending", ""];
+ 
 export const ShopsCreshopTypeCssClasses = ["success", "primary", ""];
 export const ShopsCreshopTypeTitles = ["Business", "Individual", ""];
 export const defaultSorted = [{ dataField: "id", order: "asc" }];
@@ -20,3 +22,4 @@ export const initialFilter = {
   pageNumber: 1,
   pageSize: 10
 };
+

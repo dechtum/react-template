@@ -17,11 +17,11 @@ export function ShopsCreshopEditDialogHeader({ id,onHide }) {
   const [title, setTitle] = useState("");
   // Title couting
   let til = useLang()=='en'?"Edit Shop":"เพิ่ม ร้านค้า";
-  let tilE = useLang()=='en'?"Edit Shop":"แก้ไข ร้านค้า";
+  let tilE = useLang()=='en'?"Edit":"แก้ไข";
   useEffect(() => {
     let _title = id ? "" :`${til}` ;
     if (ShopsCreshopForEdit && id) {
-      _title = `${tilE} '${ShopsCreshopForEdit.firstName}'`;
+      _title = `${tilE} '${ShopsCreshopForEdit.nameth}'`;
     }
 
     setTitle(_title);

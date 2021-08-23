@@ -12,6 +12,8 @@ import { Items } from './itemmenu/item'
 import Admin from '../__mocks__/AdminTable'
 import Saler from '../__mocks__/SalerTable'
 import AsideTableMock from '../__mocks__/AsideTableMock'
+import $ from 'jquery'
+import {_store} from './../../../../../app/modules/Mpos/_store'
 
 
 import {
@@ -27,6 +29,8 @@ const AsideUIContext = createContext();
 export function useAsidesUIContext() {
     return useContext(AsideUIContext);
 }
+const PuyMatsUIContext = createContext();
+
 
 export function AsideMenuList({ layoutProps }) {
   const[id,setId]=React.useState(undefined);
@@ -34,7 +38,7 @@ export function AsideMenuList({ layoutProps }) {
   const location = useLocation();
 
   const initAside = {
-    id: undefined,
+    id: id,
     name: "",
     tel: "",
     address: "",
@@ -55,23 +59,42 @@ export function AsideMenuList({ layoutProps }) {
     }),
     shallowEqual
   );
-  
+  const value = {
+    initAside
+  };
   useEffect(() => {
     // server call for getting Aside by id
-   // dispatch(actions.fetchAsides(AsideTableMock));
-   
-    dispatch(actions.fetchAsides(AsideTableMock)).then();
-  }, [id, dispatch]);
+   //dispatch(actions.fetchAsides(initAside));
+   const store = _store.getState();
+   setId(window.localStorage.getItem('STORE')||0)
+   _store.dispatch({
+    type:'shop',
+    value:({
+      ...store.shop,
+      id:id
+    })
+  })
+  
+    // dispatch(actions.fetchAsides(AsideTableMock)).then();
+  }, [id]);
 
   // server request for saving Aside
-  const saveAside = (Aside) => {
-    if (!id) {
-      // server request for creating Aside
-      dispatch(actions.createAside(Aside)).then();
-    } else {
-      // server request for updating Aside
-      dispatch(actions.updateAside(Aside)).then();
-    }
+  const saveAside = (e) => {
+   
+    const store = _store.getState(); 
+    let {name,value} = e.target;
+    let optxt = e.target[value].text
+    window.localStorage.setItem('STORE',value);
+    setId(value);
+   
+    _store.dispatch({
+      type:'shop',
+      value:({
+        ...store.shop,
+        id:value,
+        name:optxt
+      })
+    })
   };
 
   
@@ -84,14 +107,15 @@ export function AsideMenuList({ layoutProps }) {
 
 
   return (
-    <>
+    <PuyMatsUIContext.Provider value={value}>
+   
       <ul className={`menu-nav ${layoutProps.ulClasses}`}>
         <li
           className={`menu-item ${getMenuItemActive("/เลือกบริษัท", false)}`}
           aria-haspopup="true"
         >
           <div className="form-group pl-2 pr-2">
-            <select className="form-control form-control-solid theme-select">
+            <select className="form-control form-control-solid theme-select" value={id} onChange={saveAside}>
               <option value="0">{lang == 'en' ? 'Select Company/Store' : 'เลือกบริษัท/ร้านค้า'}</option>
               {
                 AsideTableMock.map((val, key) => {
@@ -128,6 +152,6 @@ export function AsideMenuList({ layoutProps }) {
       </ul>
 
       {/* end::Menu Nav */}
-    </>
+    </PuyMatsUIContext.Provider>
   );
 }

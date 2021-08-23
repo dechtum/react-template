@@ -20,7 +20,7 @@ export function ShopsCreshopsPage({ history }) {
   history.location.pathname.split("/")[2]+
   "/" +
   history.location.pathname.split("/")[3];
-
+ 
   const ShopsCreshopsUIEvents = {
     newShopsPageCreshopButtonClick: () => {
       store.dispatch({type:"pagehistory",value:1})
@@ -51,7 +51,11 @@ export function ShopsCreshopsPage({ history }) {
       history.push(`${pages}/updateStatus`);
     }
   }
-
+  const u = history.location.pathname.split("/");
+  React.useLayoutEffect(()=>{
+    store.dispatch({type:"pagehistory",value:0})
+  },[u])
+  
   return (
     <ShopsCreshopsUIProvider ShopsCreshopsUIEvents={ShopsCreshopsUIEvents}>
       <ShopsCreshopsLoadingDialog />
@@ -79,7 +83,7 @@ export function ShopsCreshopsPage({ history }) {
       </Route>
       <Route path={`${pages}/:id/edit`}>
         {({ history, match }) => (
-          <ShopsCreshopEditDialog
+          <ShopsCreshopEditPage
             show={match != null}
             id={match && match.params.id}
             onHide={() => {

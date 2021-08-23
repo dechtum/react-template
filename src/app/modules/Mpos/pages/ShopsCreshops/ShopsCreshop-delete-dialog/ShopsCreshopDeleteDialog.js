@@ -4,8 +4,10 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {ModalProgressBar} from "../../../../../../_metronic/_partials/controls";
 import * as actions from "../../../_redux/ShopsCreshops/ShopsCreshopsActions";
 import {useShopsCreshopsUIContext} from "../ShopsCreshopsUIContext";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 export function ShopsCreshopDeleteDialog({ id, show, onHide }) {
+  const [lang,setLang]=React.useState(useLang())
   // ShopsCreshops UI Context
   const ShopsCreshopsUIContext = useShopsCreshopsUIContext();
   const ShopsCreshopsUIProps = useMemo(() => {
@@ -21,26 +23,18 @@ export function ShopsCreshopDeleteDialog({ id, show, onHide }) {
     (state) => ({ isLoading: state.ShopsCreshops.actionsLoading }),
     shallowEqual
   );
-
-  // if !id we should close modal
   useEffect(() => {
     if (!id) {
       onHide();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // looking for loading/dispatch
   useEffect(() => {}, [isLoading, dispatch]);
-
   const deleteShopsCreshop = () => {
-    // server request for deleting ShopsCreshop by id
+   
     dispatch(actions.deleteShopsCreshop(id)).then(() => {
-      // refresh list after deletion
       dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams));
-      // clear selections list
       ShopsCreshopsUIProps.setIds([]);
-      // closing delete modal
       onHide();
     });
   };
@@ -56,14 +50,14 @@ export function ShopsCreshopDeleteDialog({ id, show, onHide }) {
       {/*end::Loading*/}
       <Modal.Header closeButton>
         <Modal.Title id="example-modal-sizes-title-lg">
-          ShopsCreshop Delete
+          {lang=='en'?'Delete':'ลบ'}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {!isLoading && (
-          <span>Are you sure to permanently delete this ShopsCreshop?</span>
+          <span>{lang=='en'?'Are you sure to permanently delete this Shops ?':'คุณแน่ใจหรือว่าลบร้านค้านี้อย่างถาวร ?'}</span>
         )}
-        {isLoading && <span>ShopsCreshop is deleting...</span>}
+        {isLoading && <span>{lang=='en'?'Shops is deleting...':'กำลังลบร้านค้า...'}</span>}
       </Modal.Body>
       <Modal.Footer>
         <div>
@@ -72,7 +66,7 @@ export function ShopsCreshopDeleteDialog({ id, show, onHide }) {
             onClick={onHide}
             className="btn btn-light btn-elevate"
           >
-            Cancel
+            {lang=='en'?'Cancel':'ยกเลิก'}
           </button>
           <> </>
           <button
@@ -80,7 +74,7 @@ export function ShopsCreshopDeleteDialog({ id, show, onHide }) {
             onClick={deleteShopsCreshop}
             className="btn btn-primary btn-elevate"
           >
-            Delete
+            {lang=='en'?'Delete':'ลบ'}
           </button>
         </div>
       </Modal.Footer>

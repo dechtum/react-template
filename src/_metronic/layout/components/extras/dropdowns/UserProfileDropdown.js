@@ -21,7 +21,6 @@ export function UserProfileDropdown() {
         "light",
     };
   }, [uiService]);
-
   return (
     <Dropdown drop="down" alignRight>
       <Dropdown.Toggle

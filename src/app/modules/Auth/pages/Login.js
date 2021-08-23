@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
 import { login } from "../_redux/authCrud";
+import { useLang, setLanguage } from './../../../../_metronic/i18n' 
+import {SetDataLogin} from './../__mocks__/mockAuthLib'
 
 /*
   INTL (i18n) docs:
@@ -16,18 +18,19 @@ import { login } from "../_redux/authCrud";
   Formik+YUP:
   https://jaredpalmer.com/formik/docs/tutorial#getfieldprops
 */
-
+// 
 const initialValues = {
-  email: "admin@demo.com",
-  password: "demo",
+  email: "test5555dsfds",
+  password: "S123456",
 };
 
 function Login(props) {
+  
   const { intl } = props;
   const [loading, setLoading] = useState(false);
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Wrong email format")
+      // .email("Wrong email format")
       .min(3, "Minimum 3 symbols")
       .max(50, "Maximum 50 symbols")
       .required(
@@ -68,24 +71,30 @@ function Login(props) {
   const formik = useFormik({
     initialValues,
     validationSchema: LoginSchema,
-    onSubmit: (values, { setStatus, setSubmitting }) => {
+    onSubmit: (values, { setStatus, setSubmitting }) => {   
       enableLoading();
-      setTimeout(() => {
-        login(values.email, values.password)
-          .then(({ data: { accessToken } }) => {
-            disableLoading();
-            props.login(accessToken);
-          })
-          .catch(() => {
-            disableLoading();
-            setSubmitting(false);
-            setStatus(
-              intl.formatMessage({
-                id: "AUTH.VALIDATION.INVALID_LOGIN",
-              })
-            );
-          });
-      }, 1000);
+      new Promise((r,j)=>{
+        SetDataLogin(values.email, values.password,r);
+      })
+      .then((v)=>{    
+        setTimeout(() => {       
+          login(values.email, values.password)
+            .then(({ data: { accessToken } }) => {  
+              disableLoading();
+              props.login(accessToken);
+            })
+            .catch(() => {
+              disableLoading();
+              setSubmitting(false);
+              setStatus(
+                intl.formatMessage({
+                  id: "AUTH.VALIDATION.INVALID_LOGIN",
+                })
+              );
+            });
+        }, 1000);
+      })
+      
     },
   });
 
@@ -94,10 +103,11 @@ function Login(props) {
       {/* begin::Head */}
       <div className="text-center mb-10 mb-lg-20">
         <h3 className="font-size-h1">
-          <FormattedMessage id="AUTH.LOGIN.TITLE" />
+          {useLang()=='en'?
+          <FormattedMessage id="AUTH.LOGIN.TITLE" />:'เข้าสู่ระบบบัญชี'}
         </h3>
         <p className="text-muted font-weight-bold">
-          Enter your username and password
+          {useLang()=='en'?'Enter your username and password':'ใส่ชื่อผู้ใช้และรหัสผ่านของคุณ'}
         </p>
       </div>
       {/* end::Head */}
@@ -112,18 +122,13 @@ function Login(props) {
             <div className="alert-text font-weight-bold">{formik.status}</div>
           </div>
         ) : (
-          <div className="mb-10 alert alert-custom alert-light-info alert-dismissible">
-            <div className="alert-text ">
-              Use account <strong>admin@demo.com</strong> and password{" "}
-              <strong>demo</strong> to continue.
-            </div>
-          </div>
+         ''
         )}
 
         <div className="form-group fv-plugins-icon-container">
           <input
-            placeholder="Email"
-            type="email"
+            placeholder={useLang()=='en'?"Username":"ชื่อผู้ใช้"}
+            type="text"
             className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
               "email"
             )}`}
@@ -138,7 +143,7 @@ function Login(props) {
         </div>
         <div className="form-group fv-plugins-icon-container">
           <input
-            placeholder="Password"
+            placeholder={useLang()=='en'?"Password":"รหัสผ่าน"}
             type="password"
             className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
               "password"
@@ -158,7 +163,9 @@ function Login(props) {
             className="text-dark-50 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
           >
-            <FormattedMessage id="AUTH.GENERAL.FORGOT_BUTTON" />
+            {useLang()=='en'?
+            <FormattedMessage id="AUTH.GENERAL.FORGOT_BUTTON" />:'ลืมรหัสผ่าน'}
+            
           </Link>
           <button
             id="kt_login_signin_submit"
@@ -166,7 +173,7 @@ function Login(props) {
             disabled={formik.isSubmitting}
             className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
           >
-            <span>Sign In</span>
+            <span>{useLang()=='en'?'Sign In':'เข้าสู่ระบบ'}</span>
             {loading && <span className="ml-3 spinner spinner-white"></span>}
           </button>
         </div>

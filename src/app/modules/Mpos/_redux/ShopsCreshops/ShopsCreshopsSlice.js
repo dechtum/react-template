@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {AjaxDataShopsCreshop} from './../../__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
 const initialShopsCreshopsState = {
   listLoading: false,

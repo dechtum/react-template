@@ -4,20 +4,15 @@ let today = `${now.getFullYear()}-${
 }-${now.getDate() < 9 ? "0" + now.getDate() : now.getDate()}`;
 
 export const Init = {
-  id:'',
-  name:{
-      th:'',
-      en:'',
-  },
-  nameth:'',
-  tex:'',
-  tel:'',
-  address:'',
-  picture:'',
-  district_id:'',
-  ampher_id:'',
-  province_id:'',
-  zipcode_id:'',
-  status: '',
+  shop: {
+    id: undefined,
+    name: "",
+    tel: "",
+    address: "",
+    picture: "",
+    district_id: "",
+    province_id: "",
+    zipcode_id: "",
+    active: ""
+  }
 };
-

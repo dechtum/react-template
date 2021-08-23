@@ -1,35 +1,46 @@
 import ShopsCreshopTableMock from "./ShopsCreshopTableMock";
 import MockUtils from "./../mock.utils";
+import {AjaxDataShopsCreshop} from './mockShopsCreshopLib'
 
 export default function mockShopsCreshop(mock) {
+  
   mock.onPost("api/ShopsCreshops").reply(({ data }) => {
     const { ShopsCreshop } = JSON.parse(data);
+    console.log(ShopsCreshop);
     const {
-      firstName = "",
-      lastName = "",
-      email = "",
-      userName = "",
-      gender = "Female",
-      status = 0,
-      dateOfBbirth = "01/01/2019",
-      ipAddress = "127.0.0.1",
-      type = 1
+      id,
+      name = "",
+      nameth="",
+      tex = "",
+      tel = "",
+      address = "",
+      picture = "",
+      pictureContent = "",
+      district_id = "",
+      ampher_id = "",
+      province_id = "",
+      zipcode_id = "",
+      status = 1
     } = ShopsCreshop;
 
-    const id = generateUserId();
+    // const id = generateUserId();
     const newShopsCreshop = {
-      id,
-      firstName,
-      lastName,
-      email,
-      userName,
-      gender,
-      status,
-      dateOfBbirth,
-      ipAddress,
-      type
+      id: id,
+      name: name,
+      nameth: nameth,
+      tex: tex,
+      tel: tel,
+      address: address,
+      picture: picture,
+      pictureContent: pictureContent,
+      district_id: district_id,
+      ampher_id: ampher_id,
+      province_id: province_id,
+      zipcode_id: zipcode_id,
+      status: status
     };
     ShopsCreshopTableMock.push(newShopsCreshop);
+    console.log(ShopsCreshopTableMock);
     return [200, { ShopsCreshop: newShopsCreshop }];
   });
 
@@ -77,11 +88,13 @@ export default function mockShopsCreshop(mock) {
   mock.onPut(/api\/ShopsCreshops\/\d+/).reply(config => {
     const id = config.url.match(/api\/ShopsCreshops\/(\d+)/)[1];
     const { ShopsCreshop } = JSON.parse(config.data);
+    
     const index = ShopsCreshopTableMock.findIndex(el => el.id === +id);
-    if (!index) {
+   
+    if (index<0) {
       return [400];
     }
-
+    console.log(index);
     ShopsCreshopTableMock[index] = { ...ShopsCreshop };
     return [200];
   });

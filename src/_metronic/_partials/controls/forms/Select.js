@@ -1,6 +1,5 @@
 import React from "react";
-import {useField} from "formik";
-import {FieldFeedbackLabel} from "./FieldFeedbackLabel";
+import {FieldFeedbackLabel} from "./FieldFeedbackLabel";;
 
 const getFieldCSSClasses = (touched, errors) => {
   const classes = ["form-control", "form-control-solid"];
@@ -15,22 +14,24 @@ const getFieldCSSClasses = (touched, errors) => {
   return classes.join(" ");
 };
 
-export function Select({
+export function Select({ 
+  field, // { name, value, onChange, onBlur }
+  form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   label,
   withFeedbackLabel = true,
-  type = "text",
   customFeedbackLabel,
   children,
   sublabel,
   ...props
 }) {
-  const [field, meta] = useField(props);
-  const { touched, error } = meta;
+  // const [field, meta] = useField(props);
+  // const { touched, error } = meta;
+  
   return (
     <>
       {label}
       <select
-        className={getFieldCSSClasses(touched, error)}
+        className={getFieldCSSClasses(touched, errors)}
         {...field}
         {...props}
       >
@@ -38,7 +39,7 @@ export function Select({
       </select>
       {withFeedbackLabel && (
         <FieldFeedbackLabel
-          erros={error}
+          erros={errors}
           touched={touched}
           label={label}
           sublabel={sublabel}

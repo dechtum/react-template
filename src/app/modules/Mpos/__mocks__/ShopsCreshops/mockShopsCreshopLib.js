@@ -1,133 +1,220 @@
-import Ajax, { ajax } from "./../../../libs/ajax";
-import { Token, hosts, hostname } from "./../../../libs/config";
-import * as actions from "../_redux/esss/esssActions";
+
+import { host, Token } from "./../../../../libs/config";
+import { useLang, setLanguage } from './../../../../../_metronic/i18n'
 import React, { useEffect, useMemo } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import essTableMock from "./essTableMock";
+import ShopsCreshopTableMock from "./ShopsCreshopTableMock";
+import ProviceTableMock from "./ProviceTableMock";
+import { ajax } from 'sit-fetch'
 import axios from "axios";
-import { initialFilter } from "./../pages/esss/EsssUIHelpers";
 import $ from "jquery";
-import userTableMock from "./../../Auth/__mocks__/userTableMock";
 
-export const ShopsCreshopS_URL = "api/esss";
 
-export async function AjaxDataShopsCreshop(resove = "") {
-  const idapp = localStorage.getItem("idapp");
 
-  let _essGroup = parseInt(idapp);
-  //const data = await new Promise((r, j) => ajax.Get(`${hosts}/ShopsCreshop/all/${_essGroup}`, Token, '', r));
+export function AjaxDataShopsCreshop(resove = "") {
 
   new Promise((r, j) => {
-    ajax.Get(`${hosts}/ShopsCreshop/all/${_essGroup}`, Token, "", r);
+    ajax.Post(`${host}/shoplist`, Token, {
+      "registerId": "1",
+      "shopId": [""]
+    }, r);
   }).then(data => {
-    if (data != false) {
-      let da = data != "" ? JSON.parse(data) : "";
-      const das = Object.entries(da).map(([key, value], i) => {
-        const id = parseInt(value.id);
-        const active = value.active;
+    const res = JSON.parse(data)
+    if (res.statusCode == 200) {
+      if (res.data.type == "REQUEST_SUCCESS") {
+        let da = res.data.content;
 
-        const newData = {
-          id,
-          active
-        };
-        essTableMock.push(newData);
-      });
+        const das = Object.entries(da).map(([key, value], i) => {
+          const id = parseInt(value.id);
+          ;
+          const newData = {
+            id: id,
+            name: {
+              th: value.name,
+              en: value.name,
+            },
+            nameth: value.name,
+            tex: value.tex,
+            tel: value.tel,
+            address: value.address,
+            picture: value.picture,
+            pictureContent: value.pictureContent,
+            district_id: value.district_id,
+            ampher_id: value.ampher_id,
+            province_id: value.province_id,
+            zipcode_id: value.zipcode_id,
+            status: parseInt(value.active)
+          };
+
+          ShopsCreshopTableMock.push(newData);
+        });
+      }
+
       if (resove != "") {
-        resove(das);
+        resove(ShopsCreshopTableMock);
       } else {
-        return das;
+        return ShopsCreshopTableMock;
       }
     }
   });
 }
-export const update = (id, data, userId, r = "") => {
-  console.log(data);
-  let obj = {
-    action: "tb_leave_request",
-    id: id == undefined ? "" : id,
-    sql: {
-      id_application: "",
-      active: "1"
-    }
-  };
 
-  console.log(obj);
-  const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/ShopsCreshop/update`, Token, obj, r)
-  );
-  res.then(v => {
+
+export const update = (id, token, registerId, data, resove = '') => {
+  const obj = {
+    "action": "update",
+    "id":id,
+    "registerId": registerId,
+    "sql": {
+      "name": data.nameth,
+      "tel": data.tel,
+      "tex": data.tex,
+      "address": data.address,
+      "picture": data.picture,
+      "district_id": data.district_id,
+      "ampher_id": data.ampher_id,
+      "province_id": data.province_id,
+      "zipcode_id": data.zipcode_id,
+      "active": data.status ? '1' : '0'
+    }
+  }
+
+
+  new Promise((r, j) => {
+    ajax.Post(`${host}/shop`, token, obj, r);
+  }).then(async (v) => {
     console.log(v);
-    if (v != false) {
-      let obj = {
-        id: parseInt(v),
-        check_hour: data.check_hour
-      };
-      if (r != "") {
-        r(obj);
-      } else {
-        return obj;
-      }
-    } else {
-      if (r != "") {
-        r(false);
-      } else {
-        return false;
+    const res = JSON.parse(v)
+    let arr = [];
+    if (res.statusCode == 200) {
+      if (res.data.type == "REQUEST_SUCCESS") {
+        let da = res.data.content;
+        const [obj] = da.map((val, key) => {
+          return {
+            id: parseInt(val.id),
+            name: {
+              th: val.name,
+              en: val.name,
+            },
+            nameth: val.name,
+            tex: val.tex,
+            tel: val.tel,
+            address: val.address,
+            picture: val.picture,
+            pictureContent: data.pictureContent,
+            district_id: val.district_id,
+            ampher_id: val.ampher_id,
+            province_id: val.province_id,
+            zipcode_id: val.zipcode_id,
+            status: parseInt(val.active)
+          }
+        })
+        
+        if (resove != "") {
+          resove(obj);
+        } else {
+          return obj;
+        }
       }
     }
   });
 };
-export const updatedbStatus = (id, status, r = "") => {
-  let obj = {
-    action: "tb_leave_request",
-    id: id,
-    sql: {
-      emreq_active: {
-        val: status,
-        type: "BOOLEAN"
-      }
-    }
-  };
-  const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/ShopsCreshop/update`, Token, obj, r)
-  );
-  res.then(v => {
-    console.log(v);
-    if (v != false) {
-      if (r != "") {
-        r(true);
-      } else {
-        return true;
-      }
-    } else {
-      if (r != "") {
-        r(false);
-      } else {
-        return false;
+
+// export const updatedbStatus = (id, status, r = "") => {
+//   const auth = Auth();
+//   let obj = {
+//     action: "tb_leave_request",
+//     id: id,
+//     sql: {
+//       emreq_active: {
+//         val: status,
+//         type: "BOOLEAN"
+//       }
+//     }
+//   };
+//   const res = new Promise((r, j) =>
+//     ajax.Post(`${host}/ShopsCreshop/update`, auth.accessToken, obj, r)
+//   );
+//   res.then(v => {
+//  
+//     if (v != false) {
+//       if (r != "") {
+//         r(true);
+//       } else {
+//         return true;
+//       }
+//     } else {
+//       if (r != "") {
+//         r(false);
+//       } else {
+//         return false;
+//       }
+//     }
+//   });
+// };
+export const updatedbStatus = (id,token, registerId, active,resove = '') => { 
+  const obj = {
+    action:"member_shop",
+    registerId:registerId,
+    shopId:"",
+    id:id,
+    active:active
+}
+
+  new Promise((r, j) => {
+    ajax.Post(`${host}/updatestatus`, token, obj, r);
+  }).then(async (v) => {
+ 
+    const res = JSON.parse(v)
+    let arr = [];
+    if (res.statusCode == 200) {
+      if (res.data.type == "REQUEST_SUCCESS") {
+        if (resove != "") {
+          resove(true);
+        } else {
+          return true;
+        }
+      }else{
+        if (resove != "") {
+          resove(false);
+        } else {
+          return false;
+        }
       }
     }
   });
 };
-export const deletedb = (id, r = "") => {
-  let obj = {
-    action: "tb_leave_request",
-    id: id
-  };
-  const res = new Promise((r, j) =>
-    ajax.Post(`${hosts}/ShopsCreshop/delete`, Token, obj, r)
-  );
-  res.then(v => {
-    console.log(v);
-    if (v != false) {
-      if (r != "") {
-        r(true);
-      } else {
-        return true;
-      }
-    } else {
-      if (r != "") {
-        r(false);
-      } else {
-        return false;
+
+
+
+export const deletedb = (id=[], token, registerId, resove = '') => {
+  const obj = {
+    action:"member_shop",
+    id:id,
+    method:"=",
+    registerId:registerId,
+    shopId:""
+  } 
+
+  new Promise((r, j) => {
+    ajax.Post(`${host}/delete`, token, obj, r);
+  }).then(async (v) => {
+ 
+    const res = JSON.parse(v)
+    let arr = [];
+    if (res.statusCode == 200) {
+      if (res.data.type == "REQUEST_SUCCESS") {
+        if (resove != "") {
+          resove(true);
+        } else {
+          return true;
+        }
+      }else{
+        if (resove != "") {
+          resove(false);
+        } else {
+          return false;
+        }
       }
     }
   });

@@ -4,7 +4,9 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
-
+import {Token,host} from './libs/config'
+import {AjaxDataAside} from './../_metronic/layout/components/aside/__mocks__/mockAsideLib'
+import {AjaxDataShopsCreshop} from './modules/Mpos/__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
 const MposPage = lazy(() =>
   import("./modules/Mpos/pages/MposPage")
