@@ -23,6 +23,7 @@ export {AutoComplete} from "./forms/AutoComplete";
 export {Upload} from "./forms/sit-upload";
 export {AntSwitchs} from "./forms/AntSwitchs";
 export {SITImage} from "./forms/sit-image";
+export {SITSelect} from "./forms/SITSelect";
 
 
 // Scaner

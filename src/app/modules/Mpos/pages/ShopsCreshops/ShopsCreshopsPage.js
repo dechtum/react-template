@@ -70,7 +70,7 @@ export function ShopsCreshopsPage({ history }) {
           />
         )}
       </Route>
-      <Route path={`${pages}/new`}>
+      {/* <Route path={`${pages}/new`}>
         {({ history, match }) => (
           <ShopsCreshopEditDialog
             show={match != null}
@@ -80,7 +80,7 @@ export function ShopsCreshopsPage({ history }) {
             }}
           />
         )}
-      </Route>
+      </Route> */}
       <Route path={`${pages}/:id/edit`}>
         {({ history, match }) => (
           <ShopsCreshopEditPage

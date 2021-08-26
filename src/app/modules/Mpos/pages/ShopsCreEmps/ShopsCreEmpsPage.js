@@ -23,6 +23,11 @@ export function ShopsCreEmpsPage({ history }) {
   "/" +
   history.location.pathname.split("/")[3];
 
+  const u = history.location.pathname.split("/");
+  React.useLayoutEffect(()=>{
+    store.dispatch({type:"pagehistory",value:0})
+  },[u])
+  
   const ShopsCreEmpsUIEvents = {
     newPositionEmpButtonClick: () => {      
       history.push(`${pages}/pagenew/position`);

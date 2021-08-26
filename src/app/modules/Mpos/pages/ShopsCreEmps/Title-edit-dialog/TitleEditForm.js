@@ -15,22 +15,10 @@ import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 // Validation schema
 const TitleSchema = Yup.object().shape({
-  firstName: Yup.string()
+  name: Yup.string()
     .min(3, "Minimum 3 symbols")
     .max(50, "Maximum 50 symbols")
-    .required("Firstname is required"),
-  lastName: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Lastname is required"),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-  userName: Yup.string().required("Username is required"),
-  dateOfBbirth: Yup.mixed()
-    .nullable(false)
-    .required("Date of Birth is required"),
-  ipAddress: Yup.string().required("IP Address is required"),
+    .required("Name is required"), 
 });
 
 export function TitleForm({
@@ -67,7 +55,7 @@ export function TitleForm({
                   {/* First Name */}
                   <div className="col-lg-12">
                     <Field
-                      name="firstName"
+                      name="name"
                       component={Input}
                       placeholder={tilInput}
                       label={tilInput}

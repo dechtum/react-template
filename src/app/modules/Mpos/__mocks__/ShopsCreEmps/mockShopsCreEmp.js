@@ -5,29 +5,48 @@ export default function mockShopsCreEmp(mock) {
   mock.onPost("api/ShopsCreEmps").reply(({ data }) => {
     const { ShopsCreEmp } = JSON.parse(data);
     const {
-      firstName = "",
-      lastName = "",
-      email = "",
-      userName = "",
-      gender = "Female",
-      status = 0,
-      dateOfBbirth = "01/01/2019",
-      ipAddress = "127.0.0.1",
-      type = 1
+      id='',
+      shop_id='',
+      title_id='',
+      name='',
+      surname='',
+      tel='',
+      email='',
+      position='',
+      jd='',
+      username='',
+      password='',
+      address='',
+      picture='',
+      pictureContent='',
+      district_id='',
+      ampher_id='',
+      province_id='',
+      zipcode_id='',
+      status=1
     } = ShopsCreEmp;
 
-    const id = generateUserId();
+    //const id = generateUserId();
     const newShopsCreEmp = {
       id,
-      firstName,
-      lastName,
+      shop_id,
+      title_id,
+      name,
+      surname,
+      tel,
       email,
-      userName,
-      gender,
-      status,
-      dateOfBbirth,
-      ipAddress,
-      type
+      position,
+      jd,
+      username,
+      password,
+      address,
+      picture,
+      pictureContent,
+      district_id,
+      ampher_id,
+      province_id,
+      zipcode_id,
+      status
     };
     ShopsCreEmpTableMock.push(newShopsCreEmp);
     return [200, { ShopsCreEmp: newShopsCreEmp }];

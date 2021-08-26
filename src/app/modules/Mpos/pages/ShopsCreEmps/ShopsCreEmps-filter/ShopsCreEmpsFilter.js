@@ -2,6 +2,9 @@ import React, { useMemo } from "react";
 import { Formik } from "formik";
 import { isEqual } from "lodash";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
+import { toAbsoluteUrl } from "../../../../../../_metronic/_helpers";
+import SVG from "react-inlinesvg";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 const prepareFilter = (queryParams, values) => {
   const { status, type, searchText } = values;
@@ -24,6 +27,7 @@ const prepareFilter = (queryParams, values) => {
 
 export function ShopsCreEmpsFilter({ listLoading,name}) {
   // ShopsCreEmps UI Context
+  const [lang,setLang]=React.useState(useLang())
   const ShopsCreEmpsUIContext = useShopsCreEmpsUIContext();
   const ShopsCreEmpsUIProps = useMemo(() => {
     return {
@@ -65,7 +69,7 @@ export function ShopsCreEmpsFilter({ listLoading,name}) {
         }) => (
           <form onSubmit={handleSubmit} className="form form-label-right">
             <div className="form-group row">
-              <div className="col-lg-2">
+            <div className="col-lg-2">
                 <select
                   className="form-control"
                   name="status"
@@ -78,16 +82,15 @@ export function ShopsCreEmpsFilter({ listLoading,name}) {
                   onBlur={handleBlur}
                   value={values.status}
                 >
-                  <option value="">All</option>
-                  <option value="0">Susspended</option>
-                  <option value="1">Active</option>
-                  <option value="2">Pending</option>
+                  <option value="">{lang=='en'?'All':'ทั้งหมด'}</option>
+                  <option value="0">{lang=='en'?'Inactive':'ไม่ได้ใช้งาน'}</option>
+                  <option value="1">{lang=='en'?'Active':'ใช้งาน'}</option>
                 </select>
                 <small className="form-text text-muted">
 
                 </small>
               </div>
-              <div className="col-lg-2">
+              {/* <div className="col-lg-2">
                 <select
                   className="form-control"
                   placeholder="Filter by Type"
@@ -106,7 +109,7 @@ export function ShopsCreEmpsFilter({ listLoading,name}) {
                 <small className="form-text text-muted">
 
                 </small>
-              </div>
+              </div> */}
               <div className="col-lg-2">
                 <input
                   type="text"
@@ -124,16 +127,19 @@ export function ShopsCreEmpsFilter({ listLoading,name}) {
 
                 </small>
               </div>
-              <div className="col-lg-6" >
+              <div className="col-lg-8" >
                 <div className="float-sm-right">
                   <button
                       type="button"
                       className="btn btn-primary"
                       onClick={ShopsCreEmpsUIProps.newShopsPageCreshopButtonClick}
-                      >{name}
+                      ><span className="svg-icon svg-icon-md svg-icon-ligth">
+                      <SVG
+                        src={toAbsoluteUrl("/media/svg/icons/Code/Plus.svg")}
+                      />
+                    </span>{name}
                   </button>
                 </div>
-
               </div>
             </div>
           </form>

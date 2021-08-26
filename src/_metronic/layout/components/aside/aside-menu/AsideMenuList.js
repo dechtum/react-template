@@ -13,6 +13,7 @@ import Admin from '../__mocks__/AdminTable'
 import Saler from '../__mocks__/SalerTable'
 import AsideTableMock from '../__mocks__/AsideTableMock'
 import $ from 'jquery'
+
 import {_store} from './../../../../../app/modules/Mpos/_store'
 
 

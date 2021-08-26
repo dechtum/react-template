@@ -5,8 +5,10 @@ import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import {Token,host} from './libs/config'
-import {AjaxDataAside} from './../_metronic/layout/components/aside/__mocks__/mockAsideLib'
 import {AjaxDataShopsCreshop} from './modules/Mpos/__mocks__/ShopsCreshops/mockShopsCreshopLib'
+import {Auth} from './libs/config'
+import {TitleList} from './modules/Mpos/__mocks__/center/mockTitlenameLib'
+import {AjaxDataAside} from '../_metronic/layout/components/aside/__mocks__/mockAsideLib'
 
 const MposPage = lazy(() =>
   import("./modules/Mpos/pages/MposPage")
@@ -19,7 +21,10 @@ export default function BasePage() {
   //   console.log('Base page');
   // }, []) // [] - is required if you need only one call
   // https://reactjs.org/docs/hooks-reference.html#useeffect
-
+  const [state,setState]=React.useState('')
+  const auth = Auth();
+  
+  // AjaxDataAside(auth.user.id,auth.authToken,setState);
   return (
     <Suspense fallback={<LayoutSplashScreen />}>
       <Switch>

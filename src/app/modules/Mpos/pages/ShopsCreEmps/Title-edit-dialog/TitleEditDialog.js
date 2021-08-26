@@ -5,6 +5,8 @@ import * as actions from "../../../_redux/ShopsCreEmps/ShopsCreEmpsActions";
 import { TitleDialogHeader } from "./TitleDialogHeader";
 import { TitleForm } from "./TitleEditForm";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
+import TitleTableMock from './../../../__mocks__/center/TitleTableMock'
+import {Update} from '../../../__mocks__/center/mockTitlenameLib'
 
 export function TitleDialog({ id, show, onHide }) {
   // ShopsCreEmps UI Context
@@ -17,14 +19,19 @@ export function TitleDialog({ id, show, onHide }) {
 
   // ShopsCreEmps Redux state
   const dispatch = useDispatch();
-  const { actionsLoading, ShopsCreEmpForEdit } = useSelector(
+  const { actionsLoading, ShopsCreEmpForEdit,auth } = useSelector(
     (state) => ({
       actionsLoading: state.ShopsCreEmps.actionsLoading,
       ShopsCreEmpForEdit: state.ShopsCreEmps.ShopsCreEmpForEdit,
+      auth:state.auth
     }),
     shallowEqual
   );
-
+  const initTitle = {
+    id:'',
+    name:'',
+    active:1
+  }
   useEffect(() => {
     // server call for getting ShopsCreEmp by id
     dispatch(actions.fetchShopsCreEmp(id));
@@ -32,13 +39,30 @@ export function TitleDialog({ id, show, onHide }) {
 
   // server request for saving ShopsCreEmp
   const saveShopsCreEmp = (ShopsCreEmp) => {
-    if (!id) {
-      // server request for creating ShopsCreEmp
-      dispatch(actions.createShopsCreEmp(ShopsCreEmp)).then(() => onHide());
-    } else {
-      // server request for updating ShopsCreEmp
-      dispatch(actions.updateShopsCreEmp(ShopsCreEmp)).then(() => onHide());
-    }
+  
+    new Promise((r,j)=>{
+      Update('',auth.user.id,auth.authToken,ShopsCreEmp, r );
+    })
+    .then((v)=>{
+      console.log(v);   
+      if(v!=false){
+        TitleTableMock.push({
+          ...ShopsCreEmp,
+          id:v
+        });
+        onHide();
+      }
+      
+    })
+    
+
+    // if (!id) {
+    //   // server request for creating ShopsCreEmp
+    //   dispatch(actions.createShopsCreEmp(ShopsCreEmp)).then(() => onHide());
+    // } else {
+    //   // server request for updating ShopsCreEmp
+    //   dispatch(actions.updateShopsCreEmp(ShopsCreEmp)).then(() => onHide());
+    // }
   };
   return (
     <Modal
@@ -51,7 +75,7 @@ export function TitleDialog({ id, show, onHide }) {
       <TitleForm
         saveShopsCreEmp={saveShopsCreEmp}
         actionsLoading={actionsLoading}
-        ShopsCreEmp={ShopsCreEmpForEdit || ShopsCreEmpsUIProps.initShopsCreEmp}
+        ShopsCreEmp={initTitle}
         onHide={onHide}
       />
     </Modal>

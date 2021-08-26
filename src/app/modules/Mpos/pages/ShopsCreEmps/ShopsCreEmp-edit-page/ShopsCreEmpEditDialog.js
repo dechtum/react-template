@@ -5,7 +5,8 @@ import * as actions from "../../../_redux/ShopsCreEmps/ShopsCreEmpsActions";
 import { ShopsCreEmpEditDialogHeader } from "./ShopsCreEmpEditDialogHeader";
 import { ShopsCreEmpEditForm } from "./ShopsCreEmpEditForm";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
-
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {update} from './../../../__mocks__/ShopsCreshops/mockShopsCreshopLib'
 
 export function ShopsCreEmpEditPage({ id, show, onHide }) {
   // ShopsCreEmps UI Context
@@ -18,10 +19,11 @@ export function ShopsCreEmpEditPage({ id, show, onHide }) {
 
   // ShopsCreEmps Redux state
   const dispatch = useDispatch();
-  const { actionsLoading, ShopsCreEmpForEdit } = useSelector(
+  const { actionsLoading, ShopsCreEmpForEdit,auth } = useSelector(
     (state) => ({
       actionsLoading: state.ShopsCreEmps.actionsLoading,
       ShopsCreEmpForEdit: state.ShopsCreEmps.ShopsCreEmpForEdit,
+      auth:state.auth
     }),
     shallowEqual
   );
@@ -31,14 +33,30 @@ export function ShopsCreEmpEditPage({ id, show, onHide }) {
     dispatch(actions.fetchShopsCreEmp(id));
   }, [id, dispatch]);
 
-  // server request for saving ShopsCreEmp
-  const saveShopsCreEmp = (ShopsCreEmp) => {
+  // server request for saving ShopsCreEmp  
+  const saveShopsCreEmp = (ShopsCreEmp,setOnsave) => {
+   
+   
     if (!id) {
-      // server request for creating ShopsCreEmp
-      dispatch(actions.createShopsCreEmp(ShopsCreEmp)).then(() => onHide());
+      // server request for creating ShopsCreshop
+      new Promise((r,j)=>{        
+        update('',auth.authToken,auth.user.id,ShopsCreEmp,r)
+      })
+      .then((v)=>{
+        setOnsave(false)
+        dispatch(actions.createShopsCreEmp(v)).then(() => onHide());
+      })
+      
     } else {
-      // server request for updating ShopsCreEmp
-      dispatch(actions.updateShopsCreEmp(ShopsCreEmp)).then(() => onHide());
+      // server request for updating ShopsCreshop
+      new Promise((r,j)=>{        
+        update(id,auth.authToken,auth.user.id,ShopsCreEmp,r)
+      })
+      .then((v)=>{
+        setOnsave(false)
+        dispatch(actions.updateShopsCreEmp(v)).then(() => onHide());
+      })
+      
     }
   };
   return (
@@ -50,6 +68,8 @@ export function ShopsCreEmpEditPage({ id, show, onHide }) {
         ShopsCreEmp={ShopsCreEmpForEdit || ShopsCreEmpsUIProps.initShopsCreEmp}
         onHide={onHide}
         id={id}
+        useLang={useLang()}
+        auth={auth}
       />
     </div>
    

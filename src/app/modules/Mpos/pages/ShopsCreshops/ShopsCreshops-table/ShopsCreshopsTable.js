@@ -22,9 +22,10 @@ import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useShopsCreshopsUIContext } from "../ShopsCreshopsUIContext";
 import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 import {AjaxDataShopsCreshop} from "./../../../__mocks__/ShopsCreshops/mockShopsCreshopLib";
-
+let start = false;
 export function ShopsCreshopsTable() {
   // ShopsCreshops UI Context
+  const[ran,setRan]=React.useState('');
   const ShopsCreshopsUIContext = useShopsCreshopsUIContext();
   const ShopsCreshopsUIProps = useMemo(() => {
     return {
@@ -38,8 +39,11 @@ export function ShopsCreshopsTable() {
   }, [ShopsCreshopsUIContext]);
 
   // Getting curret state of ShopsCreshops list from store (Redux)
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.ShopsCreshops }),
+  const { currentState,auth } = useSelector(
+    (state) => ({ 
+      currentState: state.ShopsCreshops,
+      auth:state.auth 
+    }),
     shallowEqual
   );
   const { totalCount, entities, listLoading } = currentState;
@@ -48,13 +52,27 @@ export function ShopsCreshopsTable() {
   const dispatch = useDispatch();
   useEffect(() => {    
     // clear selections list
-    ShopsCreshopsUIProps.setIds([]);
+    
     // server call by queryParams
-  
-    dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams));
+    ShopsCreshopsUIProps.setIds([]);
+    dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams)); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ShopsCreshopsUIProps.queryParams, dispatch]);
   // Table columns
+  React.useLayoutEffect(()=>{
+    new Promise((r,j)=>{
+      AjaxDataShopsCreshop(auth.authToken,{
+        "registerId": auth.user.id,
+        "shopId": [""]
+      },r );
+    })
+    .then((v)=>{     
+      start=true;
+      ShopsCreshopsUIProps.setIds([]);
+      dispatch(actions.fetchShopsCreshops(ShopsCreshopsUIProps.queryParams)); 
+    }) 
+  },[start])
+
   const columns = [
     {
       dataField: "id",

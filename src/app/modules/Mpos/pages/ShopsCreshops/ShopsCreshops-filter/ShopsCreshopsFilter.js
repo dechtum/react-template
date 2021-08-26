@@ -90,8 +90,8 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
 
                 </small>
               </div>
-              <div className="col-lg-2">
-                {/* <select
+              {/* <div className="col-lg-2">
+                <select
                   className="form-control"
                   placeholder="Filter by Type"
                   name="type"
@@ -108,8 +108,8 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
                 </select>
                 <small className="form-text text-muted">
 
-                </small> */}
-              </div>
+                </small>
+              </div> */}
               <div className="col-lg-2">
                 <input
                   type="text"
@@ -127,7 +127,7 @@ export function ShopsCreshopsFilter({ listLoading,name}) {
 
                 </small>
               </div>
-              <div className="col-lg-6" >
+              <div className="col-lg-8" >
                 <div className="float-sm-right">
                   <button
                       type="button"

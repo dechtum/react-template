@@ -15,8 +15,8 @@ export function ShopsCreEmpEditDialogHeader({ id,onHide }) {
   );
 
   const [title, setTitle] = useState("");
-  let til = useLang()=='en'?"Edit Employee":"เพิ่ม พนักงาน";
-  let tilE = useLang()=='en'?"Edit Employee":"แก้ไข พนักงาน";
+  let til = useLang()=='en'?"Edit Employee":"เพิ่ม ";
+  let tilE = useLang()=='en'?"Edit Employee":"แก้ไข ";
   // Title couting
   useEffect(() => {
     let _title = id ? "" : `${til}`;

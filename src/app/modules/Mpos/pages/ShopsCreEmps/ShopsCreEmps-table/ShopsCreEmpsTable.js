@@ -20,7 +20,13 @@ import * as uiHelpers from "../ShopsCreEmpsUIHelpers";
 import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
+import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
+import {AjaxData} from './../../../__mocks__/ShopsCreEmps/mockShopsCreEmpLib'
+import {TitleList} from '../../../__mocks__/center/mockTitlenameLib'
+import {Positions} from '../../../__mocks__/center/mockPositionLib'
+import {Shops} from '../../../__mocks__/center/mockShopLib'
 
+let start = false;
 export function ShopsCreEmpsTable() {
   // ShopsCreEmps UI Context
   const ShopsCreEmpsUIContext = useShopsCreEmpsUIContext();
@@ -36,8 +42,11 @@ export function ShopsCreEmpsTable() {
   }, [ShopsCreEmpsUIContext]);
 
   // Getting curret state of ShopsCreEmps list from store (Redux)
-  const { currentState } = useSelector(
-    (state) => ({ currentState: state.ShopsCreEmps }),
+  const { currentState ,auth} = useSelector(
+    (state) => ({ 
+      currentState: state.ShopsCreEmps,
+      auth:state.auth
+     }),
     shallowEqual
   );
   const { totalCount, entities, listLoading } = currentState;
@@ -51,39 +60,61 @@ export function ShopsCreEmpsTable() {
     dispatch(actions.fetchShopsCreEmps(ShopsCreEmpsUIProps.queryParams));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ShopsCreEmpsUIProps.queryParams, dispatch]);
+ 
+  React.useLayoutEffect(()=>{
+    new Promise(async (r,j)=>{
+     const a= await Positions(auth.user.id,auth.authToken);
+     const b= await TitleList(auth.user.id,auth.authToken);
+     const c= await Shops(auth.user.id,auth.authToken);
+     const z= await AjaxData(auth.authToken,{
+        "action":"list",
+        "registerId": auth.user.id,
+        "shopId": [""]
+      },r );
+    })
+    .then((v)=>{     
+      start=true;
+      // clear selections list
+      ShopsCreEmpsUIProps.setIds([]);
+      // server call by queryParams
+      dispatch(actions.fetchShopsCreEmps(ShopsCreEmpsUIProps.queryParams));
+    }) 
+    
+  },[start])
+ 
   // Table columns
   const columns = [
     {
       dataField: "id",
-      text: "ID",
+      text: `${useLang()=='en'?'No.':'ลำดับที่'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "firstName",
-      text: "Firstname",
+      dataField: "name",
+      text: `${useLang()=='en'?'Name':'ชื่อ'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "lastName",
-      text: "Lastname",
+      dataField: "surname",
+      text:`${useLang()=='en'?'Surname':'นามสกุล'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "email",
-      text: "Email",
+      dataField: "position",
+      text: `${useLang()=='en'?'Position':'ตำแหน่ง'}`,
       sort: true,
       sortCaret: sortCaret,
       headerSortingClasses,
     },
     {
-      dataField: "gender",
-      text: "Gender",
+      dataField: "shop_id",
+      text: `${useLang()=='en'?'Shop':'ร้าน'}`,
       sort: false,
       sortCaret: sortCaret,
     },
@@ -94,13 +125,6 @@ export function ShopsCreEmpsTable() {
       sortCaret: sortCaret,
       formatter: columnFormatters.StatusColumnFormatter,
       headerSortingClasses,
-    },
-    {
-      dataField: "type",
-      text: "Type",
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.TypeColumnFormatter,
     },
     {
       dataField: "action",
@@ -125,6 +149,7 @@ export function ShopsCreEmpsTable() {
     sizePerPage: ShopsCreEmpsUIProps.queryParams.pageSize,
     page: ShopsCreEmpsUIProps.queryParams.pageNumber,
   };
+  
   return (
     <>
       <PaginationProvider pagination={paginationFactory(paginationOptions)}>

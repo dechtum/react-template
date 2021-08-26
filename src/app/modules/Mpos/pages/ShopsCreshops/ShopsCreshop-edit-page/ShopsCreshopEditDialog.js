@@ -45,7 +45,6 @@ export function ShopsCreshopEditPage({ id, show, onHide }) {
         update('',auth.authToken,auth.user.id,ShopsCreshop,r)
       })
       .then((v)=>{
-        console.log(v);
         setOnsave(false)
         dispatch(actions.createShopsCreshop(v)).then(() => onHide());
       })

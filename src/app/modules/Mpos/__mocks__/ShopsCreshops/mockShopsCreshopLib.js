@@ -1,5 +1,5 @@
 
-import { host, Token } from "./../../../../libs/config";
+import { host } from "./../../../../libs/config";
 import { useLang, setLanguage } from './../../../../../_metronic/i18n'
 import React, { useEffect, useMemo } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
@@ -11,19 +11,18 @@ import $ from "jquery";
 
 
 
-export function AjaxDataShopsCreshop(resove = "") {
-
+export function AjaxDataShopsCreshop(token,obj, resove = '') {
+ 
   new Promise((r, j) => {
-    ajax.Post(`${host}/shoplist`, Token, {
-      "registerId": "1",
-      "shopId": [""]
-    }, r);
+    ajax.Post(`${host}/shoplist`, token, obj, r);
   }).then(data => {
     const res = JSON.parse(data)
+   
     if (res.statusCode == 200) {
       if (res.data.type == "REQUEST_SUCCESS") {
+        
         let da = res.data.content;
-
+        ShopsCreshopTableMock.splice(0, ShopsCreshopTableMock.length)
         const das = Object.entries(da).map(([key, value], i) => {
           const id = parseInt(value.id);
           ;
@@ -45,15 +44,15 @@ export function AjaxDataShopsCreshop(resove = "") {
             zipcode_id: value.zipcode_id,
             status: parseInt(value.active)
           };
-
+          
           ShopsCreshopTableMock.push(newData);
         });
-      }
-
-      if (resove != "") {
-        resove(ShopsCreshopTableMock);
-      } else {
-        return ShopsCreshopTableMock;
+       
+        if (resove != "") {         
+          resove(ShopsCreshopTableMock);
+        } else {
+          return ShopsCreshopTableMock;
+        }
       }
     }
   });
@@ -120,38 +119,6 @@ export const update = (id, token, registerId, data, resove = '') => {
   });
 };
 
-// export const updatedbStatus = (id, status, r = "") => {
-//   const auth = Auth();
-//   let obj = {
-//     action: "tb_leave_request",
-//     id: id,
-//     sql: {
-//       emreq_active: {
-//         val: status,
-//         type: "BOOLEAN"
-//       }
-//     }
-//   };
-//   const res = new Promise((r, j) =>
-//     ajax.Post(`${host}/ShopsCreshop/update`, auth.accessToken, obj, r)
-//   );
-//   res.then(v => {
-//  
-//     if (v != false) {
-//       if (r != "") {
-//         r(true);
-//       } else {
-//         return true;
-//       }
-//     } else {
-//       if (r != "") {
-//         r(false);
-//       } else {
-//         return false;
-//       }
-//     }
-//   });
-// };
 export const updatedbStatus = (id,token, registerId, active,resove = '') => { 
   const obj = {
     action:"member_shop",

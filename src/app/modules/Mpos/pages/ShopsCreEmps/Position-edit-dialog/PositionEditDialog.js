@@ -5,6 +5,8 @@ import * as actions from "../../../_redux/ShopsCreEmps/ShopsCreEmpsActions";
 import { PositionDialogHeader } from "./PositionDialogHeader";
 import { PositionForm } from "./PositionEditForm";
 import { useShopsCreEmpsUIContext } from "../ShopsCreEmpsUIContext";
+import {Update} from '../../../__mocks__/center/mockPositionLib'
+import PositionTableMock from './../../../__mocks__/center/PositionTableMock'
 
 export function PositionDialog({ id, show, onHide }) {
   // ShopsCreEmps UI Context
@@ -17,10 +19,11 @@ export function PositionDialog({ id, show, onHide }) {
 
   // ShopsCreEmps Redux state
   const dispatch = useDispatch();
-  const { actionsLoading, ShopsCreEmpForEdit } = useSelector(
+  const { actionsLoading, ShopsCreEmpForEdit ,auth} = useSelector(
     (state) => ({
       actionsLoading: state.ShopsCreEmps.actionsLoading,
       ShopsCreEmpForEdit: state.ShopsCreEmps.ShopsCreEmpForEdit,
+      auth:state.auth
     }),
     shallowEqual
   );
@@ -32,13 +35,20 @@ export function PositionDialog({ id, show, onHide }) {
 
   // server request for saving ShopsCreEmp
   const saveShopsCreEmp = (ShopsCreEmp) => {
-    if (!id) {
-      // server request for creating ShopsCreEmp
-      dispatch(actions.createShopsCreEmp(ShopsCreEmp)).then(() => onHide());
-    } else {
-      // server request for updating ShopsCreEmp
-      dispatch(actions.updateShopsCreEmp(ShopsCreEmp)).then(() => onHide());
-    }
+    new Promise((r,j)=>{
+      Update('',auth.user.id,auth.authToken,ShopsCreEmp, r );
+    })
+    .then((v)=>{
+      console.log(v);   
+      if(v!=false){
+        PositionTableMock.push({
+          ...ShopsCreEmp,
+          id:v
+        });
+        onHide();
+      }
+      
+    })
   };
   return (
     <Modal

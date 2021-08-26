@@ -26,19 +26,32 @@ export function ShopsCreEmpsUIProvider({ShopsCreEmpsUIEvents, children}) {
       return nextQueryParams;
     });
   }, []);
-
   const initShopsCreEmp = {
     id: undefined,
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    gender: "Female",
-    status: 0,
-    dateOfBbirth: "",
-    ipAddress: "",
-    type: 1
+    shop_id:'',
+    title_id:'20',
+    name: '',
+    surname: '',
+    tel: '',
+    email: '',
+    position: '',
+    hire: '',
+    jd: '',
+    username: '',
+    password:'',
+    address: '',
+    picture: '',
+    idcard: '',
+    birthdate: '',
+    remark: '',
+    pictureContent: '',
+    district_id: '',
+    ampher_id: '',
+    province_id: '',
+    zipcode_id: '',
+    status: 1
   };
+  
 
   const value = {
     queryParams,

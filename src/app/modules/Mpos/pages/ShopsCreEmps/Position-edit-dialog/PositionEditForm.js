@@ -15,23 +15,13 @@ import { useLang, setLanguage } from "./../../../../../../_metronic/i18n";
 
 // Validation schema
 const PositionSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Firstname is required"),
-  lastName: Yup.string()
-    .min(3, "Minimum 3 symbols")
-    .max(50, "Maximum 50 symbols")
-    .required("Lastname is required"),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-  userName: Yup.string().required("Username is required"),
-  dateOfBbirth: Yup.mixed()
-    .nullable(false)
-    .required("Date of Birth is required"),
-  ipAddress: Yup.string().required("IP Address is required"),
+  name: Yup.string()
+  .min(3, "Minimum 3 symbols")
+  .max(50, "Maximum 50 symbols")
+  .required("Name is required"), 
+ 
 });
+
 
 export function PositionForm({
   saveShopsCreEmp,
@@ -67,7 +57,7 @@ export function PositionForm({
                   {/* First Name */}
                   <div className="col-lg-12">
                     <Field
-                      name="firstName"
+                      name="name"
                       component={Input}
                       placeholder={tilInput}
                       label={tilInput}

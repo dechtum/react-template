@@ -10,19 +10,20 @@ export const AsideS_URL = "api/esss";
 // let Token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3Q1NTU1ZHNmZHMiLCJwYXNzd29yZCI6IjEifQ.783MLtL0Zy8camMbvGk7nciKHQ6XBGAwlT9wZa8F8pw';
 
 export async function AjaxDataAside(resove = "") {
-  console.log(Token);
+
   if(Token==null){
     //  window.location.href=`logout`
   }
   new Promise((r, j) => {
     ajax.Post(`${host}/shoplist`, Token, {
-      "registerId":"1",
+      "registerId":'1',
       "shopId":[""]
   }, r);
   }).then(data => {   
     const res = JSON.parse(data)
     if (res.statusCode == 200) {     
       if(res.data.type =="REQUEST_SUCCESS"){
+        AsideTableMock.slice(0,AsideTableMock.length)
         let da = res.data.content;
         const das = Object.entries(da).map(([key, value], i) => {
           const id = parseInt(value.id);
@@ -54,7 +55,7 @@ export async function AjaxDataAside(resove = "") {
   });
 }
 export const update = (id, data, userId, r = "") => {
-  console.log(data);
+
   let obj = {
     action: "tb_leave_request",
     id: id == undefined ? "" : id,
@@ -64,7 +65,7 @@ export const update = (id, data, userId, r = "") => {
     }
   };
 
-  console.log(obj);
+
   const res = new Promise((r, j) =>
     ajax.Post(`${host}/Aside/update`, Token, obj, r)
   );

@@ -132,8 +132,7 @@ export function Upload({
              
                 ajax.Post(url, token, obj, r)
             })
-                .then((v) => {
-                
+                .then((v) => {                
                     let obj = JSON.parse(v)                    
                     if(obj.statusCode == 200 && obj.data.type == 'REQUEST_SUCCESS'){
                         setState({
